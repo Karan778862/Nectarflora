@@ -38,13 +38,13 @@
       "settings": {
         "image_overlay_opacity": 40,
         "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
         "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
         "desktop_content_alignment": "center",
+        "show_text_box": false,
         "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
         "show_text_below": false
       }
     },
@@ -56,8 +56,8 @@
           "settings": {
             "title": "Skin",
             "link": "shopify://collections/all",
-            "bottle_color": "#1C6747",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#1c6747",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_hair": {
@@ -65,8 +65,8 @@
           "settings": {
             "title": "Hair",
             "link": "shopify://collections/all",
-            "bottle_color": "#E5A000",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#e5a000",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_sleep": {
@@ -74,8 +74,8 @@
           "settings": {
             "title": "Sleep & Stress",
             "link": "shopify://collections/all",
-            "bottle_color": "#583F8A",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#583f8a",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_liver": {
@@ -83,8 +83,8 @@
           "settings": {
             "title": "Liver & Digestion",
             "link": "shopify://collections/all",
-            "bottle_color": "#A85324",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#a85324",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_brain": {
@@ -92,8 +92,8 @@
           "settings": {
             "title": "Brain",
             "link": "shopify://collections/all",
-            "bottle_color": "#15657B",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#15657b",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_women": {
@@ -101,8 +101,8 @@
           "settings": {
             "title": "Women Health",
             "link": "shopify://collections/all",
-            "bottle_color": "#C01E5B",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#c01e5b",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_weight": {
@@ -110,8 +110,8 @@
           "settings": {
             "title": "Weight",
             "link": "shopify://collections/all",
-            "bottle_color": "#289E49",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#289e49",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "concern_immunity": {
@@ -119,68 +119,78 @@
           "settings": {
             "title": "Immunity",
             "link": "shopify://collections/all",
-            "bottle_color": "#E65A28",
-            "circle_bg_color": "#E8F6ED"
+            "bottle_color": "#e65a28",
+            "circle_bg_color": "#e8f6ed"
           }
         },
         "tag_ashwagandha": {
           "type": "trending_tag",
           "settings": {
-            "title": "KSM-66 Ashwagandha"
+            "title": "KSM-66 Ashwagandha",
+            "link": ""
           }
         },
         "tag_myo_inositol": {
           "type": "trending_tag",
           "settings": {
-            "title": "Myo-Inositol"
+            "title": "Myo-Inositol",
+            "link": ""
           }
         },
         "tag_shatavari": {
           "type": "trending_tag",
           "settings": {
-            "title": "Shatavari"
+            "title": "Shatavari",
+            "link": ""
           }
         },
         "tag_milk_thistle": {
           "type": "trending_tag",
           "settings": {
-            "title": "Milk Thistle"
+            "title": "Milk Thistle",
+            "link": ""
           }
         },
         "tag_nac": {
           "type": "trending_tag",
           "settings": {
-            "title": "NAC"
+            "title": "NAC",
+            "link": ""
           }
         },
         "tag_glutathione": {
           "type": "trending_tag",
           "settings": {
-            "title": "Liposomal Glutathione"
+            "title": "Liposomal Glutathione",
+            "link": ""
           }
         },
         "tag_resveratrol": {
           "type": "trending_tag",
           "settings": {
-            "title": "Trans-Resveratrol"
+            "title": "Trans-Resveratrol",
+            "link": ""
           }
         },
         "tag_saw_palmetto": {
           "type": "trending_tag",
           "settings": {
-            "title": "Saw Palmetto"
+            "title": "Saw Palmetto",
+            "link": ""
           }
         },
         "tag_biotin": {
           "type": "trending_tag",
           "settings": {
-            "title": "Biotin"
+            "title": "Biotin",
+            "link": ""
           }
         },
         "tag_magnesium": {
           "type": "trending_tag",
           "settings": {
-            "title": "Magnesium Bisglycinate"
+            "title": "Magnesium Bisglycinate",
+            "link": ""
           }
         }
       },
@@ -207,9 +217,9 @@
       "settings": {
         "heading": "Shop by Concern",
         "subheading": "Find the right support for your wellness goals",
-        "heading_color": "#0F3D2C",
-        "subheading_color": "#64748B",
-        "bg_color": "#FFFFFF",
+        "heading_color": "#0f3d2c",
+        "subheading_color": "#64748b",
+        "bg_color": "#ffffff",
         "show_trending": true,
         "trending_label": "Trending:",
         "padding_top": 48,
@@ -367,12 +377,12 @@
       "settings": {
         "heading": "Quality You Can Trust",
         "subheading": "Our whole-food ingredients and full-spectrum herbal blends are made in certified facilities",
-        "bg_color": "#EAF5EE",
-        "heading_color": "#0D3B2B",
-        "subheading_color": "#4A6B5D",
-        "circle_bg": "#FFFFFF",
-        "circle_border": "#A3D9B8",
-        "icon_color": "#0A8754",
+        "bg_color": "#eaf5ee",
+        "heading_color": "#0d3b2b",
+        "subheading_color": "#4a6b5d",
+        "circle_bg": "#ffffff",
+        "circle_border": "#a3d9b8",
+        "icon_color": "#0a8754",
         "layout_mobile": "grid_2",
         "padding_top": 56,
         "padding_bottom": 56
@@ -383,7 +393,7 @@
     "image_banner",
     "shop_by_concern",
     "bestsellers",
-    "quality_trust",
-    "shop_by_category"
+    "shop_by_category",
+    "quality_trust"
   ]
 }
