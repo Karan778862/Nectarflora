@@ -1,0 +1,370 @@
+/* ==========================================================================
+   NECTARFLORA PREMIUM FOOTER STYLES
+   ========================================================================== */
+
+.nectar-footer {
+  width: 100%;
+  background-color: var(--footer-bg, #0B3526);
+  color: var(--footer-text, #C2D6CC);
+  padding-top: var(--footer-pt, 56px);
+  padding-bottom: var(--footer-pb, 24px);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.nectar-footer-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* 5 Columns Layout */
+.nectar-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
+  gap: 36px 28px;
+  align-items: flex-start;
+}
+
+/* Column 1: Brand Info */
+.nectar-footer-col--brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.nectar-footer-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 7px 18px;
+  margin-bottom: 16px;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+}
+
+.nectar-footer-logo-img {
+  max-height: 38px;
+  width: auto;
+  display: block;
+}
+
+.nectar-footer-logo-text {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.nectar-footer-logo-text .logo-nectar {
+  color: #EE5A24;
+}
+
+.nectar-footer-logo-text .logo-flora {
+  color: #0A8754;
+}
+
+.nectar-footer-logo-text .logo-tm {
+  font-size: 11px;
+  color: #EE5A24;
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+.nectar-footer-company-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #A9C2B5;
+  margin: 0 0 16px;
+  font-weight: 400;
+}
+
+.nectar-footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nectar-footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #C2D6CC;
+}
+
+.nectar-footer-contact-item a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nectar-footer-contact-item a:hover {
+  color: #FFFFFF;
+}
+
+.nectar-footer-contact-icon {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+  color: #E5A000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nectar-footer-contact-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Columns 2, 3, 4: Navigation Menus */
+.nectar-footer-col--menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.nectar-footer-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 16px;
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.nectar-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.nectar-footer-links li a {
+  font-size: 13px;
+  color: #C2D6CC;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-block;
+  font-weight: 400;
+}
+
+.nectar-footer-links li a:hover {
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
+
+/* Column 5: Trust, Socials & Certifications */
+.nectar-footer-col--trust {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.nectar-footer-subgroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.nectar-footer-subheading {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 10px;
+  line-height: 1.25;
+}
+
+/* Payment Pills */
+.nectar-footer-payments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nectar-payment-pill {
+  background: #FFFFFF;
+  color: #0B3526;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+/* Social Icon Buttons */
+.nectar-footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.nectar-social-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: lowercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nectar-social-btn:hover {
+  background: #0A8754;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* Certificate Badges */
+.nectar-footer-certificates {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nectar-cert-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: #0B3526;
+  font-weight: 800;
+  font-size: 10.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.nectar-cert-badge:hover {
+  transform: scale(1.08);
+}
+
+/* Bottom Bar */
+.nectar-footer-bottom {
+  margin-top: 48px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+  color: #8FA89B;
+}
+
+.nectar-footer-copyright {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.nectar-footer-disclaimer {
+  margin: 0;
+  line-height: 1.4;
+  text-align: right;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVENESS
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+  .nectar-footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 32px 24px;
+  }
+
+  .nectar-footer-col--trust {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nectar-footer {
+    padding-top: var(--footer-pt-mob, 40px);
+    padding-bottom: var(--footer-pb-mob, 20px);
+  }
+
+  .nectar-footer-container {
+    padding: 0 18px;
+  }
+
+  /* Mobile Stack */
+  .nectar-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .nectar-footer-col--trust {
+    grid-column: span 1;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Two columns for menu rows on mobile for compact view */
+  .nectar-footer-menus-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+
+  .nectar-footer-heading {
+    font-size: 14.5px;
+    margin-bottom: 12px;
+  }
+
+  .nectar-footer-links li a {
+    font-size: 12.5px;
+  }
+
+  .nectar-footer-company-desc {
+    font-size: 12.5px;
+  }
+
+  .nectar-footer-contact-item {
+    font-size: 12px;
+  }
+
+  .nectar-footer-bottom {
+    margin-top: 32px;
+    padding-top: 18px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .nectar-footer-disclaimer {
+    text-align: center;
+  }
+}
