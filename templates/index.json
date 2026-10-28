@@ -396,7 +396,11 @@
           "settings": {
             "quote_title": "Back to my original weight in 3 months!",
             "author_name": "Adwaitya",
-            "banner_style": "green"
+            "banner_style": "green",
+            "custom_bg": "",
+            "custom_text_color": "",
+            "video_url": "",
+            "product": "nectarflora-age-well"
           }
         },
         "reel_2": {
@@ -404,7 +408,11 @@
           "settings": {
             "quote_title": "I got thicker hair in just 3 months!",
             "author_name": "Mohit",
-            "banner_style": "yellow"
+            "banner_style": "yellow",
+            "custom_bg": "",
+            "custom_text_color": "",
+            "video_url": "",
+            "product": "nectarflora-cycle-balance"
           }
         },
         "reel_3": {
@@ -412,7 +420,11 @@
           "settings": {
             "quote_title": "Every day is a great hair day with Biotin",
             "author_name": "Guneet",
-            "banner_style": "yellow"
+            "banner_style": "yellow",
+            "custom_bg": "",
+            "custom_text_color": "",
+            "video_url": "",
+            "product": ""
           }
         },
         "reel_4": {
@@ -420,7 +432,11 @@
           "settings": {
             "quote_title": "My skin glows with Collagen every day",
             "author_name": "Shivani",
-            "banner_style": "yellow"
+            "banner_style": "yellow",
+            "custom_bg": "",
+            "custom_text_color": "",
+            "video_url": "",
+            "product": ""
           }
         },
         "reel_5": {
@@ -428,7 +444,11 @@
           "settings": {
             "quote_title": "Loving my energy again with ACV!",
             "author_name": "Riya",
-            "banner_style": "green"
+            "banner_style": "green",
+            "custom_bg": "",
+            "custom_text_color": "",
+            "video_url": "",
+            "product": ""
           }
         }
       },
@@ -442,57 +462,7 @@
       "settings": {
         "heading": "Loved by Our Customers",
         "subheading": "Real stories from real people — watch their journeys",
-        "bg_color": "#FFFFFF",
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
-    "experts_science": {
-      "type": "experts-science",
-      "blocks": {
-        "expert_1": {
-          "type": "expert_item",
-          "settings": {
-            "name": "Dr. Ananya Mehta",
-            "designation": "MBBS, MD — Dermatologist",
-            "avatar_bg": "#C6E7D2"
-          }
-        },
-        "expert_2": {
-          "type": "expert_item",
-          "settings": {
-            "name": "Dr. Rohan Kapoor",
-            "designation": "PhD — Nutrition Scientist",
-            "avatar_bg": "#C6E7D2"
-          }
-        },
-        "expert_3": {
-          "type": "expert_item",
-          "settings": {
-            "name": "Neha Sharma",
-            "designation": "MSc — Clinical Nutritionist",
-            "avatar_bg": "#C6E7D2"
-          }
-        },
-        "expert_4": {
-          "type": "expert_item",
-          "settings": {
-            "name": "Dr. Vikram Iyer",
-            "designation": "MD — Ayurveda Expert",
-            "avatar_bg": "#C6E7D2"
-          }
-        }
-      },
-      "block_order": [
-        "expert_1",
-        "expert_2",
-        "expert_3",
-        "expert_4"
-      ],
-      "settings": {
-        "heading": "Experts Behind the Science",
-        "subheading": "Every ingredient, process and formulation is thoroughly researched by our global team of doctors, scientists and nutritionists.",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "padding_top": 56,
         "padding_bottom": 56
       }
@@ -536,13 +506,63 @@
       "settings": {
         "heading": "Hear from our Customers",
         "subheading": "Discover why so many people trust us with their daily wellbeing",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "enable_autoplay": true,
         "autoplay_interval": 5,
         "show_arrows": true,
         "show_dots": true,
         "padding_top": 56,
         "padding_bottom": 64
+      }
+    },
+    "experts_science": {
+      "type": "experts-science",
+      "blocks": {
+        "expert_1": {
+          "type": "expert_item",
+          "settings": {
+            "avatar_bg": "#c6e7d2",
+            "name": "Dr. Ananya Mehta",
+            "designation": "MBBS, MD — Dermatologist"
+          }
+        },
+        "expert_2": {
+          "type": "expert_item",
+          "settings": {
+            "avatar_bg": "#c6e7d2",
+            "name": "Dr. Rohan Kapoor",
+            "designation": "PhD — Nutrition Scientist"
+          }
+        },
+        "expert_3": {
+          "type": "expert_item",
+          "settings": {
+            "avatar_bg": "#c6e7d2",
+            "name": "Neha Sharma",
+            "designation": "MSc — Clinical Nutritionist"
+          }
+        },
+        "expert_4": {
+          "type": "expert_item",
+          "settings": {
+            "avatar_bg": "#c6e7d2",
+            "name": "Dr. Vikram Iyer",
+            "designation": "MD — Ayurveda Expert"
+          }
+        }
+      },
+      "block_order": [
+        "expert_1",
+        "expert_2",
+        "expert_3",
+        "expert_4"
+      ],
+      "settings": {
+        "heading": "Experts Behind the Science",
+        "subheading": "Every ingredient, process and formulation is thoroughly researched by our global team of doctors, scientists and nutritionists.",
+        "bg_color": "#ffffff",
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     }
   },
