@@ -147,11 +147,18 @@
       {%- endfor -%}
 
       {%- if section.settings.show_wishlist -%}
-        <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="nectar-header__action-link nectar-header__wishlist" aria-label="Wishlist" title="Wishlist">
+        <button
+          type="button"
+          class="nectar-header__action-link nectar-header__wishlist"
+          data-nectar-wishlist-trigger
+          aria-label="Wishlist"
+          title="My Wishlist"
+        >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
-        </a>
+          <span class="nectar-header__cart-badge nectar-wishlist-badge" data-nectar-wishlist-count style="display: none;">0</span>
+        </button>
       {%- endif -%}
 
       {%- if section.settings.show_account -%}

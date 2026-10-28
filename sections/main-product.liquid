@@ -84,18 +84,18 @@
       <!-- Breadcrumbs -->
       {% render 'nectar-breadcrumbs', product: product %}
 
-      <div class="nectar-pdp-layout product grid grid--1-col grid--2-col-tablet">
+      <div class="nectar-pdp-layout product">
         
         <!-- Left: Product Media Gallery (Always renders 9% badge, 5 thumbnails, floating 10% tab) -->
-        <div class="grid__item product__media-wrapper">
+        <div class="product__media-wrapper">
           {% render 'nectar-product-media-gallery', product: product, variant_images: variant_images %}
         </div>
 
         <!-- Right: Product Information Blocks -->
-        <div class="product__info-wrapper grid__item">
+        <div class="product__info-wrapper">
           <section
             id="ProductInfo-{{ section.id }}"
-            class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
+            class="product__info-container"
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
             {%- assign nectar_tabs_rendered = false -%}
@@ -152,10 +152,11 @@
                   <div class="nectar-block-title-wrap" {{ block.shopify_attributes }}>
                     <h1 class="nectar-product-title">{{ product.title | escape }}</h1>
                     {%- unless has_custom_subtitle -%}
-                      {%- assign sub_text = product.metafields.custom.subtitle.value | default: product.metafields.custom.subtitle | default: 'Advance Skin Wellness Formula' -%}
-                      {%- if sub_text != blank -%}
-                        <div class="nectar-product-subtitle">{{ sub_text }}</div>
+                      {%- assign sub_text = product.metafields.custom.subtitle.value | default: product.metafields.custom.subtitle -%}
+                      {%- if sub_text == blank -%}
+                        {%- assign sub_text = 'Advance Skin Wellness Formula' -%}
                       {%- endif -%}
+                      <div class="nectar-product-subtitle">{{ sub_text }}</div>
                     {%- endunless -%}
                     {%- unless has_custom_rating -%}
                       <div class="nectar-product-rating-wrap">
@@ -166,25 +167,13 @@
                     {%- endunless -%}
                   </div>
 
-                {%- when 'subtitle', 'nectar_rating', 'rating', 'product_tabs', 'clinical_claims', 'key_benefits', 'nectar_price', 'available_offers', 'bundle_selector', 'nectar_buy_buttons', 'trust_badges', 'lab_tested', 'nutritionist_badge' -%}
-                  {%- if block.type == 'product_tabs' -%}{%- assign nectar_tabs_rendered = true -%}{%- endif -%}
-                  {% render 'nectar-product-blocks', block: block, product: product, section: section %}
-
-                {%- when 'description' -%}
-                  {%- assign nectar_tabs_rendered = true -%}
-                  {%- unless has_custom_tabs -%}
-                    {% render 'nectar-product-blocks', block: block, product: product, section: section %}
-                  {%- else -%}
-                    <div class="product__description rte" {{ block.shopify_attributes }}>
-                      {{ product.description }}
-                    </div>
-                  {%- endunless -%}
-                  {%- unless has_custom_claims -%}
+                  {%- comment -%} Always guarantee 5 tabs, disclaimer & 6 benefits render directly below title {%- endcomment -%}
+                  {%- if nectar_tabs_rendered == false and has_custom_tabs == false -%}
+                    {%- assign nectar_tabs_rendered = true -%}
+                    {% render 'nectar-product-blocks', block: block, product: product, section: section, forced_type: 'product_tabs' %}
                     <div class="nectar-clinical-disclaimer">
                       Claims based on clinically studied ingredients, not the product.
                     </div>
-                  {%- endunless -%}
-                  {%- unless has_custom_benefits -%}
                     <div class="nectar-benefits-grid">
                       <div class="nectar-benefit-item">
                         <div class="nectar-benefit-icon">
@@ -239,24 +228,23 @@
                         <div class="nectar-benefit-text">Antioxidant<br>Protection⁶</div>
                       </div>
                     </div>
-                  {%- endunless -%}
+                  {%- endif -%}
+
+                {%- when 'subtitle', 'nectar_rating', 'rating', 'product_tabs', 'clinical_claims', 'key_benefits', 'nectar_price', 'available_offers', 'bundle_selector', 'nectar_buy_buttons', 'trust_badges', 'lab_tested', 'nutritionist_badge' -%}
+                  {%- if block.type == 'product_tabs' -%}{%- assign nectar_tabs_rendered = true -%}{%- endif -%}
+                  {% render 'nectar-product-blocks', block: block, product: product, section: section %}
+
+                {%- when 'description' -%}
+                  {%- if has_custom_tabs -%}
+                    <div class="product__description rte" {{ block.shopify_attributes }}>
+                      {{ product.description }}
+                    </div>
+                  {%- elsif nectar_tabs_rendered == false -%}
+                    {%- assign nectar_tabs_rendered = true -%}
+                    {% render 'nectar-product-blocks', block: block, product: product, section: section %}
+                  {%- endif -%}
 
                 {%- when 'price' -%}
-                  {%- if nectar_tabs_rendered == false and has_custom_tabs == false -%}
-                    {%- assign nectar_tabs_rendered = true -%}
-                    {% render 'nectar-product-blocks', block: block, product: product, section: section, forced_type: 'product_tabs' %}
-                    <div class="nectar-clinical-disclaimer">
-                      Claims based on clinically studied ingredients, not the product.
-                    </div>
-                    <div class="nectar-benefits-grid">
-                      <div class="nectar-benefit-item"><div class="nectar-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><div class="nectar-benefit-text">Improves Skin<br>Brightness¹</div></div>
-                      <div class="nectar-benefit-item"><div class="nectar-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></div><div class="nectar-benefit-text">Anti-Ageing<br>Support²</div></div>
-                      <div class="nectar-benefit-item"><div class="nectar-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="nectar-benefit-text">Supports Cellular<br>Health³</div></div>
-                      <div class="nectar-benefit-item"><div class="nectar-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div class="nectar-benefit-text">Helps Reduce<br>Pigmentation⁴</div></div>
-                      <div class="nectar-benefit-item"><div class="nectar-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div><div class="nectar-benefit-text">Deep Skin<br>Hydration⁵</div></div>
-                      <div class="nectar-benefit-item"><div class="nectar-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="nectar-benefit-text">Antioxidant<br>Protection⁶</div></div>
-                    </div>
-                  {%- endif -%}
 
                   {%- unless has_custom_price -%}
                     {% render 'nectar-product-blocks', block: block, product: product, section: section %}

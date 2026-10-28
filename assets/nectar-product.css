@@ -102,43 +102,85 @@
 /* --------------------------------------------------------------------------
    Layout Grid
    -------------------------------------------------------------------------- */
-.nectar-pdp-layout,
-.nectar-pdp-layout.product,
-.nectar-pdp-layout.grid {
-  display: grid !important;
-  grid-template-columns: minmax(0, 48%) minmax(0, 52%) !important;
-  gap: 48px !important;
-  align-items: start !important;
+.nectar-pdp-layout {
   width: 100% !important;
   max-width: 100% !important;
   margin-top: 8px !important;
+  box-sizing: border-box !important;
 }
 
-.nectar-pdp-layout .product__media-wrapper,
-.nectar-pdp-layout .product__info-wrapper,
-.nectar-pdp-layout.product .product__media-wrapper,
-.nectar-pdp-layout.product .product__info-wrapper,
-.product--medium:not(.product--no-media) .product__info-wrapper,
-.product--large:not(.product--no-media) .product__info-wrapper,
-.product--small:not(.product--no-media) .product__info-wrapper,
-.product__info-wrapper {
-  max-width: 100% !important;
-  width: 100% !important;
-  padding: 0 !important;
-}
-
-.product__info-container {
-  max-width: 100% !important;
-  width: 100% !important;
-}
-
-@media screen and (max-width: 989px) {
+@media screen and (min-width: 750px) {
   .nectar-pdp-layout,
-  .nectar-pdp-layout.product,
-  .nectar-pdp-layout.grid {
+  .nectar-pdp-layout.product {
+    display: grid !important;
+    grid-template-columns: minmax(0, 48%) minmax(0, 52%) !important;
+    column-gap: 36px !important;
+    row-gap: 0 !important;
+    align-items: start !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .nectar-pdp-layout .product__media-wrapper,
+  .nectar-pdp-layout.product .product__media-wrapper {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: sticky !important;
+    top: 24px !important;
+    z-index: 1 !important;
+    padding: 0 !important;
+  }
+
+  .nectar-pdp-layout .product__info-wrapper,
+  .nectar-pdp-layout.product .product__info-wrapper {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    z-index: 2 !important;
+    padding: 0 !important;
+  }
+
+  .nectar-pdp-layout .product__info-container {
+    position: relative !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nectar-pdp-layout,
+  .nectar-pdp-layout.product {
     display: flex !important;
     flex-direction: column !important;
-    gap: 28px !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .nectar-pdp-layout .product__media-wrapper,
+  .nectar-pdp-layout.product .product__media-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: static !important;
+    padding: 0 !important;
+  }
+
+  .nectar-pdp-layout .product__info-wrapper,
+  .nectar-pdp-layout.product .product__info-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    padding: 0 !important;
+  }
+
+  .nectar-pdp-layout .product__info-container {
+    position: relative !important;
+    top: auto !important;
+    width: 100% !important;
   }
 }
 
@@ -164,11 +206,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 36px 24px;
+  padding: 32px 24px;
   box-sizing: border-box;
   aspect-ratio: 1 / 1;
-  min-height: 520px;
-  height: 520px;
+  max-height: 520px;
 }
 
 .nectar-gallery-discount-badge {
@@ -929,41 +970,11 @@
 /* --------------------------------------------------------------------------
    RESPONSIVENESS (Mobile: smaller padding, stacked layout, fluid width)
    -------------------------------------------------------------------------- */
-@media screen and (max-width: 989px) {
-  .nectar-pdp-layout {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .product__media-wrapper {
-    position: static;
-  }
-
-  .nectar-gallery-main-card {
-    min-height: 420px;
-    height: 420px;
-    padding: 24px 16px;
-  }
-
-  .nectar-benefits-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .nectar-bundle-cards-grid,
-  .nectar-bundle-cards {
-    gap: 10px;
-  }
-
-  .nectar-nutritionist-pill {
-    bottom: 20px;
-    right: 16px;
-  }
-}
-
 @media screen and (max-width: 749px) {
   .nectar-gallery-main-card {
-    min-height: 340px;
-    height: 340px;
+    min-height: 320px;
+    height: auto;
+    aspect-ratio: 1 / 1;
     border-radius: 20px;
     padding: 20px 12px;
   }
