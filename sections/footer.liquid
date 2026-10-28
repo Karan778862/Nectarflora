@@ -14,7 +14,7 @@
 <footer class="nectar-footer" id="NectarFooter-{{ section.id }}" role="contentinfo">
   <div class="nectar-footer-container">
     
-    <div class="nectar-footer-grid">
+    <div class="nectar-footer-main">
       
       <!-- ================= COLUMN 1: BRAND INFO & CONTACT ================= -->
       <div class="nectar-footer-col nectar-footer-col--brand">
@@ -103,64 +103,67 @@
         </div>
       </div>
 
-      <!-- ================= COLUMN 2: SHOP BY CONCERN ================= -->
-      <div class="nectar-footer-col nectar-footer-col--menu">
-        <h3 class="nectar-footer-heading">{{ section.settings.heading_concern | default: 'Shop by Concern' }}</h3>
-        <ul class="nectar-footer-links">
-          {%- if section.settings.menu_concern != blank and section.settings.menu_concern.links.size > 0 -%}
-            {%- for link in section.settings.menu_concern.links -%}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            <li><a href="/collections/all">Fitness</a></li>
-            <li><a href="/collections/all">Weight Loss</a></li>
-            <li><a href="/collections/all">Hair Health</a></li>
-            <li><a href="/collections/all">Skin Health</a></li>
-            <li><a href="/collections/all">Sleep & Stress</a></li>
-            <li><a href="/collections/all">Liver & Digestion</a></li>
-            <li><a href="/collections/all">Women Health</a></li>
-          {%- endif -%}
-        </ul>
-      </div>
+      <!-- ================= MIDDLE GROUP: 3 MENUS (TIGHT, CLEAN GAP) ================= -->
+      <div class="nectar-footer-menus-group">
+        <!-- ================= COLUMN 2: SHOP BY CONCERN ================= -->
+        <div class="nectar-footer-col nectar-footer-col--menu">
+          <h3 class="nectar-footer-heading">{{ section.settings.heading_concern | default: 'Shop by Concern' }}</h3>
+          <ul class="nectar-footer-links">
+            {%- if section.settings.menu_concern != blank and section.settings.menu_concern.links.size > 0 -%}
+              {%- for link in section.settings.menu_concern.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              <li><a href="/collections/all">Fitness</a></li>
+              <li><a href="/collections/all">Weight Loss</a></li>
+              <li><a href="/collections/all">Hair Health</a></li>
+              <li><a href="/collections/all">Skin Health</a></li>
+              <li><a href="/collections/all">Sleep & Stress</a></li>
+              <li><a href="/collections/all">Liver & Digestion</a></li>
+              <li><a href="/collections/all">Women Health</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
 
-      <!-- ================= COLUMN 3: SHOP BY CATEGORY ================= -->
-      <div class="nectar-footer-col nectar-footer-col--menu">
-        <h3 class="nectar-footer-heading">{{ section.settings.heading_category | default: 'Shop by Category' }}</h3>
-        <ul class="nectar-footer-links">
-          {%- if section.settings.menu_category != blank and section.settings.menu_category.links.size > 0 -%}
-            {%- for link in section.settings.menu_category.links -%}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            <li><a href="/collections/all">Protein</a></li>
-            <li><a href="/collections/all">Multivitamins</a></li>
-            <li><a href="/collections/all">Biotin</a></li>
-            <li><a href="/collections/all">Collagen</a></li>
-            <li><a href="/collections/all">Hair Care</a></li>
-            <li><a href="/collections/all">Skin Care</a></li>
-            <li><a href="/collections/all">Superfood</a></li>
-          {%- endif -%}
-        </ul>
-      </div>
+        <!-- ================= COLUMN 3: SHOP BY CATEGORY ================= -->
+        <div class="nectar-footer-col nectar-footer-col--menu">
+          <h3 class="nectar-footer-heading">{{ section.settings.heading_category | default: 'Shop by Category' }}</h3>
+          <ul class="nectar-footer-links">
+            {%- if section.settings.menu_category != blank and section.settings.menu_category.links.size > 0 -%}
+              {%- for link in section.settings.menu_category.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              <li><a href="/collections/all">Protein</a></li>
+              <li><a href="/collections/all">Multivitamins</a></li>
+              <li><a href="/collections/all">Biotin</a></li>
+              <li><a href="/collections/all">Collagen</a></li>
+              <li><a href="/collections/all">Hair Care</a></li>
+              <li><a href="/collections/all">Skin Care</a></li>
+              <li><a href="/collections/all">Superfood</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
 
-      <!-- ================= COLUMN 4: QUICK LINKS ================= -->
-      <div class="nectar-footer-col nectar-footer-col--menu">
-        <h3 class="nectar-footer-heading">{{ section.settings.heading_quick_links | default: 'Quick Links' }}</h3>
-        <ul class="nectar-footer-links">
-          {%- if section.settings.menu_quick_links != blank and section.settings.menu_quick_links.links.size > 0 -%}
-            {%- for link in section.settings.menu_quick_links.links -%}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            <li><a href="/pages/about-us">About Us</a></li>
-            <li><a href="/pages/track-order">Track Order</a></li>
-            <li><a href="/pages/shipping-delivery">Shipping & Delivery</a></li>
-            <li><a href="/pages/cancellations-refunds">Cancellations & Refunds</a></li>
-            <li><a href="/policies/terms-of-service">Terms</a></li>
-            <li><a href="/policies/privacy-policy">Privacy</a></li>
-            <li><a href="/blogs/news">Blogs</a></li>
-          {%- endif -%}
-        </ul>
+        <!-- ================= COLUMN 4: QUICK LINKS ================= -->
+        <div class="nectar-footer-col nectar-footer-col--menu">
+          <h3 class="nectar-footer-heading">{{ section.settings.heading_quick_links | default: 'Quick Links' }}</h3>
+          <ul class="nectar-footer-links">
+            {%- if section.settings.menu_quick_links != blank and section.settings.menu_quick_links.links.size > 0 -%}
+              {%- for link in section.settings.menu_quick_links.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              <li><a href="/pages/about-us">About Us</a></li>
+              <li><a href="/pages/track-order">Track Order</a></li>
+              <li><a href="/pages/shipping-delivery">Shipping & Delivery</a></li>
+              <li><a href="/pages/cancellations-refunds">Cancellations & Refunds</a></li>
+              <li><a href="/policies/terms-of-service">Terms</a></li>
+              <li><a href="/policies/privacy-policy">Privacy</a></li>
+              <li><a href="/blogs/news">Blogs</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
       </div>
 
       <!-- ================= COLUMN 5: TRUST, SOCIALS & CERTS ================= -->

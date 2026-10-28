@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NECTARFLORA PREMIUM FOOTER STYLES
+   NECTARFLORA PREMIUM FOOTER STYLES (MATCHES REFERENCE EXACTLY)
    ========================================================================== */
 
 .nectar-footer {
@@ -11,6 +11,7 @@
   font-family: inherit;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .nectar-footer-container {
@@ -20,16 +21,18 @@
   box-sizing: border-box;
 }
 
-/* 5 Columns Layout */
-.nectar-footer-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
-  gap: 36px 28px;
+/* Main Row Layout: Brand (Left) | 3 Menus Group (Center) | Trust (Right) */
+.nectar-footer-main {
+  display: flex;
+  justify-content: space-between;
   align-items: flex-start;
+  gap: 36px;
 }
 
-/* Column 1: Brand Info */
+/* ================= 1. COLUMN 1: BRAND INFO & CONTACTS ================= */
 .nectar-footer-col--brand {
+  flex: 0 0 270px;
+  max-width: 270px;
   display: flex;
   flex-direction: column;
 }
@@ -37,10 +40,11 @@
 .nectar-footer-logo-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   background: #FFFFFF;
   border-radius: 12px;
-  padding: 7px 18px;
-  margin-bottom: 16px;
+  padding: 8px 22px;
+  margin-bottom: 15px;
   width: fit-content;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-decoration: none;
@@ -53,9 +57,9 @@
 }
 
 .nectar-footer-logo-text {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.5px;
   display: inline-flex;
   align-items: baseline;
@@ -74,29 +78,32 @@
   color: #EE5A24;
   vertical-align: super;
   margin-left: 2px;
+  font-weight: 800;
 }
 
 .nectar-footer-company-desc {
   font-size: 13px;
   line-height: 1.5;
-  color: #A9C2B5;
+  color: #A8C2B5;
   margin: 0 0 16px;
+  max-width: 240px;
   font-weight: 400;
 }
 
 .nectar-footer-contact-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .nectar-footer-contact-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 9px;
   font-size: 12.5px;
   line-height: 1.45;
   color: #C2D6CC;
+  max-width: 250px;
 }
 
 .nectar-footer-contact-item a {
@@ -111,10 +118,10 @@
 
 .nectar-footer-contact-icon {
   flex-shrink: 0;
-  width: 17px;
-  height: 17px;
-  margin-top: 1px;
-  color: #E5A000;
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  color: #F59E0B; /* Golden Amber Icon */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +132,13 @@
   height: 100%;
 }
 
-/* Columns 2, 3, 4: Navigation Menus */
+/* ================= 2. MIDDLE GROUP: 3 MENUS (TIGHT & CLEAN) ================= */
+.nectar-footer-menus-group {
+  display: flex;
+  gap: 48px;
+  flex: 0 1 auto;
+}
+
 .nectar-footer-col--menu {
   display: flex;
   flex-direction: column;
@@ -146,16 +159,17 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 10.5px;
 }
 
 .nectar-footer-links li a {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #C2D6CC;
   text-decoration: none;
   transition: color 0.15s ease, transform 0.15s ease;
   display: inline-block;
   font-weight: 400;
+  line-height: 1.3;
 }
 
 .nectar-footer-links li a:hover {
@@ -163,11 +177,12 @@
   transform: translateX(3px);
 }
 
-/* Column 5: Trust, Socials & Certifications */
+/* ================= 3. COLUMN 5: TRUST, PAYMENTS, SOCIALS ================= */
 .nectar-footer-col--trust {
+  flex: 0 0 255px;
+  max-width: 255px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
 }
 
 .nectar-footer-subgroup {
@@ -175,8 +190,12 @@
   flex-direction: column;
 }
 
+.nectar-footer-subgroup + .nectar-footer-subgroup {
+  margin-top: 18px;
+}
+
 .nectar-footer-subheading {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: #FFFFFF;
   margin: 0 0 10px;
@@ -194,8 +213,8 @@
   background: #FFFFFF;
   color: #0B3526;
   font-weight: 800;
-  font-size: 11px;
-  padding: 4px 9px;
+  font-size: 10.5px;
+  padding: 4px 8.5px;
   border-radius: 5px;
   display: inline-flex;
   align-items: center;
@@ -206,21 +225,21 @@
   user-select: none;
 }
 
-/* Social Icon Buttons */
+/* Social Buttons */
 .nectar-footer-socials {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
 }
 
 .nectar-social-btn {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.12);
   color: #FFFFFF;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 11.5px;
   text-transform: lowercase;
   display: inline-flex;
   align-items: center;
@@ -239,17 +258,17 @@
 .nectar-footer-certificates {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .nectar-cert-badge {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: #FFFFFF;
   color: #0B3526;
   font-weight: 800;
-  font-size: 10.5px;
+  font-size: 11px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -263,10 +282,10 @@
   transform: scale(1.08);
 }
 
-/* Bottom Bar */
+/* ================= 4. BOTTOM BAR ================= */
 .nectar-footer-bottom {
-  margin-top: 48px;
-  padding-top: 22px;
+  margin-top: 44px;
+  padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
@@ -289,30 +308,56 @@
 }
 
 /* ==========================================================================
-   MOBILE & TABLET RESPONSIVENESS
+   RESPONSIVENESS (TABLET & MOBILE)
    ========================================================================== */
 
-@media screen and (max-width: 1024px) {
-  .nectar-footer-grid {
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 32px 24px;
+@media screen and (max-width: 1100px) {
+  .nectar-footer-menus-group {
+    gap: 32px;
+  }
+  .nectar-footer-main {
+    gap: 24px;
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .nectar-footer-main {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .nectar-footer-col--brand {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .nectar-footer-company-desc,
+  .nectar-footer-contact-item {
+    max-width: 100%;
+  }
+
+  .nectar-footer-menus-group {
+    flex: 1 1 100%;
+    justify-content: space-between;
+    gap: 24px;
   }
 
   .nectar-footer-col--trust {
-    grid-column: span 3;
+    flex: 0 0 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 24px;
-    padding-top: 12px;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 }
 
 @media screen and (max-width: 749px) {
   .nectar-footer {
-    padding-top: var(--footer-pt-mob, 40px);
+    padding-top: var(--footer-pt-mob, 36px);
     padding-bottom: var(--footer-pb-mob, 20px);
   }
 
@@ -320,45 +365,25 @@
     padding: 0 18px;
   }
 
-  /* Mobile Stack */
-  .nectar-footer-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .nectar-footer-main {
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .nectar-footer-menus-group {
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
   }
 
   .nectar-footer-col--trust {
-    grid-column: span 1;
     flex-direction: column;
-    gap: 20px;
-  }
-
-  /* Two columns for menu rows on mobile for compact view */
-  .nectar-footer-menus-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px 16px;
-  }
-
-  .nectar-footer-heading {
-    font-size: 14.5px;
-    margin-bottom: 12px;
-  }
-
-  .nectar-footer-links li a {
-    font-size: 12.5px;
-  }
-
-  .nectar-footer-company-desc {
-    font-size: 12.5px;
-  }
-
-  .nectar-footer-contact-item {
-    font-size: 12px;
+    gap: 18px;
   }
 
   .nectar-footer-bottom {
-    margin-top: 32px;
-    padding-top: 18px;
+    margin-top: 30px;
+    padding-top: 16px;
     flex-direction: column;
     text-align: center;
     gap: 8px;
