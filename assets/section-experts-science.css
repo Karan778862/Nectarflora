@@ -1,0 +1,194 @@
+/* ==========================================================================
+   NECTARFLORA EXPERTS BEHIND THE SCIENCE SECTION
+   ========================================================================== */
+
+.nectar-experts-section {
+  width: 100%;
+  position: relative;
+  background-color: var(--experts-bg, #FFFFFF);
+  padding-top: var(--experts-pt, 56px);
+  padding-bottom: var(--experts-pb, 56px);
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.nectar-experts-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.nectar-experts-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 44px;
+}
+
+.nectar-experts-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0D3B2B;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+.nectar-experts-subtitle {
+  font-size: 15px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* 4-Columns Grid */
+.nectar-experts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Individual Expert Card */
+.nectar-expert-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 40px 24px 36px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  box-sizing: border-box;
+}
+
+.nectar-expert-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(13, 59, 43, 0.08);
+  border-color: #CBD5E1;
+}
+
+/* Circular Avatar */
+.nectar-expert-avatar-wrap {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background-color: #C6E7D2;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.nectar-expert-card:hover .nectar-expert-avatar-wrap {
+  transform: scale(1.05);
+}
+
+.nectar-expert-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nectar-expert-placeholder-icon {
+  width: 44px;
+  height: 44px;
+  color: #0A8754;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nectar-expert-placeholder-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+/* Expert Content */
+.nectar-expert-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.nectar-expert-designation {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   RESPONSIVENESS
+   ========================================================================== */
+
+@media screen and (max-width: 989px) {
+  .nectar-experts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nectar-experts-section {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  .nectar-experts-container {
+    padding: 0 16px;
+  }
+
+  .nectar-experts-header {
+    margin-bottom: 26px;
+  }
+
+  .nectar-experts-title {
+    font-size: 24px;
+  }
+
+  .nectar-experts-subtitle {
+    font-size: 13.5px;
+  }
+
+  .nectar-experts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .nectar-expert-card {
+    padding: 26px 14px 22px;
+  }
+
+  .nectar-expert-avatar-wrap {
+    width: 84px;
+    height: 84px;
+    margin-bottom: 14px;
+  }
+
+  .nectar-expert-placeholder-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nectar-expert-name {
+    font-size: 15px;
+  }
+
+  .nectar-expert-designation {
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+}

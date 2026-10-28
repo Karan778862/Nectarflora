@@ -1,0 +1,189 @@
+{{ 'section-experts-science.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #ExpertsScience-{{ section.id }} {
+    --experts-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --experts-pt: {{ section.settings.padding_top }}px;
+    --experts-pb: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="nectar-experts-section" id="ExpertsScience-{{ section.id }}" aria-label="{{ section.settings.heading | escape }}">
+  <div class="nectar-experts-container">
+    
+    <!-- Section Header -->
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nectar-experts-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="nectar-experts-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="nectar-experts-subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- 4 Experts Grid -->
+    <div class="nectar-experts-grid">
+      {%- for block in section.blocks -%}
+        <div class="nectar-expert-card" {{ block.shopify_attributes }}>
+          
+          <!-- Avatar Wrap -->
+          <div
+            class="nectar-expert-avatar-wrap"
+            {% if block.settings.avatar_bg != blank %}
+              style="background-color: {{ block.settings.avatar_bg }};"
+            {% endif %}
+          >
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 220 }}"
+                alt="{{ block.settings.name | escape }}"
+                loading="lazy"
+                class="nectar-expert-img"
+                width="104"
+                height="104"
+              >
+            {%- else -%}
+              <span class="nectar-expert-placeholder-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+            {%- endif -%}
+          </div>
+
+          <!-- Expert Info -->
+          {%- if block.settings.name != blank -%}
+            <h3 class="nectar-expert-name">{{ block.settings.name | escape }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.designation != blank -%}
+            <p class="nectar-expert-designation">{{ block.settings.designation | escape }}</p>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Experts Science",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Experts Behind the Science",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "default": "Every ingredient, process and formulation is thoroughly researched by our global team of doctors, scientists and nutritionists.",
+      "label": "Subheading"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "default": "#FFFFFF",
+      "label": "Section Background"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "expert_item",
+      "name": "Expert / Doctor",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Expert Photo"
+        },
+        {
+          "type": "color",
+          "id": "avatar_bg",
+          "default": "#C6E7D2",
+          "label": "Avatar Circle Background"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Dr. Ananya Mehta"
+        },
+        {
+          "type": "text",
+          "id": "designation",
+          "label": "Designation / Credentials",
+          "default": "MBBS, MD — Dermatologist"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experts Science",
+      "blocks": [
+        {
+          "type": "expert_item",
+          "settings": {
+            "name": "Dr. Ananya Mehta",
+            "designation": "MBBS, MD — Dermatologist",
+            "avatar_bg": "#C6E7D2"
+          }
+        },
+        {
+          "type": "expert_item",
+          "settings": {
+            "name": "Dr. Rohan Kapoor",
+            "designation": "PhD — Nutrition Scientist",
+            "avatar_bg": "#C6E7D2"
+          }
+        },
+        {
+          "type": "expert_item",
+          "settings": {
+            "name": "Neha Sharma",
+            "designation": "MSc — Clinical Nutritionist",
+            "avatar_bg": "#C6E7D2"
+          }
+        },
+        {
+          "type": "expert_item",
+          "settings": {
+            "name": "Dr. Vikram Iyer",
+            "designation": "MD — Ayurveda Expert",
+            "avatar_bg": "#C6E7D2"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

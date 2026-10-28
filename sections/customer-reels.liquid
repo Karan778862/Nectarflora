@@ -1,0 +1,356 @@
+{{ 'section-customer-reels.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #CustomerReels-{{ section.id }} {
+    --reels-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --reels-pt: {{ section.settings.padding_top }}px;
+    --reels-pb: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="nectar-reels-section" id="CustomerReels-{{ section.id }}" aria-label="{{ section.settings.heading | escape }}">
+  <div class="nectar-reels-container">
+    
+    <!-- Section Header -->
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nectar-reels-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="nectar-reels-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="nectar-reels-subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Reels Track Carousel -->
+    <div class="nectar-reels-wrapper">
+      <button type="button" class="nectar-reels-arrow nectar-reels-arrow--prev" data-nectar-reels-prev aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="nectar-reels-track" data-nectar-reels-track>
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign banner_class = 'nectar-reel-banner--green'
+            if block.settings.banner_style == 'yellow'
+              assign banner_class = 'nectar-reel-banner--yellow'
+            endif
+
+            assign video_src = ''
+            if block.settings.video_file != blank
+              assign video_src = block.settings.video_file.sources[0].url
+            elsif block.settings.video_url != blank
+              assign video_src = block.settings.video_url
+            endif
+          -%}
+
+          <div
+            class="nectar-reel-card"
+            data-video-src="{{ video_src }}"
+            {{ block.shopify_attributes }}
+          >
+            <!-- Background / Media -->
+            <div class="nectar-reel-media">
+              {%- if block.settings.cover_image != blank -%}
+                <img
+                  src="{{ block.settings.cover_image | image_url: width: 450 }}"
+                  alt="{{ block.settings.quote_title | escape }}"
+                  loading="lazy"
+                  class="nectar-reel-img"
+                  width="220"
+                  height="420"
+                >
+              {%- else -%}
+                <div class="nectar-reel-avatar-silhouette">
+                  <div class="nectar-reel-avatar-head"></div>
+                  <div class="nectar-reel-avatar-body"></div>
+                </div>
+              {%- endif -%}
+            </div>
+
+            <!-- Play Button -->
+            <div class="nectar-reel-play-btn" aria-label="Play video">
+              <svg viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+
+            <!-- Tagged Product (Optional, with Title Overflow Protection) -->
+            {%- if block.settings.product != blank -%}
+              {%- assign linked_product = block.settings.product -%}
+              <a href="{{ linked_product.url }}" class="nectar-reel-product-tag" onclick="event.stopPropagation();">
+                {%- if linked_product.featured_image -%}
+                  <img
+                    src="{{ linked_product.featured_image | image_url: width: 60 }}"
+                    alt="{{ linked_product.title | escape }}"
+                    class="nectar-reel-product-img"
+                    width="24"
+                    height="24"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+                <div class="nectar-reel-product-info">
+                  <span class="nectar-reel-product-title" title="{{ linked_product.title | escape }}">
+                    {{ linked_product.title | truncate: 32 | escape }}
+                  </span>
+                  <span class="nectar-reel-product-price">
+                    {{ linked_product.price | money }}
+                  </span>
+                </div>
+              </a>
+            {%- endif -%}
+
+            <!-- Bottom Quote Strip / Banner -->
+            <div
+              class="nectar-reel-banner {{ banner_class }}"
+              {% if block.settings.banner_style == 'custom' and block.settings.custom_bg != blank %}
+                style="background-color: {{ block.settings.custom_bg }}; color: {{ block.settings.custom_text_color | default: '#FFFFFF' }};"
+              {% endif %}
+            >
+              {%- if block.settings.quote_title != blank -%}
+                <div class="nectar-reel-quote">{{ block.settings.quote_title | escape }}</div>
+              {%- endif -%}
+              {%- if block.settings.author_name != blank -%}
+                <div class="nectar-reel-author">— {{ block.settings.author_name | escape }}</div>
+              {%- endif -%}
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <button type="button" class="nectar-reels-arrow nectar-reels-arrow--next" data-nectar-reels-next aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Video Modal Lightbox -->
+  <div class="nectar-video-modal" id="NectarVideoModal-{{ section.id }}">
+    <div class="nectar-video-modal__content">
+      <button type="button" class="nectar-video-modal__close" data-close-modal aria-label="Close">✕</button>
+      <video class="nectar-video-modal__video" playsinline controls></video>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    const section = document.getElementById('CustomerReels-{{ section.id }}');
+    if (!section) return;
+
+    const track = section.querySelector('[data-nectar-reels-track]');
+    const prevBtn = section.querySelector('[data-nectar-reels-prev]');
+    const nextBtn = section.querySelector('[data-nectar-reels-next]');
+    const modal = document.getElementById('NectarVideoModal-{{ section.id }}');
+    const modalVideo = modal ? modal.querySelector('.nectar-video-modal__video') : null;
+    const closeBtn = modal ? modal.querySelector('[data-close-modal]') : null;
+
+    if (prevBtn && track) {
+      prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -track.offsetWidth * 0.7, behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn && track) {
+      nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: track.offsetWidth * 0.7, behavior: 'smooth' });
+      });
+    }
+
+    // Modal Video Open
+    section.querySelectorAll('.nectar-reel-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const videoSrc = card.getAttribute('data-video-src');
+        if (videoSrc && modal && modalVideo) {
+          modalVideo.src = videoSrc;
+          modal.classList.add('is-open');
+          modalVideo.play().catch(() => {});
+        }
+      });
+    });
+
+    if (closeBtn && modal && modalVideo) {
+      const closeModal = () => {
+        modal.classList.remove('is-open');
+        modalVideo.pause();
+        modalVideo.src = '';
+      };
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Customer Reels",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Loved by Our Customers",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Real stories from real people — watch their journeys",
+      "label": "Subheading"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "default": "#FFFFFF",
+      "label": "Section Background"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel_item",
+      "name": "Customer Reel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "quote_title",
+          "label": "Quote / Customer Review",
+          "default": "Back to my original weight in 3 months!"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Customer Name",
+          "default": "Adwaitya"
+        },
+        {
+          "type": "select",
+          "id": "banner_style",
+          "label": "Banner Style",
+          "options": [
+            {
+              "value": "green",
+              "label": "Dark Green Banner"
+            },
+            {
+              "value": "yellow",
+              "label": "Yellow / Gold Banner"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Colors"
+            }
+          ],
+          "default": "green"
+        },
+        {
+          "type": "color",
+          "id": "custom_bg",
+          "label": "Custom Banner Background"
+        },
+        {
+          "type": "color",
+          "id": "custom_text_color",
+          "label": "Custom Banner Text Color"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Video Cover / Poster Image"
+        },
+        {
+          "type": "video",
+          "id": "video_file",
+          "label": "Shopify Hosted Video"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "External Video MP4 Link"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Tagged Product (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reels",
+      "blocks": [
+        {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "Back to my original weight in 3 months!",
+            "author_name": "Adwaitya",
+            "banner_style": "green"
+          }
+        },
+        {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "I got thicker hair in just 3 months!",
+            "author_name": "Mohit",
+            "banner_style": "yellow"
+          }
+        },
+        {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "Every day is a great hair day with Biotin",
+            "author_name": "Guneet",
+            "banner_style": "yellow"
+          }
+        },
+        {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "My skin glows with Collagen every day",
+            "author_name": "Shivani",
+            "banner_style": "yellow"
+          }
+        },
+        {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "Loving my energy again with ACV!",
+            "author_name": "Riya",
+            "banner_style": "green"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

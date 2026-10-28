@@ -1,0 +1,407 @@
+/* ==========================================================================
+   NECTARFLORA CUSTOMER REELS & STORIES SECTION
+   ========================================================================== */
+
+.nectar-reels-section {
+  width: 100%;
+  position: relative;
+  background-color: var(--reels-bg, #FFFFFF);
+  padding-top: var(--reels-pt, 56px);
+  padding-bottom: var(--reels-pb, 56px);
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.nectar-reels-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.nectar-reels-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 36px;
+}
+
+.nectar-reels-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0D3B2B;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+.nectar-reels-subtitle {
+  font-size: 15px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* Reels Carousel Track */
+.nectar-reels-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.nectar-reels-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 8px 4px 16px;
+  margin: -8px -4px 0;
+}
+
+.nectar-reels-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual Reel Card */
+.nectar-reel-card {
+  flex: 0 0 calc(20% - 13px);
+  min-width: 210px;
+  height: 420px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  background: #113B2E;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nectar-reel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(13, 59, 43, 0.16);
+}
+
+/* Reel Background / Poster */
+.nectar-reel-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #5D8F7B 0%, #447762 50%, #2A5A46 100%);
+}
+
+.nectar-reel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.nectar-reel-card:hover .nectar-reel-img {
+  transform: scale(1.05);
+}
+
+/* Fallback Abstract Silhouette Avatar */
+.nectar-reel-avatar-silhouette {
+  width: 130px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.nectar-reel-avatar-head {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background-color: #8BB7A5;
+  margin-bottom: -10px;
+}
+
+.nectar-reel-avatar-body {
+  width: 120px;
+  height: 100px;
+  border-radius: 60px 60px 0 0;
+  background-color: #8BB7A5;
+}
+
+/* Play Button */
+.nectar-reel-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  z-index: 3;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.nectar-reel-card:hover .nectar-reel-play-btn {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: rgba(10, 135, 84, 0.85);
+  border-color: #FFFFFF;
+}
+
+.nectar-reel-play-btn svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  fill: currentColor;
+}
+
+/* Tagged Product Pill (Optional) */
+.nectar-reel-product-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 4;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  border-radius: 8px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.nectar-reel-product-tag:hover {
+  background: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.nectar-reel-product-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: #F1F5F9;
+}
+
+.nectar-reel-product-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+
+.nectar-reel-product-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0F172A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.nectar-reel-product-price {
+  font-size: 10px;
+  font-weight: 700;
+  color: #0A8754;
+  line-height: 1.2;
+}
+
+/* Bottom Banner / Quote Strip */
+.nectar-reel-banner {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  padding: 14px 14px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-radius: 0 0 16px 16px;
+}
+
+/* Colors matching Screenshot */
+.nectar-reel-banner--green {
+  background-color: #0D3B2B;
+  color: #FFFFFF;
+}
+
+.nectar-reel-banner--yellow {
+  background-color: #F2AC1B;
+  color: #0F172A;
+}
+
+.nectar-reel-quote {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nectar-reel-author {
+  font-size: 11.5px;
+  font-weight: 500;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Carousel Arrow Navigation */
+.nectar-reels-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: #0D3B2B;
+  transition: all 0.2s ease;
+}
+
+.nectar-reels-arrow:hover {
+  background: #0D3B2B;
+  color: #FFFFFF;
+}
+
+.nectar-reels-arrow--prev {
+  left: -20px;
+}
+
+.nectar-reels-arrow--next {
+  right: -20px;
+}
+
+/* Video Modal Lightbox */
+.nectar-video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nectar-video-modal.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.nectar-video-modal__content {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  height: 80vh;
+  max-height: 740px;
+  background: #000000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.nectar-video-modal__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nectar-video-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  font-size: 18px;
+}
+
+/* ==========================================================================
+   RESPONSIVENESS
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+  .nectar-reel-card {
+    flex: 0 0 calc(33.333% - 11px);
+    height: 390px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nectar-reels-section {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  .nectar-reels-title {
+    font-size: 24px;
+  }
+
+  .nectar-reels-subtitle {
+    font-size: 13.5px;
+  }
+
+  .nectar-reels-header {
+    margin-bottom: 24px;
+  }
+
+  .nectar-reel-card {
+    flex: 0 0 68%;
+    min-width: 200px;
+    height: 370px;
+  }
+
+  .nectar-reels-arrow {
+    display: none;
+  }
+}

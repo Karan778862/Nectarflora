@@ -387,6 +387,115 @@
         "padding_top": 56,
         "padding_bottom": 56
       }
+    },
+    "customer_reels": {
+      "type": "customer-reels",
+      "blocks": {
+        "reel_1": {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "Back to my original weight in 3 months!",
+            "author_name": "Adwaitya",
+            "banner_style": "green"
+          }
+        },
+        "reel_2": {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "I got thicker hair in just 3 months!",
+            "author_name": "Mohit",
+            "banner_style": "yellow"
+          }
+        },
+        "reel_3": {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "Every day is a great hair day with Biotin",
+            "author_name": "Guneet",
+            "banner_style": "yellow"
+          }
+        },
+        "reel_4": {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "My skin glows with Collagen every day",
+            "author_name": "Shivani",
+            "banner_style": "yellow"
+          }
+        },
+        "reel_5": {
+          "type": "reel_item",
+          "settings": {
+            "quote_title": "Loving my energy again with ACV!",
+            "author_name": "Riya",
+            "banner_style": "green"
+          }
+        }
+      },
+      "block_order": [
+        "reel_1",
+        "reel_2",
+        "reel_3",
+        "reel_4",
+        "reel_5"
+      ],
+      "settings": {
+        "heading": "Loved by Our Customers",
+        "subheading": "Real stories from real people — watch their journeys",
+        "bg_color": "#FFFFFF",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "experts_science": {
+      "type": "experts-science",
+      "blocks": {
+        "expert_1": {
+          "type": "expert_item",
+          "settings": {
+            "name": "Dr. Ananya Mehta",
+            "designation": "MBBS, MD — Dermatologist",
+            "avatar_bg": "#C6E7D2"
+          }
+        },
+        "expert_2": {
+          "type": "expert_item",
+          "settings": {
+            "name": "Dr. Rohan Kapoor",
+            "designation": "PhD — Nutrition Scientist",
+            "avatar_bg": "#C6E7D2"
+          }
+        },
+        "expert_3": {
+          "type": "expert_item",
+          "settings": {
+            "name": "Neha Sharma",
+            "designation": "MSc — Clinical Nutritionist",
+            "avatar_bg": "#C6E7D2"
+          }
+        },
+        "expert_4": {
+          "type": "expert_item",
+          "settings": {
+            "name": "Dr. Vikram Iyer",
+            "designation": "MD — Ayurveda Expert",
+            "avatar_bg": "#C6E7D2"
+          }
+        }
+      },
+      "block_order": [
+        "expert_1",
+        "expert_2",
+        "expert_3",
+        "expert_4"
+      ],
+      "settings": {
+        "heading": "Experts Behind the Science",
+        "subheading": "Every ingredient, process and formulation is thoroughly researched by our global team of doctors, scientists and nutritionists.",
+        "bg_color": "#FFFFFF",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     }
   },
   "order": [
@@ -394,6 +503,8 @@
     "shop_by_concern",
     "bestsellers",
     "shop_by_category",
-    "quality_trust"
+    "quality_trust",
+    "customer_reels",
+    "experts_science"
   ]
 }
