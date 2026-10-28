@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nectarflora Cycle Balance - Product Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/nectar-product.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1E293B;
+      background: #FFFFFF;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Top Strip */
+    .top-strip {
+      background: #0B3526;
+      color: #C2D6CC;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      text-align: center;
+    }
+    .top-strip span {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    /* Header */
+    .main-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid #E2E8F0;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .kebab-menu {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5px;
+      padding: 4px;
+    }
+    .kebab-dot {
+      width: 4px;
+      height: 4px;
+      background: #0D3B2B;
+      border-radius: 50%;
+    }
+    .brand-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #0D3B2B;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+    .brand-logo span {
+      color: #E85D26;
+    }
+    .search-pill {
+      display: flex;
+      align-items: center;
+      background: #F1F5F9;
+      border-radius: 30px;
+      padding: 9px 18px;
+      width: 380px;
+      max-width: 100%;
+      gap: 10px;
+    }
+    .search-pill svg {
+      width: 18px;
+      height: 18px;
+      color: #64748B;
+    }
+    .search-pill input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 13.5px;
+      color: #1E293B;
+      width: 100%;
+      font-family: inherit;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .header-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #0D3B2B;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+    }
+    .header-icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -8px;
+      background: #0D3B2B;
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 800;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Subnav bar */
+    .subnav-bar {
+      background: #EAF8F1;
+      border-bottom: 1px solid #C4EBD8;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+    .subnav-link {
+      color: #0D3B2B;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+    .subnav-link:hover {
+      color: #E85D26;
+    }
+    .badge-hot {
+      background: #E85D26;
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+    .badge-new {
+      background: #16A34A;
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Page container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* Product Section */
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .pdp-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .search-pill {
+        display: none;
+      }
+    }
+
+    /* Modal for Lab report */
+    .lab-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .lab-modal.is-active {
+      display: flex;
+    }
+    .lab-modal-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    /* Footer preview */
+    .nectar-footer {
+      background: #0B3526;
+      color: #C2D6CC;
+      padding: 50px 24px 24px;
+      margin-top: 60px;
+    }
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+    }
+    .footer-col h4 {
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+    }
+    .footer-col a {
+      color: #C2D6CC;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: #FFFFFF;
+    }
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(194, 214, 204, 0.2);
+      text-align: center;
+      font-size: 12px;
+      color: #8CA799;
+    }
+    @media (max-width: 768px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+  </style>
+</head>
+<body style="--product-accent-color: #0D3B2B;">
+
+  <!-- Floating Left 10% OFF Tab -->
+  <div class="nectar-floating-left-tab" data-floating-tab>
+    Get 10% OFF
+  </div>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-strip">
+    Use code <span>NECTAR10</span> for extra 10% off • Free Express Delivery Across India
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-left">
+      <div class="kebab-menu" title="Menu">
+        <div class="kebab-dot"></div>
+        <div class="kebab-dot"></div>
+        <div class="kebab-dot"></div>
+      </div>
+      <a href="#" class="brand-logo">Nectar<span>flora</span></a>
+      <div class="search-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="Search for wellness, PCOS, skin, hair formulas...">
+      </div>
+    </div>
+    <div class="header-right">
+      <a href="#" class="header-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </a>
+      <a href="#" class="header-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>LOGIN</span>
+      </a>
+      <a href="#" class="header-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <div class="cart-badge" data-cart-count>1</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- Mint Green Subnav -->
+  <nav class="subnav-bar">
+    <a href="#" class="subnav-link">Home</a>
+    <a href="#" class="subnav-link">Product by Benefits <span class="badge-hot">HOT</span></a>
+    <a href="#" class="subnav-link">Product by Category <span class="badge-new">NEW</span></a>
+    <a href="#" class="subnav-link">Free Consultation</a>
+    <a href="#" class="subnav-link">About Us</a>
+    <a href="#" class="subnav-link">Blogs</a>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="container">
+    
+    <!-- Breadcrumbs -->
+    <nav class="nectar-breadcrumbs" aria-label="Breadcrumb">
+      <a href="#">Home</a>
+      <span class="nectar-breadcrumbs-separator">›</span>
+      <a href="#">Women's Health</a>
+      <span class="nectar-breadcrumbs-separator">›</span>
+      <span class="nectar-breadcrumbs-current">Nectarflora Cycle Balance</span>
+    </nav>
+
+    <!-- Two-column PDP Grid -->
+    <div class="pdp-grid">
+      
+      <!-- LEFT: Media Gallery -->
+      <div class="pdp-left-col" style="position: sticky; top: 90px;">
+        <div class="nectar-product-gallery">
+          <!-- Main Card -->
+          <div class="nectar-gallery-main-card">
+            <div class="nectar-gallery-discount-badge">9% OFF</div>
+            <img 
+              id="mainProductImg" 
+              src="assets/nectarflora-reference.png" 
+              alt="Nectarflora Cycle Balance"
+              style="width: 100%; height: 100%; object-fit: contain; max-height: 480px;"
+            >
+          </div>
+
+          <!-- 5 Horizontal Thumbnails -->
+          <div class="nectar-gallery-thumbnails-wrap" data-gallery-thumbs>
+            <button type="button" class="nectar-thumbnail-btn is-active" data-thumb-src="assets/nectarflora-reference.png">
+              <img src="assets/nectarflora-reference.png" alt="Thumb 1" width="76" height="76">
+            </button>
+            <button type="button" class="nectar-thumbnail-btn" data-thumb-src="assets/nectarflora-reference.png">
+              <img src="assets/nectarflora-reference.png" alt="Thumb 2" width="76" height="76">
+            </button>
+            <button type="button" class="nectar-thumbnail-btn" data-thumb-src="assets/nectarflora-reference.png">
+              <img src="assets/nectarflora-reference.png" alt="Thumb 3" width="76" height="76">
+            </button>
+            <button type="button" class="nectar-thumbnail-btn" data-thumb-src="assets/nectarflora-reference.png">
+              <img src="assets/nectarflora-reference.png" alt="Thumb 4" width="76" height="76">
+            </button>
+            <button type="button" class="nectar-thumbnail-btn" data-thumb-src="assets/nectarflora-reference.png">
+              <img src="assets/nectarflora-reference.png" alt="Thumb 5" width="76" height="76">
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Product Info -->
+      <div class="pdp-right-col">
+        
+        <!-- Title & Subtitle -->
+        <div class="nectar-block-title-wrap">
+          <h1 class="nectar-product-title">Nectarflora Cycle Balance</h1>
+          <div class="nectar-product-subtitle">Advance Skin &amp; Hormonal Wellness Formula</div>
+          
+          <!-- Rating -->
+          <div class="nectar-product-rating-wrap">
+            <div class="nectar-rating-stars">★★★★★</div>
+            <span class="nectar-rating-score">4.6/5</span>
+            <span class="nectar-rating-count">(128 reviews)</span>
+          </div>
+        </div>
+
+        <!-- 5 Tabs -->
+        <div class="nectar-product-tabs-wrap" id="NectarTabs">
+          <div class="nectar-tabs-nav" role="tablist">
+            <button type="button" class="nectar-tab-btn is-active" data-tab-target="tab-desc">Description</button>
+            <button type="button" class="nectar-tab-btn" data-tab-target="tab-ingr">Ingredients</button>
+            <button type="button" class="nectar-tab-btn" data-tab-target="tab-take">How to take</button>
+            <button type="button" class="nectar-tab-btn" data-tab-target="tab-faq">FAQ</button>
+            <button type="button" class="nectar-tab-btn" data-tab-target="tab-lab">Lab Reports</button>
+          </div>
+
+          <!-- Description Tab -->
+          <div class="nectar-tab-panel is-active" id="tab-desc">
+            <p>Nectarflora Cycle Balance is our clinically crafted PCOS and hormonal wellness formula, thoughtfully encapsulated to deliver Myo-Inositol, Shatavari, Ashoka, Lodhra extracts, and essential micronutrients. Formulated to encourage predictable cycles, support clear skin, and balance stress hormones naturally from within.</p>
+          </div>
+
+          <!-- Ingredients Tab -->
+          <div class="nectar-tab-panel" id="tab-ingr">
+            <p><strong>Clinical Grade Active Ingredients per serving (2 capsules):</strong></p>
+            <ul style="padding-left: 20px; margin-top: 8px;">
+              <li><strong>Myo-Inositol (1000mg):</strong> Promotes healthy insulin sensitivity and hormonal balance.</li>
+              <li><strong>Shatavari Extract (200mg):</strong> Ayurvedic adaptogen supporting reproductive vitality.</li>
+              <li><strong>Ashoka &amp; Lodhra Extracts (200mg + 100mg):</strong> Time-tested uterine and cycle tonics.</li>
+              <li><strong>Magnesium, Zinc Glycinate &amp; Vitamin D3:</strong> Essential co-factors for cellular hormone synthesis.</li>
+              <li><strong>Folate &amp; Vitamin B12:</strong> Micro-circulation and red blood cell health.</li>
+            </ul>
+          </div>
+
+          <!-- How to take Tab -->
+          <div class="nectar-tab-panel" id="tab-take">
+            <p><strong>Recommended Usage:</strong></p>
+            <p>Take 2 capsules daily with water after breakfast or your first meal of the day.</p>
+            <p style="margin-top: 6px;"><em>For Best Results:</em> Consume consistently for 60 to 90 days to achieve holistic cellular hormonal balance.</p>
+          </div>
+
+          <!-- FAQ Tab -->
+          <div class="nectar-tab-panel" id="tab-faq">
+            <div class="nectar-faq-item">
+              <div class="nectar-faq-question">How soon will I see visible improvements?</div>
+              <div class="nectar-faq-answer">Most women report reduced bloating and improved mood within 3 weeks. Regular cycle tracking and clear skin benefits typically stabilize within 60 to 90 days.</div>
+            </div>
+            <div class="nectar-faq-item">
+              <div class="nectar-faq-question">Are there any side effects?</div>
+              <div class="nectar-faq-answer">Our formula is 100% vegan, clean-label, non-GMO, and free from synthetic preservatives. It is gentle on digestion and safe for long-term daily use.</div>
+            </div>
+          </div>
+
+          <!-- Lab Reports Tab -->
+          <div class="nectar-tab-panel" id="tab-lab">
+            <p><strong>100% Third-Party Batch Certified:</strong></p>
+            <p>Every single production batch undergoes ISO/IEC 17025 certified lab testing for heavy metals, microbial safety, and active bioavailability.</p>
+            <p style="margin-top: 10px;"><a href="#lab-test" style="color: #0D3B2B; font-weight: 700; text-decoration: underline;">View COA Certificate &rarr;</a></p>
+          </div>
+        </div>
+
+        <!-- Clinical Disclaimer Note -->
+        <div class="nectar-clinical-disclaimer">
+          Claims based on clinically studied ingredients, not the product.
+        </div>
+
+        <!-- 6 Key Benefits Grid -->
+        <div class="nectar-benefits-grid">
+          <div class="nectar-benefit-item">
+            <div class="nectar-benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </div>
+            <div class="nectar-benefit-text">Improves Skin<br>Brightness¹</div>
+          </div>
+          <div class="nectar-benefit-item">
+            <div class="nectar-benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
+            </div>
+            <div class="nectar-benefit-text">Anti-Ageing<br>Support²</div>
+          </div>
+          <div class="nectar-benefit-item">
+            <div class="nectar-benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="nectar-benefit-text">Supports Cellular<br>Health³</div>
+          </div>
+          <div class="nectar-benefit-item">
+            <div class="nectar-benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </div>
+            <div class="nectar-benefit-text">Helps Reduce<br>Pigmentation⁴</div>
+          </div>
+          <div class="nectar-benefit-item">
+            <div class="nectar-benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+            <div class="nectar-benefit-text">Deep Skin<br>Hydration⁵</div>
+          </div>
+          <div class="nectar-benefit-item">
+            <div class="nectar-benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="nectar-benefit-text">Antioxidant<br>Protection⁶</div>
+          </div>
+        </div>
+
+        <!-- Price Block -->
+        <div class="nectar-price-block">
+          <div class="nectar-price-row">
+            <span class="nectar-price-current" data-price-current>₹1,999</span>
+            <span class="nectar-price-compare" data-price-compare>₹2,199</span>
+            <span class="nectar-price-discount" data-price-discount>9% off</span>
+          </div>
+          <div class="nectar-price-tax-note">(MRP Inclusive of all taxes)</div>
+        </div>
+
+        <!-- Available Offers Box -->
+        <div class="nectar-offers-box">
+          <div class="nectar-offers-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"/>
+              <rect x="2" y="7" width="20" height="5"/>
+              <line x1="12" y1="22" x2="12" y2="7"/>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+            </svg>
+            <span>Available Offers</span>
+          </div>
+          <div class="nectar-offers-list">
+            <div class="nectar-offer-item">
+              <span class="nectar-offer-badge" data-coupon="BUY2GET1" title="Click to copy coupon">BUY2GET1</span>
+              <span>Buy any 2, get 1 free</span>
+            </div>
+            <div class="nectar-offer-item">
+              <span class="nectar-offer-badge" data-coupon="FIRST10" title="Click to copy coupon">FIRST10</span>
+              <span>Extra 10% off on your first order</span>
+            </div>
+            <div class="nectar-offer-item">
+              <span class="nectar-offer-badge" data-coupon="FREESHIP" title="Click to copy coupon">FREESHIP</span>
+              <span>Free shipping on orders above ₹499</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Select Option (Bundles) -->
+        <div class="nectar-bundle-selector" id="NectarBundles">
+          <div class="nectar-bundle-heading">Select Option</div>
+          <div class="nectar-bundle-cards-grid">
+            <!-- Buy 1 -->
+            <div class="nectar-bundle-card is-active" data-qty="1" data-price="₹1,999" data-compare="₹2,199" data-discount="9% off">
+              <div class="nectar-bundle-image-area">
+                <img src="assets/nectarflora-reference.png" alt="Buy 1" width="70" height="70" style="object-fit: contain;">
+              </div>
+              <div class="nectar-bundle-card-bottom">
+                <div class="nectar-bundle-name">Buy 1</div>
+                <div class="nectar-bundle-price">₹1,999</div>
+              </div>
+            </div>
+
+            <!-- Buy 2 -->
+            <div class="nectar-bundle-card" data-qty="2" data-price="₹3,798" data-compare="₹4,398" data-discount="14% off">
+              <div class="nectar-bundle-image-area">
+                <div style="display: flex; gap: 3px; justify-content: center;">
+                  <img src="assets/nectarflora-reference.png" alt="Buy 2" width="48" height="48" style="object-fit: contain;">
+                  <img src="assets/nectarflora-reference.png" alt="Buy 2" width="48" height="48" style="object-fit: contain;">
+                </div>
+                <div class="nectar-bundle-ribbon">MOST POPULAR</div>
+              </div>
+              <div class="nectar-bundle-card-bottom">
+                <div class="nectar-bundle-name">Buy 2</div>
+                <div class="nectar-bundle-price">₹3,798 &bull; Save ₹600</div>
+              </div>
+            </div>
+
+            <!-- Buy 3 -->
+            <div class="nectar-bundle-card" data-qty="3" data-price="₹5,397" data-compare="₹6,597" data-discount="18% off">
+              <div class="nectar-bundle-image-area">
+                <div style="display: flex; gap: 2px; justify-content: center;">
+                  <img src="assets/nectarflora-reference.png" alt="Buy 3" width="38" height="38" style="object-fit: contain;">
+                  <img src="assets/nectarflora-reference.png" alt="Buy 3" width="38" height="38" style="object-fit: contain;">
+                  <img src="assets/nectarflora-reference.png" alt="Buy 3" width="38" height="38" style="object-fit: contain;">
+                </div>
+                <div class="nectar-bundle-ribbon">BEST VALUE</div>
+              </div>
+              <div class="nectar-bundle-card-bottom">
+                <div class="nectar-bundle-name">Buy 3</div>
+                <div class="nectar-bundle-price">₹5,397 &bull; Save ₹1,200</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buy Buttons -->
+        <div class="nectar-buy-buttons-wrap">
+          <button type="button" class="nectar-btn-add-to-cart" id="btnAddToCart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            <span>Add to cart</span>
+          </button>
+          <button type="button" class="nectar-btn-buy-now" id="btnBuyNow">
+            <span>BUY NOW</span>
+            <div class="nectar-payment-pill-icons">
+              <span class="nectar-pay-badge nectar-pay-badge--gpay">GPay</span>
+              <span class="nectar-pay-badge nectar-pay-badge--phonepe">Pe</span>
+              <span class="nectar-pay-badge nectar-pay-badge--paytm">Paytm</span>
+              <span style="font-size: 16px; margin-left: 2px;">›</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="nectar-trust-badges-row">
+          <div class="nectar-trust-badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Free Shipping</span>
+          </div>
+          <div class="nectar-trust-badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Cash on Delivery</span>
+          </div>
+          <div class="nectar-trust-badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>100% Vegan Capsule</span>
+          </div>
+        </div>
+
+        <!-- Third-party Lab Tested Banner -->
+        <div class="nectar-lab-tested-banner" id="lab-test">
+          <div class="nectar-lab-left">
+            <div class="nectar-qr-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+            </div>
+            <div class="nectar-lab-info">
+              <div class="nectar-lab-title">Third-party Lab Tested</div>
+              <div class="nectar-lab-subtitle">Scan the QR on your pack to view the batch report</div>
+            </div>
+          </div>
+          <button type="button" class="nectar-lab-btn" id="openLabModal">
+            View Report
+          </button>
+        </div>
+
+        <!-- Talk to a Nutritionist Pill -->
+        <a href="https://wa.me/" class="nectar-nutritionist-pill" target="_blank" rel="noopener">
+          <div class="nectar-nutritionist-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="nectar-nutritionist-info">
+            <div class="nectar-nutritionist-title">Talk to a Nutritionist</div>
+            <div class="nectar-nutritionist-sub">
+              <span class="nectar-online-dot"></span>
+              <span>Free • Online now</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Lab Modal Dialog -->
+  <div class="lab-modal" id="labModal">
+    <div class="lab-modal-card">
+      <h3 style="font-size: 20px; font-weight: 800; color: #0D3B2B; margin-bottom: 8px;">Batch Quality Certification</h3>
+      <p style="font-size: 13.5px; color: #64748B; margin-bottom: 20px;">Batch #NF-CB-2026-04 • Tested by Eurofins ISO/IEC 17025 Certified Laboratories</p>
+      <div style="background: #F8FAFC; border-radius: 12px; padding: 16px; margin-bottom: 20px; text-align: left; font-size: 13px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Heavy Metals:</span> <strong style="color:#16A34A;">PASSED (Below LOD)</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Microbial Purity:</span> <strong style="color:#16A34A;">PASSED (100% Sterile)</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>Active Myo-Inositol:</span> <strong style="color:#16A34A;">99.4% Potency Verified</strong></div>
+      </div>
+      <button type="button" id="closeLabModal" style="background:#0D3B2B; color:#fff; border:none; padding:10px 24px; border-radius:8px; font-weight:700; cursor:pointer;">Close Certificate</button>
+    </div>
+  </div>
+
+  <!-- Nectarflora Footer -->
+  <footer class="nectar-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="brand-logo" style="color: #FFFFFF; margin-bottom: 14px;">Nectar<span style="color: #E85D26;">flora</span></div>
+        <p style="font-size: 13.5px; line-height: 1.6; max-width: 340px;">Science-backed, plant-powered formulas crafted with premium liposomal encapsulation for superior absorption and daily wellness.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">Cycle Balance (PCOS)</a></li>
+          <li><a href="#">Age Well Formula</a></li>
+          <li><a href="#">Skin Brightness</a></li>
+          <li><a href="#">Cellular Defense</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Clinical Science</a></li>
+          <li><a href="#">Lab Reports</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Need Guidance?</h4>
+        <p style="font-size: 13px; margin-bottom: 14px;">Speak to our in-house certified clinical nutritionists for personalized dosage recommendations.</p>
+        <a href="https://wa.me/" target="_blank" style="display: inline-block; background: #E85D26; color: #FFFFFF; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none;">Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Nectarflora Wellness Inc. All rights reserved. • ISO 9001 &amp; GMP Certified
+    </div>
+  </footer>
+
+  <script src="assets/nectar-product.js"></script>
+  <script>
+    // Tab switching
+    document.querySelectorAll('.nectar-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nectar-tab-btn').forEach(b => b.classList.remove('is-active'));
+        document.querySelectorAll('.nectar-tab-panel').forEach(p => p.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const target = btn.dataset.tabTarget;
+        const panel = document.getElementById(target);
+        if (panel) panel.classList.add('is-active');
+      });
+    });
+
+    // Thumbnails click
+    document.querySelectorAll('.nectar-thumbnail-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nectar-thumbnail-btn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const src = btn.dataset.thumbSrc;
+        const mainImg = document.getElementById('mainProductImg');
+        if (mainImg && src) {
+          mainImg.style.opacity = '0.4';
+          setTimeout(() => {
+            mainImg.src = src;
+            mainImg.style.opacity = '1';
+          }, 120);
+        }
+      });
+    });
+
+    // Bundle selector click
+    document.querySelectorAll('.nectar-bundle-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.nectar-bundle-card').forEach(c => c.classList.remove('is-active'));
+        card.classList.add('is-active');
+        const price = card.dataset.price;
+        const compare = card.dataset.compare;
+        const discount = card.dataset.discount;
+        const priceCurrent = document.querySelector('[data-price-current]');
+        const priceCompare = document.querySelector('[data-price-compare]');
+        const priceDiscount = document.querySelector('[data-price-discount]');
+        if (priceCurrent) priceCurrent.textContent = price;
+        if (priceCompare) priceCompare.textContent = compare;
+        if (priceDiscount) priceDiscount.textContent = discount;
+      });
+    });
+
+    // Copy coupon on click
+    document.querySelectorAll('[data-coupon]').forEach(badge => {
+      badge.addEventListener('click', () => {
+        const code = badge.dataset.coupon;
+        navigator.clipboard.writeText(code).then(() => {
+          const original = badge.textContent;
+          badge.textContent = 'COPIED!';
+          badge.style.background = '#16A34A';
+          badge.style.color = '#fff';
+          setTimeout(() => {
+            badge.textContent = original;
+            badge.style.background = '';
+            badge.style.color = '';
+          }, 2000);
+        });
+      });
+    });
+
+    // Lab modal
+    const labModal = document.getElementById('labModal');
+    document.getElementById('openLabModal')?.addEventListener('click', () => labModal.classList.add('is-active'));
+    document.getElementById('closeLabModal')?.addEventListener('click', () => labModal.classList.remove('is-active'));
+    labModal?.addEventListener('click', (e) => {
+      if (e.target === labModal) labModal.classList.remove('is-active');
+    });
+
+    // Add to cart click
+    document.getElementById('btnAddToCart')?.addEventListener('click', () => {
+      const btn = document.getElementById('btnAddToCart');
+      const span = btn.querySelector('span');
+      span.textContent = 'Adding...';
+      setTimeout(() => {
+        span.textContent = 'Added to Cart ✓';
+        btn.style.borderColor = '#16A34A';
+        btn.style.color = '#16A34A';
+        const cartBadge = document.querySelector('[data-cart-count]');
+        if (cartBadge) {
+          cartBadge.textContent = parseInt(cartBadge.textContent || 0) + 1;
+        }
+        setTimeout(() => {
+          span.textContent = 'Add to cart';
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2500);
+      }, 500);
+    });
+
+    // Buy now click
+    document.getElementById('btnBuyNow')?.addEventListener('click', () => {
+      alert('Redirecting to Instant Secure Checkout with UPI/GPay/PhonePe!');
+    });
+  </script>
+</body>
+</html>
