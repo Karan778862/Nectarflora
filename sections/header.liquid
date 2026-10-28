@@ -1,297 +1,154 @@
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-<link
-  rel="stylesheet"
-  href="{{ 'component-cart-notification.css' | asset_url }}"
-  media="print"
-  onload="this.media='all'"
->
+{{ 'nectar-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nectar-header.js' | asset_url }}" defer="defer"></script>
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+  <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
-
-{%- if section.settings.menu_type_desktop == 'mega' -%}
-  <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- endif -%}
-
-<style>
-  header-drawer {
-    justify-self: start;
-    margin-left: -1.2rem;
-  }
-
-  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
-    .scrolled-past-header .header__heading-logo-wrapper {
-      width: 75%;
-    }
-  {%- endif -%}
-
-  {%- if section.settings.menu_type_desktop != "drawer" -%}
-    @media screen and (min-width: 990px) {
-      header-drawer {
-        display: none;
-      }
-    }
-  {%- endif -%}
-
-  .menu-drawer-container {
-    display: flex;
-  }
-
-  .list-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .list-menu--inline {
-    display: inline-flex;
-    flex-wrap: wrap;
-  }
-
-  summary.list-menu__item {
-    padding-right: 2.7rem;
-  }
-
-  .list-menu__item {
-    display: flex;
-    align-items: center;
-    line-height: calc(1 + 0.3 / var(--font-body-scale));
-  }
-
-  .list-menu__item--link {
-    text-decoration: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    line-height: calc(1 + 0.8 / var(--font-body-scale));
-  }
-
-  @media screen and (min-width: 750px) {
-    .list-menu__item--link {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
-    }
-  }
-
-  shopify-account.header__icon {
-    --shopify-account-font-heading: var(--font-heading-family);
-    --shopify-account-font-heading-weight: var(--font-heading-weight);
-    --shopify-account-font-body: var(--font-body-family);
-    --shopify-account-font-body-weight: var(--font-body-weight);
-    --shopify-account-radius-base: var(--popup-corner-radius);
-    --shopify-account-radius-button: var(--buttons-radius);
-    --shopify-account-radius-button-small: var(--buttons-radius);
-    --shopify-account-radius-input: var(--inputs-radius);
-    --shopify-account-color-background: rgb(var(--color-background));
-    --shopify-account-color-text: rgb(var(--color-foreground));
-    --shopify-account-color-accent: rgb(var(--color-button));
-    --shopify-account-color-accent-text: rgb(var(--color-button-text));
-    --shopify-account-dialog-position-top: var(--account-dialog-top, var(--header-height, 0px));
-  }
-
-  shopify-account.header__icon:not(:defined) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 4.4rem;
-    height: 4.4rem;
-  }
-</style>
 
 {%- style -%}
-  .header {
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
+  :root {
+    --nectar-orange: {{ section.settings.logo_orange_color | default: '#EE5A24' }};
+    --nectar-green: {{ section.settings.logo_green_color | default: '#0A8754' }};
+    --nectar-subnav-bg: {{ section.settings.subnav_bg_color | default: '#EAF5EE' }};
+    --nectar-top-strip-color: {{ section.settings.top_strip_color | default: '#0E3D2F' }};
+    --nectar-header-bg: {{ section.settings.header_bg_color | default: '#FFFFFF' }};
   }
 
-  .section-header {
-    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
-    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+  .nectar-header__main-row {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
-  @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
+  .nectar-subnav__link {
+    font-size: {{ section.settings.menu_font_size }}px;
+    color: {{ section.settings.menu_text_color }};
   }
 
-  @media screen and (min-width: 990px) {
-    .header {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
+  .nectar-subnav__item.is-active .nectar-subnav__link,
+  .nectar-subnav__link.is-active,
+  .nectar-subnav__link:hover {
+    color: {{ section.settings.menu_active_color }};
+  }
+
+  .nectar-header__cart-badge {
+    background-color: {{ section.settings.cart_badge_color }};
+    color: {{ section.settings.cart_badge_text_color }};
   }
 {%- endstyle -%}
 
-<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+<div class="nectar-header-wrapper{% if section.settings.enable_sticky_header %} is-sticky{% endif %}" id="NectarHeaderWrapper">
+  {%- if section.settings.show_top_strip -%}
+    <div class="nectar-top-strip" style="height: {{ section.settings.top_strip_height }}px;"></div>
+  {%- endif -%}
 
-{%- liquid
-  for block in section.blocks
-    if block.type == '@app'
-      assign has_app_block = true
-    endif
-  endfor
--%}
+  <!-- Main Top Bar -->
+  <header class="nectar-header__main-row" role="banner">
+    <!-- Left: Kebab Menu Button + Logo -->
+    <div class="nectar-header__left">
+      <button
+        type="button"
+        class="nectar-header__kebab-btn"
+        aria-label="{{ 'sections.header.menu' | t | default: 'Open Menu' }}"
+        title="Open Menu"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <circle cx="12" cy="4.5" r="2.2" />
+          <circle cx="12" cy="12" r="2.2" />
+          <circle cx="12" cy="19.5" r="2.2" />
+        </svg>
+      </button>
 
-{% liquid
-  assign header_tag = 'div'
-
-  if section.settings.sticky_header_type != 'none'
-    assign header_tag = 'sticky-header'
-  endif
-%}
-
-<{{ header_tag }}
-  {% if header_tag == 'sticky-header' %}
-    data-sticky-type="{{ section.settings.sticky_header_type }}"
-  {% endif %}
-  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
->
-  {%- liquid
-    assign social_links = false
-    if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank
-      assign social_links = true
-    endif
-
-    assign country_selector = false
-    if section.settings.enable_country_selector and localization.available_countries.size > 1
-      assign country_selector = true
-    endif
-
-    assign language_selector = false
-    if section.settings.enable_language_selector and localization.available_languages.size > 1
-      assign language_selector = true
-    endif
-  -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if country_selector or language_selector %} header--has-localizations{% endif %}">
-    {%- liquid
-      assign render_search_left = false
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank or shop.customer_accounts_enabled
-        assign render_search_left = true
-      endif
-
-      if section.settings.menu != blank
-        render 'header-drawer', show_country_selector: country_selector, show_language_selector: language_selector, show_social_links: social_links
-      endif
-
-      if render_search_left
-        render 'header-search', input_id: 'Search-In-Modal-1'
-      endif
-    -%}
-
-    {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
+        <h1 class="nectar-header__heading" style="margin: 0; font-size: 1rem;">
       {%- endif -%}
-      <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper">
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo motion-reduce',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
-          </div>
+      <a href="{{ routes.root_url }}" class="nectar-header__logo-link">
+        {%- if section.settings.logo != blank -%}
+          {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+          {{
+            section.settings.logo
+            | image_url: width: 400
+            | image_tag:
+              class: 'nectar-header__logo-img',
+              width: section.settings.logo_width,
+              alt: logo_alt,
+              preload: true
+          }}
+        {%- elsif settings.logo != blank -%}
+          {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+          {{
+            settings.logo
+            | image_url: width: 400
+            | image_tag:
+              class: 'nectar-header__logo-img',
+              width: settings.logo_width,
+              alt: logo_alt,
+              preload: true
+          }}
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <span class="nectar-header__logo-text">
+            <span class="logo-orange">Nectar</span><span class="logo-green">flora</span><sup class="logo-tm">™</sup>
+          </span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
-    {%- endif -%}
+    </div>
 
-    {%- liquid
-      if section.settings.menu != blank
-        if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
-        elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
-        endif
-      endif
-    %}
-
-    {%- if section.settings.logo_position == 'middle-center' -%}
-      {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
-      {%- endif -%}
-      <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper">
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
-          </div>
+    <!-- Center: Search Pill Input -->
+    {%- if section.settings.show_search -%}
+      <div class="nectar-header__center">
+        {%- if settings.predictive_search_enabled -%}
+          <predictive-search class="nectar-header__search-form" data-loading-text="{{ 'accessibility.loading' | t }}">
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <div class="nectar-header__search-form">
         {%- endif -%}
-      </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
-      {%- endif -%}
-    {%- endif -%}
-
-    <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
-      <div class="desktop-localization-wrapper">
-        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          <localization-form class="small-hide medium-hide" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
-                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
+          <form action="{{ routes.search_url }}" method="get" role="search">
+            <div class="nectar-header__search-pill">
+              <span class="nectar-header__search-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+              <input
+                type="search"
+                name="q"
+                class="nectar-header__search-input"
+                value="{{ search.terms | escape }}"
+                placeholder="{{ section.settings.search_placeholder | default: 'Search for nutrition, skin, hair...' }}"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-label="{{ section.settings.search_placeholder | default: 'Search for nutrition, skin, hair...' }}"
+              >
+              <input type="hidden" name="options[prefix]" value="last">
+              <button type="reset" class="nectar-header__search-reset hidden" aria-label="{{ 'general.search.reset' | t | default: 'Clear search' }}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            {%- if settings.predictive_search_enabled -%}
+              <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+                {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
               </div>
-            {%- endform -%}
-          </localization-form>
-        {% endif %}
-
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          <localization-form class="small-hide medium-hide" data-prevent-hide>
-            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-              <div>
-                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-              </div>
-            {%- endform -%}
-          </localization-form>
+              <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+            {%- endif -%}
+          </form>
+        {%- if settings.predictive_search_enabled -%}
+          </predictive-search>
+        {%- else -%}
+          </div>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+    {%- endif -%}
 
-      {%- if shop.customer_accounts_enabled -%}
-        <shopify-account
-          menu="{{ settings.customer_account_menu | default: 'customer-account-main-menu' }}"
-          class="header__icon header__icon--account link focus-inset"
-        >
-          <span slot="signed-out-avatar" class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-          <span slot="signed-out-avatar" class="visually-hidden">{{ 'customer.log_in' | t }}</span>
-        </shopify-account>
-      {%- endif -%}
-
+    <!-- Right: Action Icons (Wishlist, Login, Cart) -->
+    <div class="nectar-header__right">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when '@app' -%}
@@ -299,184 +156,169 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {% if cart == empty %}
-          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-        {% else %}
-          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-        {% endif %}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
+      {%- if section.settings.show_wishlist -%}
+        <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="nectar-header__action-link nectar-header__wishlist" aria-label="Wishlist" title="Wishlist">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.show_account -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="nectar-header__action-link nectar-header__login" aria-label="Customer Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="nectar-header__login-text">
+            {% if customer %}
+              {{ customer.first_name | default: 'ACCOUNT' | upcase }}
+            {% else %}
+              {{ section.settings.login_text | default: 'LOGIN' }}
+            {% endif %}
+          </span>
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="nectar-header__action-link nectar-header__cart" id="cart-icon-bubble" aria-label="{{ 'templates.cart.cart' | t }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="nectar-header__cart-text">{{ section.settings.cart_text | default: 'Cart' }}</span>
+        <span class="nectar-header__cart-badge" data-count="{{ cart.item_count }}">
+          {{ cart.item_count }}
+        </span>
       </a>
     </div>
   </header>
-</{{ header_tag }}>
+
+  <!-- Sub-Navigation Bar (Mint Green Background) -->
+  <nav class="nectar-subnav" aria-label="Main Navigation">
+    <div class="nectar-subnav__container">
+      <ul class="nectar-subnav__menu" role="list">
+        {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
+          {%- for link in linklists[section.settings.menu].links -%}
+            {%- assign is_active = false -%}
+            {%- if link.active or forloop.first and request.path == routes.root_url -%}
+              {%- assign is_active = true -%}
+            {%- endif -%}
+            <li class="nectar-subnav__item{% if is_active %} is-active{% endif %}{% if link.links != blank %} has-dropdown{% endif %}">
+              <a href="{{ link.url }}" class="nectar-subnav__link{% if is_active %} is-active{% endif %}">
+                {{ link.title | escape }}
+                {%- if link.links != blank -%}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                {%- endif -%}
+              </a>
+              {%- if link.links != blank -%}
+                <ul class="nectar-subnav__dropdown" role="list">
+                  {%- for childlink in link.links -%}
+                    <li>
+                      <a href="{{ childlink.url }}" class="nectar-subnav__dropdown-link{% if childlink.active %} is-active{% endif %}">
+                        {{ childlink.title | escape }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default Reference Menu Items from Design -->
+          <li class="nectar-subnav__item is-active">
+            <a href="{{ routes.root_url }}" class="nectar-subnav__link is-active">Home</a>
+          </li>
+          <li class="nectar-subnav__item">
+            <a href="/collections/all" class="nectar-subnav__link">Product by Benefits</a>
+          </li>
+          <li class="nectar-subnav__item">
+            <a href="/collections" class="nectar-subnav__link">Product by Category</a>
+          </li>
+          <li class="nectar-subnav__item">
+            <a href="/pages/free-consultation" class="nectar-subnav__link">Free Consultation</a>
+          </li>
+          <li class="nectar-subnav__item">
+            <a href="/pages/about-us" class="nectar-subnav__link">About Us</a>
+          </li>
+          <li class="nectar-subnav__item">
+            <a href="/blogs/news" class="nectar-subnav__link">Blogs</a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!-- Sliding Side Drawer -->
+<div class="nectar-drawer-backdrop" aria-hidden="true"></div>
+<aside class="nectar-drawer" aria-label="Mobile Navigation" role="dialog" aria-modal="true">
+  <div class="nectar-drawer__header">
+    <span class="nectar-header__logo-text">
+      <span class="logo-orange">Nectar</span><span class="logo-green">flora</span><sup class="logo-tm">™</sup>
+    </span>
+    <button type="button" class="nectar-drawer__close-btn" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div class="nectar-drawer__content">
+    <ul class="nectar-drawer__menu" role="list">
+      {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li class="nectar-drawer__item">
+            <a href="{{ link.url }}" class="nectar-drawer__link{% if link.active %} is-active{% endif %}">
+              {{ link.title | escape }}
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li class="nectar-drawer__item"><a href="{{ routes.root_url }}" class="nectar-drawer__link is-active">Home</a></li>
+        <li class="nectar-drawer__item"><a href="/collections/all" class="nectar-drawer__link">Product by Benefits</a></li>
+        <li class="nectar-drawer__item"><a href="/collections" class="nectar-drawer__link">Product by Category</a></li>
+        <li class="nectar-drawer__item"><a href="/pages/free-consultation" class="nectar-drawer__link">Free Consultation</a></li>
+        <li class="nectar-drawer__item"><a href="/pages/about-us" class="nectar-drawer__link">About Us</a></li>
+        <li class="nectar-drawer__item"><a href="/blogs/news" class="nectar-drawer__link">Blogs</a></li>
+      {%- endif -%}
+    </ul>
+  </div>
+  <div class="nectar-drawer__footer">
+    {%- if section.settings.show_wishlist -%}
+      <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="nectar-drawer__footer-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        Wishlist
+      </a>
+    {%- endif -%}
+    {%- if section.settings.show_account -%}
+      <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="nectar-drawer__footer-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        {% if customer %}{{ customer.name | default: 'My Account' }}{% else %}Login / Register{% endif %}
+      </a>
+    {%- endif -%}
+  </div>
+</aside>
 
 {%- if settings.cart_type == 'notification' -%}
-  {%- render 'cart-notification',
-    color_scheme: section.settings.color_scheme,
-    desktop_menu_type: section.settings.menu_type_desktop
-  -%}
+  {%- render 'cart-notification', color_scheme: 'scheme-1', desktop_menu_type: 'dropdown' -%}
 {%- endif -%}
-
-{% javascript %}
-  class StickyHeader extends HTMLElement {
-    constructor() {
-      super();
-      this.setHeaderHeight = this.setHeaderHeight.bind(this);
-    }
-
-    connectedCallback() {
-      this.header = document.querySelector('.section-header');
-      this.mobileMediaQuery = window.matchMedia('(max-width: 990px)');
-      this.headerIsAlwaysSticky =
-        this.getAttribute('data-sticky-type') === 'always' ||
-        this.getAttribute('data-sticky-type') === 'reduce-logo-size';
-      this.headerBounds = {};
-
-      this.setHeaderHeight();
-
-      this.mobileMediaQuery.addEventListener('change', this.setHeaderHeight);
-
-      if (this.headerIsAlwaysSticky) {
-        this.header.classList.add('shopify-section-header-sticky');
-      }
-
-      this.currentScrollTop = 0;
-      this.preventReveal = false;
-      this.predictiveSearches = this.querySelectorAll('predictive-search');
-
-      this.onScrollHandler = this.onScroll.bind(this);
-      this.hideHeaderOnScrollUp = () => (this.preventReveal = true);
-
-      this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
-      window.addEventListener('scroll', this.onScrollHandler, false);
-
-      this.createObserver();
-    }
-
-    setHeaderHeight() {
-      document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
-    }
-
-    disconnectedCallback() {
-      this.mobileMediaQuery.removeEventListener('change', this.setHeaderHeight);
-      this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
-      window.removeEventListener('scroll', this.onScrollHandler);
-    }
-
-    createObserver() {
-      let observer = new IntersectionObserver((entries, observer) => {
-        this.headerBounds = entries[0].intersectionRect;
-        observer.disconnect();
-      });
-
-      observer.observe(this.header);
-    }
-
-    onScroll() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-      if ([...this.predictiveSearches].some((predictiveSearch) => predictiveSearch.isOpen)) return;
-
-      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
-        this.header.classList.add('scrolled-past-header');
-        if (this.preventHide) return;
-        requestAnimationFrame(this.hide.bind(this));
-      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
-        this.header.classList.add('scrolled-past-header');
-        if (!this.preventReveal) {
-          requestAnimationFrame(this.reveal.bind(this));
-        } else {
-          window.clearTimeout(this.isScrolling);
-
-          this.isScrolling = setTimeout(() => {
-            this.preventReveal = false;
-          }, 66);
-
-          requestAnimationFrame(this.hide.bind(this));
-        }
-      } else if (scrollTop <= this.headerBounds.top) {
-        this.header.classList.remove('scrolled-past-header');
-        requestAnimationFrame(this.reset.bind(this));
-      }
-
-      this.currentScrollTop = scrollTop;
-    }
-
-    hide() {
-      if (this.headerIsAlwaysSticky) return;
-      this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
-      this.closeMenuDisclosure();
-      this.closeSearchModal();
-    }
-
-    reveal() {
-      if (this.headerIsAlwaysSticky) return;
-      this.header.classList.add('shopify-section-header-sticky', 'animate');
-      this.header.classList.remove('shopify-section-header-hidden');
-    }
-
-    reset() {
-      if (this.headerIsAlwaysSticky) return;
-      this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-sticky', 'animate');
-    }
-
-    closeMenuDisclosure() {
-      this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
-      this.disclosures.forEach((disclosure) => disclosure.close());
-    }
-
-    closeSearchModal() {
-      this.searchModals = this.searchModals || this.header.querySelectorAll('details-modal');
-      this.searchModals.forEach((searchModal) => searchModal.close(false));
-    }
-  }
-
-  // The account `open` event is composed but does not bubble, so listen during capture.
-  // Anchor the dialog to the bottom of the account button itself. The header group can be
-  // much taller than the button's row (for example, a top-left logo pushes the menu to a
-  // second row), so anchoring to the section bottom drops the dialog too low.
-  document.addEventListener(
-    'open',
-    (event) => {
-      if (!(event.target instanceof HTMLElement) || !event.target.matches('shopify-account')) return;
-
-      const bottom = Math.max(0, Math.round(event.target.getBoundingClientRect().bottom));
-      event.target.style.setProperty('--account-dialog-top', `${bottom}px`);
-    },
-    true
-  );
-
-  customElements.define('sticky-header', StickyHeader);
-{% endjavascript %}
 
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "Organization",
     "name": {{ shop.name | json }},
-    {% if settings.logo %}
-      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% if section.settings.logo or settings.logo %}
+      "logo": {{ section.settings.logo | default: settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
-    "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
-    ],
     "url": {{ request.origin | append: page.url | json }}
   }
 </script>
@@ -500,182 +342,200 @@
 
 {% schema %}
 {
-  "name": "t:sections.header.name",
+  "name": "Nectarflora Header",
   "class": "section-header",
-  "max_blocks": 3,
   "settings": [
     {
-      "type": "select",
-      "id": "logo_position",
-      "options": [
-        {
-          "value": "top-left",
-          "label": "t:sections.header.settings.logo_position.options__2.label"
-        },
-        {
-          "value": "top-center",
-          "label": "t:sections.header.settings.logo_position.options__3.label"
-        },
-        {
-          "value": "middle-left",
-          "label": "t:sections.header.settings.logo_position.options__1.label"
-        },
-        {
-          "value": "middle-center",
-          "label": "t:sections.header.settings.logo_position.options__4.label"
-        }
-      ],
-      "default": "middle-left",
-      "label": "t:sections.header.settings.logo_position.label",
-      "info": "t:sections.header.settings.logo_help.content"
+      "type": "header",
+      "content": "Top Accent Strip"
     },
     {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "options": [
-        {
-          "value": "center",
-          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
-        },
-        {
-          "value": "left",
-          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
-        }
-      ],
-      "default": "center",
-      "label": "t:sections.header.settings.mobile_logo_position.label"
+      "type": "checkbox",
+      "id": "show_top_strip",
+      "label": "Show Top Dark Strip",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "top_strip_color",
+      "label": "Top Strip Color",
+      "default": "#0E3D2F"
+    },
+    {
+      "type": "range",
+      "id": "top_strip_height",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Top Strip Height",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Custom Logo Width",
+      "default": 170
+    },
+    {
+      "type": "color",
+      "id": "logo_orange_color",
+      "label": "Logo Orange Color (Nectar)",
+      "default": "#EE5A24"
+    },
+    {
+      "type": "color",
+      "id": "logo_green_color",
+      "label": "Logo Green Color (flora)",
+      "default": "#0A8754"
+    },
+    {
+      "type": "header",
+      "content": "Search Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder Text",
+      "default": "Search for nutrition, skin, hair..."
+    },
+    {
+      "type": "header",
+      "content": "Header Actions (Right Side)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show Wishlist Icon",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist Page URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show Login / Account",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "login_text",
+      "label": "Login Button Text",
+      "default": "LOGIN"
+    },
+    {
+      "type": "text",
+      "id": "cart_text",
+      "label": "Cart Button Text",
+      "default": "Cart"
+    },
+    {
+      "type": "color",
+      "id": "cart_badge_color",
+      "label": "Cart Badge Color",
+      "default": "#0A8754"
+    },
+    {
+      "type": "color",
+      "id": "cart_badge_text_color",
+      "label": "Cart Badge Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Menu (Sub-Bar)"
     },
     {
       "type": "link_list",
       "id": "menu",
-      "default": "main-menu",
-      "label": "t:sections.header.settings.menu.label"
+      "label": "Menu",
+      "default": "main-menu"
     },
     {
-      "type": "select",
-      "id": "menu_type_desktop",
-      "options": [
-        {
-          "value": "dropdown",
-          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
-        },
-        {
-          "value": "mega",
-          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
-        },
-        {
-          "value": "drawer",
-          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
-        }
-      ],
-      "default": "dropdown",
-      "label": "t:sections.header.settings.menu_type_desktop.label"
+      "type": "color",
+      "id": "subnav_bg_color",
+      "label": "Sub-Nav Background Color",
+      "default": "#EAF5EE"
     },
     {
-      "type": "select",
-      "id": "sticky_header_type",
-      "options": [
-        {
-          "value": "none",
-          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
-        },
-        {
-          "value": "on-scroll-up",
-          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
-        },
-        {
-          "value": "always",
-          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
-        },
-        {
-          "value": "reduce-logo-size",
-          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
-        }
-      ],
-      "default": "on-scroll-up",
-      "label": "t:sections.header.settings.sticky_header_type.label"
+      "type": "color",
+      "id": "menu_text_color",
+      "label": "Menu Link Color",
+      "default": "#1E293B"
     },
     {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__1.content"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "color_scheme",
-      "id": "menu_color_scheme",
-      "label": "t:sections.header.settings.menu_color_scheme.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__utilities.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": true,
-      "label": "t:sections.header.settings.enable_country_selector.label",
-      "info": "t:sections.header.settings.enable_country_selector.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": true,
-      "label": "t:sections.header.settings.enable_language_selector.label",
-      "info": "t:sections.header.settings.enable_language_selector.info"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:sections.header.settings.customer_account_menu.content"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.spacing"
+      "type": "color",
+      "id": "menu_active_color",
+      "label": "Active & Hover Menu Color",
+      "default": "#0A8754"
     },
     {
       "type": "range",
-      "id": "margin_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
+      "id": "menu_font_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
       "unit": "px",
-      "label": "t:sections.header.settings.margin_bottom.label",
-      "default": 0
+      "label": "Menu Font Size",
+      "default": 14
     },
     {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "content": "General Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Enable Sticky Header",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Main Header Background Color",
+      "default": "#FFFFFF"
     },
     {
       "type": "range",
       "id": "padding_top",
-      "min": 0,
-      "max": 36,
-      "step": 4,
+      "min": 4,
+      "max": 32,
+      "step": 2,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 20
+      "label": "Top Padding",
+      "default": 12
     },
     {
       "type": "range",
       "id": "padding_bottom",
-      "min": 0,
-      "max": 36,
-      "step": 4,
+      "min": 4,
+      "max": 32,
+      "step": 2,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 20
+      "label": "Bottom Padding",
+      "default": 12
     }
   ],
   "blocks": [
