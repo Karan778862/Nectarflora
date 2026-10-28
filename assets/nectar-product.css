@@ -102,13 +102,44 @@
 /* --------------------------------------------------------------------------
    Layout Grid
    -------------------------------------------------------------------------- */
-.nectar-pdp-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
-  gap: 48px;
-  align-items: start;
-  width: 100%;
-  margin-top: 8px;
+.nectar-pdp-layout,
+.nectar-pdp-layout.product,
+.nectar-pdp-layout.grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 48%) minmax(0, 52%) !important;
+  gap: 48px !important;
+  align-items: start !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 8px !important;
+}
+
+.nectar-pdp-layout .product__media-wrapper,
+.nectar-pdp-layout .product__info-wrapper,
+.nectar-pdp-layout.product .product__media-wrapper,
+.nectar-pdp-layout.product .product__info-wrapper,
+.product--medium:not(.product--no-media) .product__info-wrapper,
+.product--large:not(.product--no-media) .product__info-wrapper,
+.product--small:not(.product--no-media) .product__info-wrapper,
+.product__info-wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+.product__info-container {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+@media screen and (max-width: 989px) {
+  .nectar-pdp-layout,
+  .nectar-pdp-layout.product,
+  .nectar-pdp-layout.grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
+  }
 }
 
 /* --------------------------------------------------------------------------

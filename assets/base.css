@@ -81,70 +81,75 @@ collection-component {
 
 /* base */
 
+:root {
+  --page-width: 160rem !important;
+}
+
 .page-width {
-  max-width: var(--page-width, 152rem);
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 1.6rem;
-  box-sizing: border-box;
+  max-width: 1600px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
 }
 
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
-  max-width: 100%;
+  max-width: 100% !important;
 }
 
 .page-width.drawer-menu {
-  max-width: 100%;
+  max-width: 100% !important;
 }
 
 .page-width-desktop {
-  padding: 0;
-  margin: 0 auto;
+  max-width: 1600px !important;
+  width: 100% !important;
+  padding: 0 16px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
 }
 
 .utility-bar__grid.page-width {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
 }
 
 @media screen and (min-width: 750px) {
-  .page-width {
-    padding: 0 3.2rem;
+  .page-width,
+  .page-width-desktop {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
   }
 
   .header.page-width,
   .utility-bar__grid.page-width {
-    padding-left: 3.2rem;
-    padding-right: 3.2rem;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
   }
 
   .page-width--narrow {
-    padding: 0 4rem;
-  }
-
-  .page-width-desktop {
-    padding: 0;
+    padding: 0 32px !important;
   }
 
   .page-width-tablet {
-    padding: 0 3.2rem;
+    padding: 0 32px !important;
   }
 }
 
 @media screen and (min-width: 990px) {
   .header:not(.drawer-menu).page-width {
-    padding-left: 3.6rem;
-    padding-right: 3.6rem;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
   }
 
   .page-width--narrow {
-    max-width: 84rem;
-    padding: 0;
+    max-width: 96rem;
+    padding: 0 32px !important;
   }
 
   .page-width-desktop {
-    max-width: var(--page-width, 152rem);
-    padding: 0 3.6rem;
+    max-width: 1600px !important;
+    padding: 0 32px !important;
   }
 }
 

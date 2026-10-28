@@ -149,8 +149,8 @@
         --media-shadow-blur-radius: {{ settings.media_shadow_blur }}px;
         --media-shadow-visible: {% if settings.media_shadow_opacity > 0 %}1{% else %}0{% endif %};
 
-        --page-width: {{ settings.page_width | divided_by: 10 }}rem;
-        --page-width-margin: {% if settings.page_width == '1600' %}2{% else %}0{% endif %}rem;
+        --page-width: 160rem;
+        --page-width-margin: 0rem;
 
         --product-card-image-padding: {{ settings.card_image_padding | divided_by: 10.0 }}rem;
         --product-card-corner-radius: {{ settings.card_corner_radius | divided_by: 10.0 }}rem;
@@ -278,11 +278,31 @@
         body {
           font-size: 1.6rem;
         }
+      :root {
+        --page-width: 160rem !important;
+      }
+      .page-width,
+      .page-width-desktop {
+        max-width: 1600px !important;
+        width: 100% !important;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+      }
+      @media screen and (max-width: 749px) {
+        .page-width,
+        .page-width-desktop {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+        }
       }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'nectar-card.css' | asset_url | stylesheet_tag }}
+    {{ 'nectar-product.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}

@@ -13,9 +13,10 @@
 }
 
 .nectar-reels-container {
-  max-width: 1240px;
+  max-width: 1600px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 32px;
   box-sizing: border-box;
 }
 
@@ -381,6 +382,10 @@
   .nectar-reels-section {
     padding-top: 36px;
     padding-bottom: 36px;
+  }
+
+  .nectar-reels-container {
+    padding: 0 16px;
   }
 
   .nectar-reels-title {
