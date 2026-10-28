@@ -58,13 +58,13 @@
       </div>
     {%- endif -%}
 
-    <!-- Circular Concern Items -->
+    <!-- Horizontal List of 8 Circular Concern Items -->
     <div class="shop-by-concern__grid" role="list">
       {%- if concern_blocks_count > 0 -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'concern_item' -%}
             {%- assign item_color = block.settings.bottle_color | default: '#1C6747' -%}
-            {%- assign item_bg = block.settings.circle_bg_color | default: '#E6F5ED' -%}
+            {%- assign item_bg = block.settings.circle_bg_color | default: '#E8F6ED' -%}
             <a
               href="{{ block.settings.link | default: routes.all_products_collection_url }}"
               class="shop-by-concern__item"
@@ -82,23 +82,21 @@
                       alt: block.settings.title | escape
                   }}
                 {%- else -%}
-                  <!-- Stylized Health Supplement Bottle SVG matching screenshot -->
+                  <!-- Clean Flat Minimalist Bottle Silhouette matching Image 2 -->
                   <svg
                     class="shop-by-concern__bottle-svg"
-                    viewBox="0 0 64 80"
+                    viewBox="0 0 54 72"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                   >
                     <!-- Dark Cap -->
-                    <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-                    <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-                    <!-- Bottle Body with Dynamic Color -->
-                    <rect x="14" y="17" width="36" height="56" rx="8" fill="{{ item_color }}" />
-                    <!-- Clean White Product Label -->
-                    <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-                    <!-- Soft Glass Reflection Highlight -->
-                    <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+                    <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+                    <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+                    <!-- Bottle Body -->
+                    <rect x="10" y="14" width="34" height="54" rx="8" fill="{{ item_color }}" />
+                    <!-- Center White Label -->
+                    <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
                   </svg>
                 {%- endif -%}
               </div>
@@ -109,16 +107,15 @@
           {%- endif -%}
         {%- endfor -%}
       {%- else -%}
-        <!-- Default 8 Reference Concern Items matching Image -->
+        <!-- Default 8 Reference Concern Items matching Image 2 -->
         <!-- 1: Skin -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#1C6747" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#1C6747" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Skin</span>
@@ -126,13 +123,12 @@
 
         <!-- 2: Hair -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#E5A000" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#E5A000" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Hair</span>
@@ -140,13 +136,12 @@
 
         <!-- 3: Sleep & Stress -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#583F8A" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#583F8A" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Sleep & Stress</span>
@@ -154,13 +149,12 @@
 
         <!-- 4: Liver & Digestion -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#A85324" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#A85324" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Liver & Digestion</span>
@@ -168,13 +162,12 @@
 
         <!-- 5: Brain -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#15657B" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#15657B" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Brain</span>
@@ -182,13 +175,12 @@
 
         <!-- 6: Women Health -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#C01E5B" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#C01E5B" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Women Health</span>
@@ -196,13 +188,12 @@
 
         <!-- 7: Weight -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#289E49" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#289E49" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Weight</span>
@@ -210,13 +201,12 @@
 
         <!-- 8: Immunity -->
         <a href="/collections/all" class="shop-by-concern__item" role="listitem">
-          <div class="shop-by-concern__circle" style="background-color: #E6F5ED;">
-            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 64 80" fill="none">
-              <rect x="23" y="6" width="18" height="8" rx="2" fill="#0D3B2B" />
-              <rect x="25" y="14" width="14" height="3" fill="#0D3B2B" opacity="0.85" />
-              <rect x="14" y="17" width="36" height="56" rx="8" fill="#E65A28" />
-              <rect x="19" y="31" width="26" height="28" rx="4" fill="#FFFFFF" />
-              <rect x="18" y="20" width="4" height="48" rx="2" fill="#FFFFFF" opacity="0.18" />
+          <div class="shop-by-concern__circle" style="background-color: #E8F6ED;">
+            <svg class="shop-by-concern__bottle-svg" viewBox="0 0 54 72" fill="none">
+              <rect x="20" y="4" width="14" height="7" rx="2" fill="#0D3B2B" />
+              <rect x="22" y="11" width="10" height="3" fill="#0D3B2B" />
+              <rect x="10" y="14" width="34" height="54" rx="8" fill="#E65A28" />
+              <rect x="15" y="27" width="24" height="28" rx="5" fill="#FFFFFF" />
             </svg>
           </div>
           <span class="shop-by-concern__title">Immunity</span>
@@ -224,48 +214,46 @@
       {%- endif -%}
     </div>
 
-    <!-- Trending Searches Area -->
+    <!-- Trending Searches Area matching Image 2 -->
     {%- if section.settings.show_trending -%}
       <div class="shop-by-concern__trending-wrap">
         <span class="shop-by-concern__trending-label">
           {{ section.settings.trending_label | default: 'Trending:' }}
         </span>
 
-        <div class="shop-by-concern__pills-list">
-          {%- if trending_blocks_count > 0 -%}
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'trending_tag' -%}
-                {%- capture default_search_url -%}{{ routes.search_url }}?q={{ block.settings.title | url_encode }}{%- endcapture -%}
-                <a
-                  href="{{ block.settings.link | default: default_search_url }}"
-                  class="shop-by-concern__pill"
-                  {{ block.shopify_attributes }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                  <span>{{ block.settings.title | escape }}</span>
-                </a>
-              {%- endif -%}
-            {%- endfor -%}
-          {%- else -%}
-            <!-- Default 10 Reference Trending Tags matching Image -->
-            {%- assign default_tags = "KSM-66 Ashwagandha,Myo-Inositol,Shatavari,Milk Thistle,NAC,Liposomal Glutathione,Trans-Resveratrol,Saw Palmetto,Biotin,Magnesium Bisglycinate" | split: "," -%}
-            {%- for tag in default_tags -%}
+        {%- if trending_blocks_count > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trending_tag' -%}
+              {%- capture default_search_url -%}{{ routes.search_url }}?q={{ block.settings.title | url_encode }}{%- endcapture -%}
               <a
-                href="{{ routes.search_url }}?q={{ tag | url_encode }}"
+                href="{{ block.settings.link | default: default_search_url }}"
                 class="shop-by-concern__pill"
+                {{ block.shopify_attributes }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <span>{{ tag }}</span>
+                <span>{{ block.settings.title | escape }}</span>
               </a>
-            {%- endfor -%}
-          {%- endif -%}
-        </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default 10 Reference Trending Tags matching Image 2 -->
+          {%- assign default_tags = "KSM-66 Ashwagandha,Myo-Inositol,Shatavari,Milk Thistle,NAC,Liposomal Glutathione,Trans-Resveratrol,Saw Palmetto,Biotin,Magnesium Bisglycinate" | split: "," -%}
+          {%- for tag in default_tags -%}
+            <a
+              href="{{ routes.search_url }}?q={{ tag | url_encode }}"
+              class="shop-by-concern__pill"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>{{ tag }}</span>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -379,7 +367,7 @@
           "type": "color",
           "id": "circle_bg_color",
           "label": "Circle Background Color",
-          "default": "#E6F5ED"
+          "default": "#E8F6ED"
         }
       ]
     },

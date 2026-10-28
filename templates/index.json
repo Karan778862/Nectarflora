@@ -48,7 +48,7 @@
             "title": "Skin",
             "link": "shopify://collections/all",
             "bottle_color": "#1C6747",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_hair": {
@@ -57,7 +57,7 @@
             "title": "Hair",
             "link": "shopify://collections/all",
             "bottle_color": "#E5A000",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_sleep": {
@@ -66,7 +66,7 @@
             "title": "Sleep & Stress",
             "link": "shopify://collections/all",
             "bottle_color": "#583F8A",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_liver": {
@@ -75,7 +75,7 @@
             "title": "Liver & Digestion",
             "link": "shopify://collections/all",
             "bottle_color": "#A85324",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_brain": {
@@ -84,7 +84,7 @@
             "title": "Brain",
             "link": "shopify://collections/all",
             "bottle_color": "#15657B",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_women": {
@@ -93,7 +93,7 @@
             "title": "Women Health",
             "link": "shopify://collections/all",
             "bottle_color": "#C01E5B",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_weight": {
@@ -102,7 +102,7 @@
             "title": "Weight",
             "link": "shopify://collections/all",
             "bottle_color": "#289E49",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "concern_immunity": {
@@ -111,7 +111,7 @@
             "title": "Immunity",
             "link": "shopify://collections/all",
             "bottle_color": "#E65A28",
-            "circle_bg_color": "#E6F5ED"
+            "circle_bg_color": "#E8F6ED"
           }
         },
         "tag_ashwagandha": {
