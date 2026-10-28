@@ -28,6 +28,38 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "mega_menu_benefits": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item_title": "Product by Benefits",
+            "badge_text": "HOT",
+            "badge_bg_color": "#EE5A24",
+            "badge_text_color": "#FFFFFF",
+            "promo_heading_1": "100% Organic Nutrition",
+            "promo_subheading_1": "Special Offer",
+            "promo_button_text_1": "Explore Now",
+            "promo_link_1": "/collections/all"
+          }
+        },
+        "mega_menu_category": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item_title": "Product by Category",
+            "badge_text": "NEW",
+            "badge_bg_color": "#0A8754",
+            "badge_text_color": "#FFFFFF",
+            "promo_heading_2": "Best Sellers Collection",
+            "promo_subheading_2": "Trending",
+            "promo_button_text_2": "Shop Now",
+            "promo_link_2": "/collections"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_benefits",
+        "mega_menu_category"
+      ],
       "settings": {
         "show_top_strip": true,
         "top_strip_color": "#0E3D2F",

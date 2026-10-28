@@ -117,8 +117,7 @@
 }
 
 .nectar-header__logo-img {
-  max-height: 50px;
-  width: auto;
+  height: auto;
   display: block;
   object-fit: contain;
 }
@@ -262,6 +261,7 @@
 
 /* Bottom Sub-Navigation Bar */
 .nectar-subnav {
+  position: relative;
   width: 100%;
   background-color: var(--nectar-subnav-bg);
   border-top: 1px solid rgba(0, 0, 0, 0.03);
@@ -294,6 +294,7 @@
 }
 
 .nectar-subnav__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -317,17 +318,39 @@
   font-weight: 700;
 }
 
-/* Dropdown Menu for Sub-links */
+/* Menu Item Badge (HOT, NEW, SALE) */
+.nectar-menu-badge {
+  display: inline-block;
+  position: absolute;
+  top: -8px;
+  right: -14px;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  animation: nectarBadgePulse 2s infinite ease-in-out;
+}
+
+@keyframes nectarBadgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Regular Dropdown Menu for Sub-links */
 .nectar-subnav__dropdown {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(8px);
   background-color: #FFFFFF;
-  min-width: 200px;
-  border-radius: 8px;
+  min-width: 210px;
+  border-radius: 10px;
   padding: 8px 0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--nectar-border-light);
   list-style: none;
   margin: 0;
@@ -343,12 +366,12 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(2px);
+  transform: translateX(-50%) translateY(4px);
 }
 
 .nectar-subnav__dropdown-link {
   display: block;
-  padding: 8px 18px;
+  padding: 9px 18px;
   text-decoration: none;
   font-size: 13.5px;
   color: var(--nectar-text-dark);
@@ -360,7 +383,312 @@
   color: var(--nectar-green);
 }
 
-/* Side Drawer Overlay & Panel */
+/* ==========================================================================
+   MEGA MENU CONTAINER & LAYOUT
+   ========================================================================== */
+.nectar-subnav__item.has-megamenu {
+  position: static;
+}
+
+.nectar-megamenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid var(--nectar-border-light);
+  border-bottom: 2px solid var(--nectar-border-light);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+  z-index: 95;
+  cursor: default;
+}
+
+.nectar-subnav__item.has-megamenu:hover .nectar-megamenu,
+.nectar-subnav__item.has-megamenu:focus-within .nectar-megamenu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nectar-megamenu__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 24px 34px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 36px;
+}
+
+/* Mega Menu Links / Category Columns */
+.nectar-megamenu__nav-cols {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.nectar-megamenu__col {
+  flex: 1;
+  min-width: 170px;
+  max-width: 240px;
+}
+
+.nectar-megamenu__heading-link {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--nectar-text-dark);
+  text-decoration: none;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--nectar-subnav-bg);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.nectar-megamenu__heading-link:hover {
+  color: var(--nectar-green);
+  border-color: var(--nectar-green);
+}
+
+.nectar-megamenu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.nectar-megamenu__link {
+  display: inline-block;
+  font-size: 13.5px;
+  color: var(--nectar-text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.nectar-megamenu__link:hover {
+  color: var(--nectar-green);
+  transform: translateX(4px);
+}
+
+/* Mega Menu Media / Promo Side (Banners & Featured Products) */
+.nectar-megamenu__side-media {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+/* Category Promo Banner */
+.nectar-megamenu__promo-banner {
+  width: 230px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, #103B2B 0%, #176548 100%);
+  position: relative;
+  display: flex;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nectar-megamenu__promo-banner:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(16, 59, 43, 0.2);
+}
+
+.nectar-megamenu__promo-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  min-height: 240px;
+  padding: 20px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.nectar-megamenu__promo-inner.promo--alt {
+  background: linear-gradient(135deg, #EE5A24 0%, #FA8231 100%);
+}
+
+.nectar-megamenu__promo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  z-index: 1;
+}
+
+.nectar-megamenu__promo-banner:hover .nectar-megamenu__promo-img {
+  transform: scale(1.06);
+}
+
+.nectar-megamenu__promo-content {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 75%, transparent 100%);
+  padding: 24px 16px 16px;
+  margin: -20px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nectar-megamenu__promo-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #A7F3D0;
+}
+
+.promo--alt .nectar-megamenu__promo-tag {
+  color: #FFEDD5;
+}
+
+.nectar-megamenu__promo-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.25;
+  color: #FFFFFF;
+}
+
+.nectar-megamenu__promo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-top: 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Featured Product Card */
+.nectar-megamenu__product-card {
+  width: 200px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--nectar-border-light);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.nectar-megamenu__product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--nectar-green);
+}
+
+.nectar-megamenu__product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--nectar-green);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.nectar-megamenu__product-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #F8FAFC;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.nectar-megamenu__product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.nectar-megamenu__product-card:hover .nectar-megamenu__product-img-wrap img {
+  transform: scale(1.05);
+}
+
+.nectar-megamenu__product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nectar-megamenu__product-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--nectar-text-dark);
+  text-decoration: none;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s ease;
+}
+
+.nectar-megamenu__product-title:hover {
+  color: var(--nectar-green);
+}
+
+.nectar-megamenu__product-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nectar-green);
+  margin-top: 2px;
+}
+
+.nectar-megamenu__product-btn {
+  display: block;
+  text-align: center;
+  background-color: var(--nectar-subnav-bg);
+  color: var(--nectar-green);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nectar-megamenu__product-btn:hover {
+  background-color: var(--nectar-green);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   SIDE DRAWER (MOBILE & TABLET SLIDING PANEL)
+   ========================================================================== */
 .nectar-drawer-backdrop {
   position: fixed;
   inset: 0;
@@ -381,8 +709,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 320px;
-  max-width: 85vw;
+  width: 330px;
+  max-width: 86vw;
   height: 100vh;
   background-color: #FFFFFF;
   z-index: 1000;
@@ -438,22 +766,71 @@
   border-bottom: 1px solid #F1F5F9;
 }
 
-.nectar-drawer__link {
+.nectar-drawer__link-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 4px;
+  padding: 13px 4px;
+}
+
+.nectar-drawer__link {
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
   color: var(--nectar-text-dark);
   transition: color 0.2s ease;
+  flex: 1;
 }
 
 .nectar-drawer__link:hover,
 .nectar-drawer__link.is-active {
   color: var(--nectar-green);
   font-weight: 600;
+}
+
+.nectar-drawer__toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: var(--nectar-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.nectar-drawer__toggle-btn.is-active svg {
+  transform: rotate(180deg);
+}
+
+.nectar-drawer__subcontent {
+  display: none;
+  padding: 6px 0 14px 12px;
+}
+
+.nectar-drawer__subcontent.is-open {
+  display: block;
+}
+
+.nectar-drawer__sublist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nectar-drawer__sublink {
+  text-decoration: none;
+  font-size: 13.5px;
+  color: var(--nectar-text-muted);
+  display: block;
+}
+
+.nectar-drawer__sublink:hover {
+  color: var(--nectar-green);
 }
 
 .nectar-drawer__footer {
@@ -486,6 +863,7 @@
   .nectar-header__main-row {
     padding: 10px 16px;
     gap: 12px;
+    flex-wrap: wrap;
   }
 
   .nectar-header__center {
@@ -493,10 +871,6 @@
     flex-basis: 100%;
     max-width: 100%;
     margin: 8px 0 0 0;
-  }
-
-  .nectar-header__main-row {
-    flex-wrap: wrap;
   }
 
   .nectar-header__logo-text {
@@ -525,6 +899,11 @@
 
   .nectar-header__login-text {
     display: none;
+  }
+
+  /* Disable hover mega menu on mobile header row, drawer handles it */
+  .nectar-megamenu {
+    display: none !important;
   }
 }
 

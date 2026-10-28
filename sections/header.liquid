@@ -63,25 +63,15 @@
         <h1 class="nectar-header__heading" style="margin: 0; font-size: 1rem;">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="nectar-header__logo-link">
-        {%- if section.settings.logo != blank -%}
-          {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
-          {{
-            section.settings.logo
-            | image_url: width: 400
-            | image_tag:
-              class: 'nectar-header__logo-img',
-              width: section.settings.logo_width,
-              alt: logo_alt,
-              preload: true
-          }}
-        {%- elsif settings.logo != blank -%}
+        {%- if settings.logo != blank -%}
           {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+          {%- assign logo_w = settings.logo_width | default: 90 -%}
           {{
             settings.logo
-            | image_url: width: 400
+            | image_url: width: 600
             | image_tag:
               class: 'nectar-header__logo-img',
-              width: settings.logo_width,
+              style: 'max-width: ' | append: logo_w | append: 'px; width: ' | append: logo_w | append: 'px;',
               alt: logo_alt,
               preload: true
           }}
@@ -194,7 +184,7 @@
     </div>
   </header>
 
-  <!-- Sub-Navigation Bar (Mint Green Background) -->
+  <!-- Sub-Navigation Bar with Mega Menu Support -->
   <nav class="nectar-subnav" aria-label="Main Navigation">
     <div class="nectar-subnav__container">
       <ul class="nectar-subnav__menu" role="list">
@@ -204,16 +194,166 @@
             {%- if link.active or forloop.first and request.path == routes.root_url -%}
               {%- assign is_active = true -%}
             {%- endif -%}
-            <li class="nectar-subnav__item{% if is_active %} is-active{% endif %}{% if link.links != blank %} has-dropdown{% endif %}">
+
+            {%- comment -%} Check if this link has an attached Mega Menu block {%- endcomment -%}
+            {%- assign megamenu_block = nil -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'mega_menu' -%}
+                {%- assign target_title = block.settings.menu_item_title | downcase | strip -%}
+                {%- assign link_title = link.title | downcase | strip -%}
+                {%- if target_title == link_title -%}
+                  {%- assign megamenu_block = block -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            <li class="nectar-subnav__item{% if is_active %} is-active{% endif %}{% if megamenu_block != nil %} has-megamenu{% elsif link.links != blank %} has-dropdown{% endif %}" {{ megamenu_block.shopify_attributes }}>
               <a href="{{ link.url }}" class="nectar-subnav__link{% if is_active %} is-active{% endif %}">
                 {{ link.title | escape }}
-                {%- if link.links != blank -%}
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;">
+                {%- if megamenu_block.settings.badge_text != blank -%}
+                  <span class="nectar-menu-badge" style="background-color: {{ megamenu_block.settings.badge_bg_color }}; color: {{ megamenu_block.settings.badge_text_color }};">
+                    {{ megamenu_block.settings.badge_text }}
+                  </span>
+                {%- endif -%}
+                {%- if megamenu_block != nil or link.links != blank -%}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;" aria-hidden="true">
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 {%- endif -%}
               </a>
-              {%- if link.links != blank -%}
+
+              {%- if megamenu_block != nil -%}
+                <!-- Full-Width Dynamic Mega Menu Dropdown -->
+                <div class="nectar-megamenu">
+                  <div class="nectar-megamenu__inner">
+                    <!-- Navigation / Categories Columns -->
+                    <div class="nectar-megamenu__nav-cols">
+                      {%- if link.links.size > 0 -%}
+                        {%- for childlink in link.links -%}
+                          <div class="nectar-megamenu__col">
+                            <a href="{{ childlink.url }}" class="nectar-megamenu__heading-link">
+                              {{ childlink.title | escape }}
+                            </a>
+                            {%- if childlink.links.size > 0 -%}
+                              <ul class="nectar-megamenu__list" role="list">
+                                {%- for grandchild in childlink.links -%}
+                                  <li>
+                                    <a href="{{ grandchild.url }}" class="nectar-megamenu__link">
+                                      {{ grandchild.title | escape }}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </div>
+                        {%- endfor -%}
+                      {%- else -%}
+                        <!-- Default Rich Categories when link has no nested childlinks -->
+                        <div class="nectar-megamenu__col">
+                          <span class="nectar-megamenu__heading-link">Immunity & Defense</span>
+                          <ul class="nectar-megamenu__list" role="list">
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Vitamin C & Zinc</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Natural Herbal Extracts</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Cold & Flu Support</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Antioxidant Blends</a></li>
+                          </ul>
+                        </div>
+                        <div class="nectar-megamenu__col">
+                          <span class="nectar-megamenu__heading-link">Daily Wellness</span>
+                          <ul class="nectar-megamenu__list" role="list">
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Multivitamin Tablets</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Omega-3 & Fish Oil</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Energy & Stamina</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Gut & Digestive Health</a></li>
+                          </ul>
+                        </div>
+                        <div class="nectar-megamenu__col">
+                          <span class="nectar-megamenu__heading-link">Skin & Hair Care</span>
+                          <ul class="nectar-megamenu__list" role="list">
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Collagen Peptides</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Biotin Hair Gummies</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Glow & Hydration Serums</a></li>
+                            <li><a href="/collections/all" class="nectar-megamenu__link">Anti-Aging Nutrition</a></li>
+                          </ul>
+                        </div>
+                      {%- endif -%}
+                    </div>
+
+                    <!-- Right Side Media: Promo Banners and Featured Products -->
+                    <div class="nectar-megamenu__side-media">
+                      {%- if megamenu_block.settings.featured_product_1 != blank -%}
+                        {%- assign f_product_1 = megamenu_block.settings.featured_product_1 -%}
+                        <div class="nectar-megamenu__product-card">
+                          <div class="nectar-megamenu__product-badge">Featured</div>
+                          <a href="{{ f_product_1.url }}" class="nectar-megamenu__product-img-wrap">
+                            {%- if f_product_1.featured_image -%}
+                              <img src="{{ f_product_1.featured_image | image_url: width: 350 }}" alt="{{ f_product_1.title | escape }}" loading="lazy" />
+                            {%- else -%}
+                              {{ 'product-1' | placeholder_svg_tag }}
+                            {%- endif -%}
+                          </a>
+                          <div class="nectar-megamenu__product-info">
+                            <a href="{{ f_product_1.url }}" class="nectar-megamenu__product-title">{{ f_product_1.title }}</a>
+                            <div class="nectar-megamenu__product-price">{{ f_product_1.price | money }}</div>
+                            <a href="{{ f_product_1.url }}" class="nectar-megamenu__product-btn">View Product</a>
+                          </div>
+                        </div>
+                      {%- endif -%}
+
+                      {%- if megamenu_block.settings.featured_product_2 != blank -%}
+                        {%- assign f_product_2 = megamenu_block.settings.featured_product_2 -%}
+                        <div class="nectar-megamenu__product-card">
+                          <div class="nectar-megamenu__product-badge">Popular</div>
+                          <a href="{{ f_product_2.url }}" class="nectar-megamenu__product-img-wrap">
+                            {%- if f_product_2.featured_image -%}
+                              <img src="{{ f_product_2.featured_image | image_url: width: 350 }}" alt="{{ f_product_2.title | escape }}" loading="lazy" />
+                            {%- else -%}
+                              {{ 'product-2' | placeholder_svg_tag }}
+                            {%- endif -%}
+                          </a>
+                          <div class="nectar-megamenu__product-info">
+                            <a href="{{ f_product_2.url }}" class="nectar-megamenu__product-title">{{ f_product_2.title }}</a>
+                            <div class="nectar-megamenu__product-price">{{ f_product_2.price | money }}</div>
+                            <a href="{{ f_product_2.url }}" class="nectar-megamenu__product-btn">View Product</a>
+                          </div>
+                        </div>
+                      {%- endif -%}
+
+                      {%- if megamenu_block.settings.promo_heading_1 != blank or megamenu_block.settings.promo_image_1 != blank -%}
+                        <div class="nectar-megamenu__promo-banner">
+                          <a href="{{ megamenu_block.settings.promo_link_1 | default: '/collections/all' }}" class="nectar-megamenu__promo-inner">
+                            {%- if megamenu_block.settings.promo_image_1 != blank -%}
+                              <img src="{{ megamenu_block.settings.promo_image_1 | image_url: width: 500 }}" alt="{{ megamenu_block.settings.promo_heading_1 | escape }}" class="nectar-megamenu__promo-img" loading="lazy" />
+                            {%- endif -%}
+                            <div class="nectar-megamenu__promo-content">
+                              <span class="nectar-megamenu__promo-tag">{{ megamenu_block.settings.promo_subheading_1 | default: 'Special Offer' }}</span>
+                              <h4 class="nectar-megamenu__promo-title">{{ megamenu_block.settings.promo_heading_1 | default: 'New Collection' }}</h4>
+                              <span class="nectar-megamenu__promo-btn">{{ megamenu_block.settings.promo_button_text_1 | default: 'Explore Now' }} &rarr;</span>
+                            </div>
+                          </a>
+                        </div>
+                      {%- endif -%}
+
+                      {%- if megamenu_block.settings.promo_heading_2 != blank or megamenu_block.settings.promo_image_2 != blank -%}
+                        <div class="nectar-megamenu__promo-banner">
+                          <a href="{{ megamenu_block.settings.promo_link_2 | default: '/collections/all' }}" class="nectar-megamenu__promo-inner promo--alt">
+                            {%- if megamenu_block.settings.promo_image_2 != blank -%}
+                              <img src="{{ megamenu_block.settings.promo_image_2 | image_url: width: 500 }}" alt="{{ megamenu_block.settings.promo_heading_2 | escape }}" class="nectar-megamenu__promo-img" loading="lazy" />
+                            {%- endif -%}
+                            <div class="nectar-megamenu__promo-content">
+                              <span class="nectar-megamenu__promo-tag">{{ megamenu_block.settings.promo_subheading_2 | default: 'Trending' }}</span>
+                              <h4 class="nectar-megamenu__promo-title">{{ megamenu_block.settings.promo_heading_2 | default: 'Best Sellers' }}</h4>
+                              <span class="nectar-megamenu__promo-btn">{{ megamenu_block.settings.promo_button_text_2 | default: 'Shop Now' }} &rarr;</span>
+                            </div>
+                          </a>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              {%- elsif link.links != blank -%}
+                <!-- Regular Dropdown for standard submenu links -->
                 <ul class="nectar-subnav__dropdown" role="list">
                   {%- for childlink in link.links -%}
                     <li>
@@ -231,11 +371,100 @@
           <li class="nectar-subnav__item is-active">
             <a href="{{ routes.root_url }}" class="nectar-subnav__link is-active">Home</a>
           </li>
-          <li class="nectar-subnav__item">
-            <a href="/collections/all" class="nectar-subnav__link">Product by Benefits</a>
+          <li class="nectar-subnav__item has-megamenu">
+            <a href="/collections/all" class="nectar-subnav__link">
+              Product by Benefits
+              <span class="nectar-menu-badge" style="background-color: #EE5A24; color: #FFFFFF;">HOT</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="nectar-megamenu">
+              <div class="nectar-megamenu__inner">
+                <div class="nectar-megamenu__nav-cols">
+                  <div class="nectar-megamenu__col">
+                    <span class="nectar-megamenu__heading-link">Immunity & Defense</span>
+                    <ul class="nectar-megamenu__list" role="list">
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Vitamin C & Zinc</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Natural Herbal Extracts</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Cold & Flu Support</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Antioxidant Blends</a></li>
+                    </ul>
+                  </div>
+                  <div class="nectar-megamenu__col">
+                    <span class="nectar-megamenu__heading-link">Daily Wellness</span>
+                    <ul class="nectar-megamenu__list" role="list">
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Multivitamin Tablets</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Omega-3 & Fish Oil</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Energy & Stamina</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Gut Health & Probiotics</a></li>
+                    </ul>
+                  </div>
+                  <div class="nectar-megamenu__col">
+                    <span class="nectar-megamenu__heading-link">Skin & Hair Care</span>
+                    <ul class="nectar-megamenu__list" role="list">
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Collagen Peptides</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Biotin Hair Gummies</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Glow & Hydration Serums</a></li>
+                      <li><a href="/collections/all" class="nectar-megamenu__link">Anti-Aging Nutrition</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="nectar-megamenu__side-media">
+                  <div class="nectar-megamenu__promo-banner">
+                    <a href="/collections/all" class="nectar-megamenu__promo-inner">
+                      <div class="nectar-megamenu__promo-content">
+                        <span class="nectar-megamenu__promo-tag">Featured Offer</span>
+                        <h4 class="nectar-megamenu__promo-title">100% Organic Nutrition</h4>
+                        <span class="nectar-megamenu__promo-btn">Explore Now &rarr;</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
-          <li class="nectar-subnav__item">
-            <a href="/collections" class="nectar-subnav__link">Product by Category</a>
+          <li class="nectar-subnav__item has-megamenu">
+            <a href="/collections" class="nectar-subnav__link">
+              Product by Category
+              <span class="nectar-menu-badge" style="background-color: #0A8754; color: #FFFFFF;">NEW</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="nectar-megamenu">
+              <div class="nectar-megamenu__inner">
+                <div class="nectar-megamenu__nav-cols">
+                  <div class="nectar-megamenu__col">
+                    <span class="nectar-megamenu__heading-link">Nutrition & Herbs</span>
+                    <ul class="nectar-megamenu__list" role="list">
+                      <li><a href="/collections" class="nectar-megamenu__link">Superfood Powders</a></li>
+                      <li><a href="/collections" class="nectar-megamenu__link">Plant Protein</a></li>
+                      <li><a href="/collections" class="nectar-megamenu__link">Ayurvedic Juices</a></li>
+                    </ul>
+                  </div>
+                  <div class="nectar-megamenu__col">
+                    <span class="nectar-megamenu__heading-link">Organic Beauty</span>
+                    <ul class="nectar-megamenu__list" role="list">
+                      <li><a href="/collections" class="nectar-megamenu__link">Natural Face Oils</a></li>
+                      <li><a href="/collections" class="nectar-megamenu__link">Herbal Shampoos</a></li>
+                      <li><a href="/collections" class="nectar-megamenu__link">Body Cleansers</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="nectar-megamenu__side-media">
+                  <div class="nectar-megamenu__promo-banner">
+                    <a href="/collections" class="nectar-megamenu__promo-inner promo--alt">
+                      <div class="nectar-megamenu__promo-content">
+                        <span class="nectar-megamenu__promo-tag">Trending</span>
+                        <h4 class="nectar-megamenu__promo-title">Best Sellers Collection</h4>
+                        <span class="nectar-megamenu__promo-btn">Shop Now &rarr;</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="nectar-subnav__item">
             <a href="/pages/free-consultation" class="nectar-subnav__link">Free Consultation</a>
@@ -252,7 +481,7 @@
   </nav>
 </div>
 
-<!-- Sliding Side Drawer -->
+<!-- Sliding Side Drawer for Mobile/Tablet -->
 <div class="nectar-drawer-backdrop" aria-hidden="true"></div>
 <aside class="nectar-drawer" aria-label="Mobile Navigation" role="dialog" aria-modal="true">
   <div class="nectar-drawer__header">
@@ -270,10 +499,48 @@
     <ul class="nectar-drawer__menu" role="list">
       {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
         {%- for link in linklists[section.settings.menu].links -%}
+          {%- assign megamenu_block = nil -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'mega_menu' -%}
+              {%- assign target_title = block.settings.menu_item_title | downcase | strip -%}
+              {%- assign link_title = link.title | downcase | strip -%}
+              {%- if target_title == link_title -%}
+                {%- assign megamenu_block = block -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+
           <li class="nectar-drawer__item">
-            <a href="{{ link.url }}" class="nectar-drawer__link{% if link.active %} is-active{% endif %}">
-              {{ link.title | escape }}
-            </a>
+            <div class="nectar-drawer__link-row">
+              <a href="{{ link.url }}" class="nectar-drawer__link{% if link.active %} is-active{% endif %}">
+                {{ link.title | escape }}
+              </a>
+              {%- if megamenu_block != nil or link.links != blank -%}
+                <button type="button" class="nectar-drawer__toggle-btn" aria-label="Expand submenu">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+              {%- endif -%}
+            </div>
+            {%- if megamenu_block != nil or link.links != blank -%}
+              <div class="nectar-drawer__subcontent">
+                <ul class="nectar-drawer__sublist" role="list">
+                  {%- if link.links.size > 0 -%}
+                    {%- for childlink in link.links -%}
+                      <li>
+                        <a href="{{ childlink.url }}" class="nectar-drawer__sublink">{{ childlink.title | escape }}</a>
+                      </li>
+                    {%- endfor -%}
+                  {%- else -%}
+                    <li><a href="/collections/all" class="nectar-drawer__sublink">Immunity & Defense</a></li>
+                    <li><a href="/collections/all" class="nectar-drawer__sublink">Daily Wellness</a></li>
+                    <li><a href="/collections/all" class="nectar-drawer__sublink">Skin & Hair Care</a></li>
+                  {%- endif -%}
+                </ul>
+              </div>
+            {%- endif -%}
           </li>
         {%- endfor -%}
       {%- else -%}
@@ -316,8 +583,8 @@
     "@context": "http://schema.org",
     "@type": "Organization",
     "name": {{ shop.name | json }},
-    {% if section.settings.logo or settings.logo %}
-      "logo": {{ section.settings.logo | default: settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% if settings.logo %}
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
     "url": {{ request.origin | append: page.url | json }}
   }
@@ -346,6 +613,10 @@
   "class": "section-header",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Logo and logo width can be configured in Theme Settings > Logo."
+    },
+    {
       "type": "header",
       "content": "Top Accent Strip"
     },
@@ -373,22 +644,7 @@
     },
     {
       "type": "header",
-      "content": "Logo Settings"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Custom Logo Image"
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "min": 80,
-      "max": 300,
-      "step": 10,
-      "unit": "px",
-      "label": "Custom Logo Width",
-      "default": 170
+      "content": "Logo Colors (When using text logo)"
     },
     {
       "type": "color",
@@ -539,6 +795,118 @@
     }
   ],
   "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item_title",
+          "label": "Menu Item Title",
+          "info": "Enter the exact title of the menu item from your menu list (e.g., 'Product by Benefits' or 'Product by Category')",
+          "default": "Product by Category"
+        },
+        {
+          "type": "header",
+          "content": "Badge / Highlight"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text (e.g. HOT, NEW, SALE)"
+        },
+        {
+          "type": "color",
+          "id": "badge_bg_color",
+          "label": "Badge Background Color",
+          "default": "#EE5A24"
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge Text Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Featured Products"
+        },
+        {
+          "type": "product",
+          "id": "featured_product_1",
+          "label": "Featured Product 1"
+        },
+        {
+          "type": "product",
+          "id": "featured_product_2",
+          "label": "Featured Product 2"
+        },
+        {
+          "type": "header",
+          "content": "Category Promo Banner 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image_1",
+          "label": "Banner 1 Image"
+        },
+        {
+          "type": "text",
+          "id": "promo_heading_1",
+          "label": "Banner 1 Heading",
+          "default": "New Arrivals"
+        },
+        {
+          "type": "text",
+          "id": "promo_subheading_1",
+          "label": "Banner 1 Subheading",
+          "default": "Special Offer"
+        },
+        {
+          "type": "text",
+          "id": "promo_button_text_1",
+          "label": "Banner 1 Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "promo_link_1",
+          "label": "Banner 1 Link"
+        },
+        {
+          "type": "header",
+          "content": "Category Promo Banner 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image_2",
+          "label": "Banner 2 Image"
+        },
+        {
+          "type": "text",
+          "id": "promo_heading_2",
+          "label": "Banner 2 Heading",
+          "default": "Best Sellers"
+        },
+        {
+          "type": "text",
+          "id": "promo_subheading_2",
+          "label": "Banner 2 Subheading",
+          "default": "Trending"
+        },
+        {
+          "type": "text",
+          "id": "promo_button_text_2",
+          "label": "Banner 2 Button Label",
+          "default": "Explore"
+        },
+        {
+          "type": "url",
+          "id": "promo_link_2",
+          "label": "Banner 2 Link"
+        }
+      ]
+    },
     {
       "type": "@app"
     }
