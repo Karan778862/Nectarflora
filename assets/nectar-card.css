@@ -1,0 +1,650 @@
+/* ==========================================================================
+   NECTARFLORA UNIVERSAL PRODUCT CARD & CAROUSEL STYLES
+   ========================================================================== */
+
+.nectar-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  font-family: inherit;
+}
+
+.nectar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15, 61, 44, 0.09);
+  border-color: #CBD5E1;
+}
+
+/* 1. Media Box */
+.nectar-card__media-box {
+  background: #EAF5EE;
+  border-radius: 12px;
+  margin: 8px 8px 0 8px;
+  height: 220px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nectar-card__media-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.nectar-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  background: #EE4B2B;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(238, 75, 43, 0.2);
+}
+
+.nectar-card__badge--bestseller {
+  background: #EE5A24;
+}
+
+.nectar-card__badge--new {
+  background: #EE4B2B;
+}
+
+.nectar-card__badge--buyget {
+  background: #EE4B2B;
+}
+
+.nectar-card__badge--mostloved {
+  background: #EE4526;
+}
+
+.nectar-card__wishlist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #475569;
+  transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  padding: 0;
+}
+
+.nectar-card__wishlist:hover {
+  transform: scale(1.12);
+  color: #E11D48;
+}
+
+.nectar-card__wishlist.is-active {
+  color: #E11D48;
+}
+
+.nectar-card__wishlist.is-active svg {
+  fill: #E11D48;
+}
+
+.nectar-card__img {
+  max-height: 165px;
+  max-width: 82%;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.nectar-card:hover .nectar-card__img {
+  transform: scale(1.05);
+}
+
+.nectar-card__bottle-svg {
+  width: 86px;
+  height: 145px;
+  transition: transform 0.35s ease;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+}
+
+.nectar-card:hover .nectar-card__bottle-svg {
+  transform: scale(1.05);
+}
+
+/* 2. Card Body */
+.nectar-card__body {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.nectar-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.nectar-card__stars {
+  color: #F59E0B;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.nectar-card__rating-text {
+  color: #64748B;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.nectar-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.35;
+  margin: 0 0 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nectar-card__title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nectar-card__title a:hover {
+  color: #0A8754;
+}
+
+.nectar-card__subtitle {
+  font-size: 12px;
+  color: #64748B;
+  margin: 0 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.nectar-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
+}
+
+.nectar-card__price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F3D2C;
+  line-height: 1.2;
+}
+
+.nectar-card__compare-price {
+  font-size: 13px;
+  color: #94A3B8;
+  text-decoration: line-through;
+  line-height: 1.2;
+}
+
+.nectar-card__discount-pill {
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803D;
+  background: #DCFCE7;
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1.2;
+}
+
+.nectar-card__savings {
+  font-size: 11px;
+  color: #64748B;
+  margin-bottom: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* 3. Add to Cart Button */
+.nectar-card__atc-btn {
+  margin-top: auto;
+  width: 100%;
+  background: #0A8754;
+  color: #FFFFFF;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 10.5px 14px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+.nectar-card__atc-btn:hover {
+  background: #086F45;
+  box-shadow: 0 4px 12px rgba(10, 135, 84, 0.25);
+}
+
+.nectar-card__atc-btn:active {
+  transform: scale(0.98);
+}
+
+.nectar-card__atc-btn:disabled {
+  background: #94A3B8;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.75;
+}
+
+.nectar-card__atc-btn.is-loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.nectar-card__atc-btn.is-loading .nectar-card__spinner {
+  display: inline-block;
+  animation: nectarSpin 0.7s linear infinite;
+}
+
+.nectar-card__atc-btn.is-added {
+  background: #0D3B2B;
+}
+
+@keyframes nectarSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes nectarBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+
+.badge-bounce {
+  animation: nectarBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ==========================================================================
+   CAROUSEL & SECTION CONTAINER STYLES
+   ========================================================================== */
+
+.nectar-products-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  background: #FFFFFF;
+}
+
+.nectar-products-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.nectar-section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.nectar-section-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0D3B2B;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.nectar-section-subtitle {
+  font-size: 15px;
+  color: #64748B;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Carousel Track */
+.nectar-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.nectar-carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 8px 4px 16px;
+  margin: -8px -4px 0;
+}
+
+.nectar-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.nectar-carousel-item {
+  flex: 0 0 calc(25% - 15px);
+  min-width: 260px;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+}
+
+/* Grid Layout */
+.nectar-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.nectar-grid-layout .nectar-carousel-item {
+  flex: initial;
+  min-width: 0;
+}
+
+/* Navigation Arrow Buttons */
+.nectar-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: #0D3B2B;
+  transition: all 0.2s ease;
+}
+
+.nectar-slider-arrow:hover {
+  background: #0D3B2B;
+  color: #FFFFFF;
+  border-color: #0D3B2B;
+  box-shadow: 0 6px 16px rgba(13, 59, 43, 0.2);
+}
+
+.nectar-slider-arrow--prev {
+  left: -22px;
+}
+
+.nectar-slider-arrow--next {
+  right: -22px;
+}
+
+/* View All Button */
+.nectar-section-footer {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.nectar-view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 36px;
+  border-radius: 30px;
+  border: 1.5px solid #0D3B2B;
+  background: #FFFFFF;
+  color: #0D3B2B;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nectar-view-all-btn:hover {
+  background: #0D3B2B;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(13, 59, 43, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Category Filter Tabs (For Shop by Category) */
+.nectar-category-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.nectar-cat-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 24px;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  color: #1E293B;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.nectar-cat-tab:hover {
+  border-color: #0D3B2B;
+  color: #0D3B2B;
+  background: #F8FAF9;
+}
+
+.nectar-cat-tab.is-active {
+  background: #0D3B2B;
+  color: #FFFFFF;
+  border-color: #0D3B2B;
+  box-shadow: 0 4px 10px rgba(13, 59, 43, 0.2);
+}
+
+.nectar-cat-tab__icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Tab Panels */
+.nectar-cat-panel {
+  display: none;
+}
+
+.nectar-cat-panel.is-active {
+  display: block;
+  animation: nectarFadeIn 0.3s ease;
+}
+
+@keyframes nectarFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+
+@media screen and (max-width: 989px) {
+  .nectar-carousel-item {
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: 240px;
+  }
+  .nectar-grid-layout {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nectar-products-section {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  
+  .nectar-products-container {
+    padding: 0 16px;
+  }
+
+  .nectar-section-title {
+    font-size: 24px;
+  }
+
+  .nectar-section-subtitle {
+    font-size: 13.5px;
+  }
+
+  .nectar-section-header {
+    margin-bottom: 22px;
+  }
+
+  /* Carousel on Mobile */
+  .nectar-carousel-track {
+    gap: 14px;
+    padding-bottom: 12px;
+  }
+
+  .nectar-carousel-item {
+    flex: 0 0 76%;
+    min-width: 220px;
+  }
+
+  .nectar-mobile-grid-2 .nectar-grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .nectar-slider-arrow {
+    display: none;
+  }
+
+  .nectar-card__media-box {
+    height: 180px;
+  }
+
+  .nectar-card__bottle-svg {
+    width: 72px;
+    height: 125px;
+  }
+
+  .nectar-card__img {
+    max-height: 140px;
+  }
+
+  .nectar-card__body {
+    padding: 12px 12px 14px;
+  }
+
+  .nectar-card__title {
+    font-size: 14px;
+  }
+
+  .nectar-card__subtitle {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .nectar-card__price {
+    font-size: 15.5px;
+  }
+
+  .nectar-card__compare-price {
+    font-size: 12px;
+  }
+
+  .nectar-card__discount-pill {
+    font-size: 10px;
+    padding: 2px 5px;
+  }
+
+  .nectar-card__savings {
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+
+  .nectar-card__atc-btn {
+    font-size: 12.5px;
+    padding: 9.5px 10px;
+  }
+
+  .nectar-category-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .nectar-category-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nectar-cat-tab {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    font-size: 12.5px;
+  }
+}
+
+/* ==========================================================================
+   DAWN COLLECTION GRID & COMPATIBILITY
+   ========================================================================== */
+.product-grid .grid__item,
+#product-grid .grid__item,
+.contains-card--product {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.product-grid .card-wrapper,
+#product-grid .card-wrapper,
+.card-wrapper.product-card-wrapper {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+  background: transparent !important;
+}
+
+.card-wrapper .nectar-card {
+  width: 100%;
+  flex-grow: 1;
+}
+

@@ -1,0 +1,432 @@
+{{ 'nectar-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nectar-card.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="nectar-products-section section-{{ section.id }}-padding {% if section.settings.layout_mobile == 'grid_2' %}nectar-mobile-grid-2{% endif %}" id="ShopByCategory-{{ section.id }}">
+  <div class="nectar-products-container">
+    
+    <!-- Section Header -->
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nectar-section-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="nectar-section-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="nectar-section-subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Category Filter Tabs -->
+    <div class="nectar-category-tabs">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="nectar-cat-tab {% if forloop.first %}is-active{% endif %}"
+          data-nectar-tab
+          data-target="cat-panel-{{ section.id }}-{{ block.id }}"
+          {{ block.shopify_attributes }}
+        >
+          <span class="nectar-cat-tab__icon">🍃</span>
+          <span>{{ block.settings.title | escape }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+
+    <!-- Tab Panels -->
+    {%- for block in section.blocks -%}
+      {%- assign collection = block.settings.collection -%}
+      {%- assign has_products = false -%}
+      {%- if collection != blank and collection.products_count > 0 -%}
+        {%- assign has_products = true -%}
+      {%- endif -%}
+
+      <div
+        class="nectar-cat-panel {% if forloop.first %}is-active{% endif %}"
+        id="cat-panel-{{ section.id }}-{{ block.id }}"
+      >
+        <div class="nectar-carousel-wrapper">
+          {%- if section.settings.layout_desktop == 'carousel' -%}
+            <button type="button" class="nectar-slider-arrow nectar-slider-arrow--prev" data-nectar-slider-prev aria-label="Previous">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          {%- endif -%}
+
+          <div class="{% if section.settings.layout_desktop == 'grid' %}nectar-grid-layout{% else %}nectar-carousel-track{% endif %}">
+            {%- if has_products -%}
+              {%- for product in collection.products limit: section.settings.products_to_show -%}
+                <div class="nectar-carousel-item">
+                  {% render 'card-product',
+                    card_product: product,
+                    section_id: section.id,
+                    product_view_context: 'collection'
+                  %}
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <!-- Fallback Products matching Image 1 -->
+              <!-- Product 1: Marine Collagen Peptides -->
+              <div class="nectar-carousel-item">
+                <div class="nectar-card">
+                  <div class="nectar-card__media-box">
+                    <span class="nectar-card__badge nectar-card__badge--buyget">BUY 2 GET 1</span>
+                    <button type="button" class="nectar-card__wishlist" data-nectar-wishlist data-product-id="mock-cat-1" aria-label="Add to wishlist">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button>
+                    <a href="{{ section.settings.view_all_link | default: '/collections/all' }}" class="nectar-card__media-link">
+                      <svg class="nectar-card__bottle-svg" viewBox="0 0 100 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="35" y="8" width="30" height="20" rx="3" fill="#1B5E43" />
+                        <rect x="32" y="24" width="36" height="5" rx="2" fill="#1B5E43" filter="brightness(0.9)" />
+                        <rect x="18" y="28" width="64" height="134" rx="16" fill="#1B5E43" />
+                        <path d="M22 42C22 35 27 30 34 30H42V158H34C27 158 22 153 22 146V42Z" fill="white" fill-opacity="0.08" />
+                        <rect x="23" y="65" width="54" height="52" rx="6" fill="#FFFFFF" />
+                        <text x="50" y="95" fill="#0F172A" font-size="9" font-weight="800" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="0.5">COLLAGEN</text>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="nectar-card__body">
+                    <div class="nectar-card__rating">
+                      <span class="nectar-card__stars">★★★★★</span>
+                      <span class="nectar-card__rating-text">4.8 (3.2k reviews)</span>
+                    </div>
+                    <h3 class="nectar-card__title"><a href="{{ section.settings.view_all_link | default: '/collections/all' }}">Marine Collagen Peptides</a></h3>
+                    <div class="nectar-card__subtitle">Glowing skin • Joint support</div>
+                    <div class="nectar-card__price-row">
+                      <span class="nectar-card__price">₹1,299</span>
+                      <span class="nectar-card__compare-price">₹1,799</span>
+                      <span class="nectar-card__discount-pill">28% off</span>
+                    </div>
+                    <div class="nectar-card__savings">You save ₹500 • Incl. of all taxes</div>
+                    <button type="button" class="nectar-card__atc-btn" data-nectar-quick-add data-variant-id="mock-cat-1">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product 2: Plant Biotin Hair Vitamins -->
+              <div class="nectar-carousel-item">
+                <div class="nectar-card">
+                  <div class="nectar-card__media-box">
+                    <span class="nectar-card__badge nectar-card__badge--bestseller">BESTSELLER</span>
+                    <button type="button" class="nectar-card__wishlist" data-nectar-wishlist data-product-id="mock-cat-2" aria-label="Add to wishlist">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button>
+                    <a href="{{ section.settings.view_all_link | default: '/collections/all' }}" class="nectar-card__media-link">
+                      <svg class="nectar-card__bottle-svg" viewBox="0 0 100 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="35" y="8" width="30" height="20" rx="3" fill="#DDA10C" />
+                        <rect x="32" y="24" width="36" height="5" rx="2" fill="#DDA10C" filter="brightness(0.9)" />
+                        <rect x="18" y="28" width="64" height="134" rx="16" fill="#DDA10C" />
+                        <path d="M22 42C22 35 27 30 34 30H42V158H34C27 158 22 153 22 146V42Z" fill="white" fill-opacity="0.08" />
+                        <rect x="23" y="65" width="54" height="52" rx="6" fill="#FFFFFF" />
+                        <text x="50" y="95" fill="#0F172A" font-size="9" font-weight="800" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="0.5">BIOTIN</text>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="nectar-card__body">
+                    <div class="nectar-card__rating">
+                      <span class="nectar-card__stars">★★★★★</span>
+                      <span class="nectar-card__rating-text">4.7 (2.4k reviews)</span>
+                    </div>
+                    <h3 class="nectar-card__title"><a href="{{ section.settings.view_all_link | default: '/collections/all' }}">Plant Biotin Hair Vitamins</a></h3>
+                    <div class="nectar-card__subtitle">Thicker hair • Stronger nails</div>
+                    <div class="nectar-card__price-row">
+                      <span class="nectar-card__price">₹699</span>
+                      <span class="nectar-card__compare-price">₹999</span>
+                      <span class="nectar-card__discount-pill">30% off</span>
+                    </div>
+                    <div class="nectar-card__savings">You save ₹300 • Incl. of all taxes</div>
+                    <button type="button" class="nectar-card__atc-btn" data-nectar-quick-add data-variant-id="mock-cat-2">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product 3: Liver Detox with Milk Thistle -->
+              <div class="nectar-carousel-item">
+                <div class="nectar-card">
+                  <div class="nectar-card__media-box">
+                    <span class="nectar-card__badge nectar-card__badge--new">NEW LAUNCH</span>
+                    <button type="button" class="nectar-card__wishlist" data-nectar-wishlist data-product-id="mock-cat-3" aria-label="Add to wishlist">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button>
+                    <a href="{{ section.settings.view_all_link | default: '/collections/all' }}" class="nectar-card__media-link">
+                      <svg class="nectar-card__bottle-svg" viewBox="0 0 100 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="35" y="8" width="30" height="20" rx="3" fill="#8E4A28" />
+                        <rect x="32" y="24" width="36" height="5" rx="2" fill="#8E4A28" filter="brightness(0.9)" />
+                        <rect x="18" y="28" width="64" height="134" rx="16" fill="#8E4A28" />
+                        <path d="M22 42C22 35 27 30 34 30H42V158H34C27 158 22 153 22 146V42Z" fill="white" fill-opacity="0.08" />
+                        <rect x="23" y="65" width="54" height="52" rx="6" fill="#FFFFFF" />
+                        <text x="50" y="95" fill="#0F172A" font-size="9" font-weight="800" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="0.5">LIVER</text>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="nectar-card__body">
+                    <div class="nectar-card__rating">
+                      <span class="nectar-card__stars">★★★★★</span>
+                      <span class="nectar-card__rating-text">4.7 (1.1k reviews)</span>
+                    </div>
+                    <h3 class="nectar-card__title"><a href="{{ section.settings.view_all_link | default: '/collections/all' }}">Liver Detox with Milk Thistle</a></h3>
+                    <div class="nectar-card__subtitle">Liver care • Better digestion</div>
+                    <div class="nectar-card__price-row">
+                      <span class="nectar-card__price">₹649</span>
+                      <span class="nectar-card__compare-price">₹899</span>
+                      <span class="nectar-card__discount-pill">28% off</span>
+                    </div>
+                    <div class="nectar-card__savings">You save ₹250 • Incl. of all taxes</div>
+                    <button type="button" class="nectar-card__atc-btn" data-nectar-quick-add data-variant-id="mock-cat-3">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product 4: ACV Moringa Effervescent -->
+              <div class="nectar-carousel-item">
+                <div class="nectar-card">
+                  <div class="nectar-card__media-box">
+                    <span class="nectar-card__badge nectar-card__badge--buyget">BUY 1 GET 1</span>
+                    <button type="button" class="nectar-card__wishlist" data-nectar-wishlist data-product-id="mock-cat-4" aria-label="Add to wishlist">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button>
+                    <a href="{{ section.settings.view_all_link | default: '/collections/all' }}" class="nectar-card__media-link">
+                      <svg class="nectar-card__bottle-svg" viewBox="0 0 100 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="35" y="8" width="30" height="20" rx="3" fill="#3D9E4E" />
+                        <rect x="32" y="24" width="36" height="5" rx="2" fill="#3D9E4E" filter="brightness(0.9)" />
+                        <rect x="18" y="28" width="64" height="134" rx="16" fill="#3D9E4E" />
+                        <path d="M22 42C22 35 27 30 34 30H42V158H34C27 158 22 153 22 146V42Z" fill="white" fill-opacity="0.08" />
+                        <rect x="23" y="65" width="54" height="52" rx="6" fill="#FFFFFF" />
+                        <text x="50" y="95" fill="#0F172A" font-size="9" font-weight="800" font-family="system-ui, sans-serif" text-anchor="middle" letter-spacing="0.5">ACV</text>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="nectar-card__body">
+                    <div class="nectar-card__rating">
+                      <span class="nectar-card__stars">★★★★★</span>
+                      <span class="nectar-card__rating-text">4.7 (4.5k reviews)</span>
+                    </div>
+                    <h3 class="nectar-card__title"><a href="{{ section.settings.view_all_link | default: '/collections/all' }}">ACV Moringa Effervescent</a></h3>
+                    <div class="nectar-card__subtitle">Metabolism • Craving control</div>
+                    <div class="nectar-card__price-row">
+                      <span class="nectar-card__price">₹449</span>
+                      <span class="nectar-card__compare-price">₹650</span>
+                      <span class="nectar-card__discount-pill">31% off</span>
+                    </div>
+                    <div class="nectar-card__savings">You save ₹201 • Incl. of all taxes</div>
+                    <button type="button" class="nectar-card__atc-btn" data-nectar-quick-add data-variant-id="mock-cat-4">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                      </svg>
+                      <span>Add to Cart</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.layout_desktop == 'carousel' -%}
+            <button type="button" class="nectar-slider-arrow nectar-slider-arrow--next" data-nectar-slider-next aria-label="Next">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop by Category",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Shop by Category",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Explore our full range, category by category",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show per tab"
+    },
+    {
+      "type": "select",
+      "id": "layout_desktop",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Carousel Slider"
+        },
+        {
+          "value": "grid",
+          "label": "Grid Layout"
+        }
+      ],
+      "default": "grid",
+      "label": "Desktop Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_mobile",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Horizontal Swipe Carousel"
+        },
+        {
+          "value": "grid_2",
+          "label": "2 Columns Grid"
+        }
+      ],
+      "default": "carousel",
+      "label": "Mobile Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_tab",
+      "name": "Category Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Name",
+          "default": "Category"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Category",
+      "blocks": [
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Bestsellers"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Skin"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Hair"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Sleep & Stress"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Liver & Digestion"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Brain"
+          }
+        },
+        {
+          "type": "category_tab",
+          "settings": {
+            "title": "Women Health"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
