@@ -42,19 +42,13 @@ function initNectarDrawer() {
 }
 
 function initDrawerAccordions() {
-  const toggleBtns = document.querySelectorAll('.nectar-drawer__toggle-btn');
-  toggleBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
+  const accordionItems = document.querySelectorAll('.nectar-drawer__item.has-accordion');
+  accordionItems.forEach((item) => {
+    const trigger = item.querySelector('.nectar-drawer__link-row');
+    if (!trigger) return;
+    trigger.addEventListener('click', (e) => {
       e.preventDefault();
-      e.stopPropagation();
-      const item = btn.closest('.nectar-drawer__item');
-      if (!item) return;
-      const content = item.querySelector('.nectar-drawer__subcontent');
-      if (content) {
-        const isOpen = content.classList.contains('is-open');
-        content.classList.toggle('is-open', !isOpen);
-        btn.classList.toggle('is-active', !isOpen);
-      }
+      item.classList.toggle('is-expanded');
     });
   });
 }

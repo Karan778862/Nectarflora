@@ -188,14 +188,13 @@
   <nav class="nectar-subnav" aria-label="Main Navigation">
     <div class="nectar-subnav__container">
       <ul class="nectar-subnav__menu" role="list">
-        {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
+        {%- if section.settings.use_complete_nectar_menu == false and section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
           {%- for link in linklists[section.settings.menu].links -%}
             {%- assign is_active = false -%}
             {%- if link.active or forloop.first and request.path == routes.root_url -%}
               {%- assign is_active = true -%}
             {%- endif -%}
 
-            {%- comment -%} Check if this link has an attached Mega Menu block {%- endcomment -%}
             {%- assign megamenu_block = nil -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'mega_menu' -%}
@@ -224,39 +223,29 @@
               </a>
 
               {%- if megamenu_block != nil -%}
-                <!-- Full-Width Dynamic Mega Menu Dropdown -->
                 <div class="nectar-megamenu">
                   <div class="nectar-megamenu__inner">
-                    <!-- Navigation / Categories Columns -->
                     <div class="nectar-megamenu__nav-cols">
                       {%- if link.links.size > 0 -%}
                         {%- for childlink in link.links -%}
                           <div class="nectar-megamenu__col">
-                            <a href="{{ childlink.url }}" class="nectar-megamenu__heading-link">
-                              {{ childlink.title | escape }}
-                            </a>
+                            <a href="{{ childlink.url }}" class="nectar-megamenu__heading-link">{{ childlink.title | escape }}</a>
                             {%- if childlink.links.size > 0 -%}
                               <ul class="nectar-megamenu__list" role="list">
                                 {%- for grandchild in childlink.links -%}
-                                  <li>
-                                    <a href="{{ grandchild.url }}" class="nectar-megamenu__link">
-                                      {{ grandchild.title | escape }}
-                                    </a>
-                                  </li>
+                                  <li><a href="{{ grandchild.url }}" class="nectar-megamenu__link">{{ grandchild.title | escape }}</a></li>
                                 {%- endfor -%}
                               </ul>
                             {%- endif -%}
                           </div>
                         {%- endfor -%}
                       {%- else -%}
-                        <!-- Default Rich Categories when link has no nested childlinks -->
                         <div class="nectar-megamenu__col">
                           <span class="nectar-megamenu__heading-link">Immunity & Defense</span>
                           <ul class="nectar-megamenu__list" role="list">
                             <li><a href="/collections/all" class="nectar-megamenu__link">Vitamin C & Zinc</a></li>
                             <li><a href="/collections/all" class="nectar-megamenu__link">Natural Herbal Extracts</a></li>
                             <li><a href="/collections/all" class="nectar-megamenu__link">Cold & Flu Support</a></li>
-                            <li><a href="/collections/all" class="nectar-megamenu__link">Antioxidant Blends</a></li>
                           </ul>
                         </div>
                         <div class="nectar-megamenu__col">
@@ -264,62 +253,12 @@
                           <ul class="nectar-megamenu__list" role="list">
                             <li><a href="/collections/all" class="nectar-megamenu__link">Multivitamin Tablets</a></li>
                             <li><a href="/collections/all" class="nectar-megamenu__link">Omega-3 & Fish Oil</a></li>
-                            <li><a href="/collections/all" class="nectar-megamenu__link">Energy & Stamina</a></li>
                             <li><a href="/collections/all" class="nectar-megamenu__link">Gut & Digestive Health</a></li>
-                          </ul>
-                        </div>
-                        <div class="nectar-megamenu__col">
-                          <span class="nectar-megamenu__heading-link">Skin & Hair Care</span>
-                          <ul class="nectar-megamenu__list" role="list">
-                            <li><a href="/collections/all" class="nectar-megamenu__link">Collagen Peptides</a></li>
-                            <li><a href="/collections/all" class="nectar-megamenu__link">Biotin Hair Gummies</a></li>
-                            <li><a href="/collections/all" class="nectar-megamenu__link">Glow & Hydration Serums</a></li>
-                            <li><a href="/collections/all" class="nectar-megamenu__link">Anti-Aging Nutrition</a></li>
                           </ul>
                         </div>
                       {%- endif -%}
                     </div>
-
-                    <!-- Right Side Media: Promo Banners and Featured Products -->
                     <div class="nectar-megamenu__side-media">
-                      {%- if megamenu_block.settings.featured_product_1 != blank -%}
-                        {%- assign f_product_1 = megamenu_block.settings.featured_product_1 -%}
-                        <div class="nectar-megamenu__product-card">
-                          <div class="nectar-megamenu__product-badge">Featured</div>
-                          <a href="{{ f_product_1.url }}" class="nectar-megamenu__product-img-wrap">
-                            {%- if f_product_1.featured_image -%}
-                              <img src="{{ f_product_1.featured_image | image_url: width: 350 }}" alt="{{ f_product_1.title | escape }}" loading="lazy" />
-                            {%- else -%}
-                              {{ 'product-1' | placeholder_svg_tag }}
-                            {%- endif -%}
-                          </a>
-                          <div class="nectar-megamenu__product-info">
-                            <a href="{{ f_product_1.url }}" class="nectar-megamenu__product-title">{{ f_product_1.title }}</a>
-                            <div class="nectar-megamenu__product-price">{{ f_product_1.price | money }}</div>
-                            <a href="{{ f_product_1.url }}" class="nectar-megamenu__product-btn">View Product</a>
-                          </div>
-                        </div>
-                      {%- endif -%}
-
-                      {%- if megamenu_block.settings.featured_product_2 != blank -%}
-                        {%- assign f_product_2 = megamenu_block.settings.featured_product_2 -%}
-                        <div class="nectar-megamenu__product-card">
-                          <div class="nectar-megamenu__product-badge">Popular</div>
-                          <a href="{{ f_product_2.url }}" class="nectar-megamenu__product-img-wrap">
-                            {%- if f_product_2.featured_image -%}
-                              <img src="{{ f_product_2.featured_image | image_url: width: 350 }}" alt="{{ f_product_2.title | escape }}" loading="lazy" />
-                            {%- else -%}
-                              {{ 'product-2' | placeholder_svg_tag }}
-                            {%- endif -%}
-                          </a>
-                          <div class="nectar-megamenu__product-info">
-                            <a href="{{ f_product_2.url }}" class="nectar-megamenu__product-title">{{ f_product_2.title }}</a>
-                            <div class="nectar-megamenu__product-price">{{ f_product_2.price | money }}</div>
-                            <a href="{{ f_product_2.url }}" class="nectar-megamenu__product-btn">View Product</a>
-                          </div>
-                        </div>
-                      {%- endif -%}
-
                       {%- if megamenu_block.settings.promo_heading_1 != blank or megamenu_block.settings.promo_image_1 != blank -%}
                         <div class="nectar-megamenu__promo-banner">
                           <a href="{{ megamenu_block.settings.promo_link_1 | default: '/collections/all' }}" class="nectar-megamenu__promo-inner">
@@ -334,40 +273,20 @@
                           </a>
                         </div>
                       {%- endif -%}
-
-                      {%- if megamenu_block.settings.promo_heading_2 != blank or megamenu_block.settings.promo_image_2 != blank -%}
-                        <div class="nectar-megamenu__promo-banner">
-                          <a href="{{ megamenu_block.settings.promo_link_2 | default: '/collections/all' }}" class="nectar-megamenu__promo-inner promo--alt">
-                            {%- if megamenu_block.settings.promo_image_2 != blank -%}
-                              <img src="{{ megamenu_block.settings.promo_image_2 | image_url: width: 500 }}" alt="{{ megamenu_block.settings.promo_heading_2 | escape }}" class="nectar-megamenu__promo-img" loading="lazy" />
-                            {%- endif -%}
-                            <div class="nectar-megamenu__promo-content">
-                              <span class="nectar-megamenu__promo-tag">{{ megamenu_block.settings.promo_subheading_2 | default: 'Trending' }}</span>
-                              <h4 class="nectar-megamenu__promo-title">{{ megamenu_block.settings.promo_heading_2 | default: 'Best Sellers' }}</h4>
-                              <span class="nectar-megamenu__promo-btn">{{ megamenu_block.settings.promo_button_text_2 | default: 'Shop Now' }} &rarr;</span>
-                            </div>
-                          </a>
-                        </div>
-                      {%- endif -%}
                     </div>
                   </div>
                 </div>
               {%- elsif link.links != blank -%}
-                <!-- Regular Dropdown for standard submenu links -->
                 <ul class="nectar-subnav__dropdown" role="list">
                   {%- for childlink in link.links -%}
-                    <li>
-                      <a href="{{ childlink.url }}" class="nectar-subnav__dropdown-link{% if childlink.active %} is-active{% endif %}">
-                        {{ childlink.title | escape }}
-                      </a>
-                    </li>
+                    <li><a href="{{ childlink.url }}" class="nectar-subnav__dropdown-link">{{ childlink.title | escape }}</a></li>
                   {%- endfor -%}
                 </ul>
               {%- endif -%}
             </li>
           {%- endfor -%}
         {%- else -%}
-          <!-- Default Reference Menu Items from Design -->
+          <!-- Complete Nectarflora Standard Menu -->
           <li class="nectar-subnav__item is-active">
             <a href="{{ routes.root_url }}" class="nectar-subnav__link is-active">Home</a>
           </li>
@@ -414,7 +333,7 @@
                   <div class="nectar-megamenu__promo-banner">
                     <a href="/collections/all" class="nectar-megamenu__promo-inner">
                       <div class="nectar-megamenu__promo-content">
-                        <span class="nectar-megamenu__promo-tag">Featured Offer</span>
+                        <span class="nectar-megamenu__promo-tag">Special Offer</span>
                         <h4 class="nectar-megamenu__promo-title">100% Organic Nutrition</h4>
                         <span class="nectar-megamenu__promo-btn">Explore Now &rarr;</span>
                       </div>
@@ -481,96 +400,164 @@
   </nav>
 </div>
 
-<!-- Sliding Side Drawer for Mobile/Tablet -->
+<!-- Sliding Side Drawer (Exact Image 1 Design: Deep Green Header, Logo Pill, Chevrons, Help Card) -->
 <div class="nectar-drawer-backdrop" aria-hidden="true"></div>
 <aside class="nectar-drawer" aria-label="Mobile Navigation" role="dialog" aria-modal="true">
+  <!-- Deep Forest Green Header with White Logo Pill -->
   <div class="nectar-drawer__header">
-    <span class="nectar-header__logo-text">
-      <span class="logo-orange">Nectar</span><span class="logo-green">flora</span><sup class="logo-tm">™</sup>
-    </span>
-    <button type="button" class="nectar-drawer__close-btn" aria-label="Close menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="nectar-drawer__logo-badge">
+      {%- if settings.logo != blank -%}
+        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {{
+          settings.logo
+          | image_url: width: 350
+          | image_tag:
+            class: 'nectar-header__logo-img',
+            style: 'max-height: 32px; max-width: 150px; width: auto; object-fit: contain;',
+            alt: logo_alt,
+            preload: true
+        }}
+      {%- else -%}
+        <span class="nectar-header__logo-text">
+          <span class="logo-orange">Nectar</span><span class="logo-green">flora</span><sup class="logo-tm">™</sup>
+        </span>
+      {%- endif -%}
+    </div>
+    <button type="button" class="nectar-drawer__close-btn" aria-label="Close menu" title="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
   </div>
+
   <div class="nectar-drawer__content">
     <ul class="nectar-drawer__menu" role="list">
-      {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
-        {%- for link in linklists[section.settings.menu].links -%}
-          {%- assign megamenu_block = nil -%}
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'mega_menu' -%}
-              {%- assign target_title = block.settings.menu_item_title | downcase | strip -%}
-              {%- assign link_title = link.title | downcase | strip -%}
-              {%- if target_title == link_title -%}
-                {%- assign megamenu_block = block -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endif -%}
-          {%- endfor -%}
+      <!-- Item 1: Home -->
+      <li class="nectar-drawer__item">
+        <a href="{{ routes.root_url }}" class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">Home</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </li>
 
-          <li class="nectar-drawer__item">
-            <div class="nectar-drawer__link-row">
-              <a href="{{ link.url }}" class="nectar-drawer__link{% if link.active %} is-active{% endif %}">
-                {{ link.title | escape }}
-              </a>
-              {%- if megamenu_block != nil or link.links != blank -%}
-                <button type="button" class="nectar-drawer__toggle-btn" aria-label="Expand submenu">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </button>
-              {%- endif -%}
-            </div>
-            {%- if megamenu_block != nil or link.links != blank -%}
-              <div class="nectar-drawer__subcontent">
-                <ul class="nectar-drawer__sublist" role="list">
-                  {%- if link.links.size > 0 -%}
-                    {%- for childlink in link.links -%}
-                      <li>
-                        <a href="{{ childlink.url }}" class="nectar-drawer__sublink">{{ childlink.title | escape }}</a>
-                      </li>
-                    {%- endfor -%}
-                  {%- else -%}
-                    <li><a href="/collections/all" class="nectar-drawer__sublink">Immunity & Defense</a></li>
-                    <li><a href="/collections/all" class="nectar-drawer__sublink">Daily Wellness</a></li>
-                    <li><a href="/collections/all" class="nectar-drawer__sublink">Skin & Hair Care</a></li>
-                  {%- endif -%}
-                </ul>
-              </div>
-            {%- endif -%}
-          </li>
-        {%- endfor -%}
-      {%- else -%}
-        <li class="nectar-drawer__item"><a href="{{ routes.root_url }}" class="nectar-drawer__link is-active">Home</a></li>
-        <li class="nectar-drawer__item"><a href="/collections/all" class="nectar-drawer__link">Product by Benefits</a></li>
-        <li class="nectar-drawer__item"><a href="/collections" class="nectar-drawer__link">Product by Category</a></li>
-        <li class="nectar-drawer__item"><a href="/pages/free-consultation" class="nectar-drawer__link">Free Consultation</a></li>
-        <li class="nectar-drawer__item"><a href="/pages/about-us" class="nectar-drawer__link">About Us</a></li>
-        <li class="nectar-drawer__item"><a href="/blogs/news" class="nectar-drawer__link">Blogs</a></li>
-      {%- endif -%}
+      <!-- Item 2: Product by Benefits (Accordion) -->
+      <li class="nectar-drawer__item has-accordion">
+        <div class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">Product by Benefits</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </div>
+        <div class="nectar-drawer__subcontent">
+          <ul class="nectar-drawer__sublist" role="list">
+            <li><a href="/collections/all" class="nectar-drawer__sublink">Immunity & Defense</a></li>
+            <li><a href="/collections/all" class="nectar-drawer__sublink">Daily Wellness</a></li>
+            <li><a href="/collections/all" class="nectar-drawer__sublink">Skin & Hair Care</a></li>
+            <li><a href="/collections/all" class="nectar-drawer__sublink">Gut & Digestive Health</a></li>
+            <li><a href="/collections/all" class="nectar-drawer__sublink">Energy & Stamina</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Item 3: Product by Category (Accordion) -->
+      <li class="nectar-drawer__item has-accordion">
+        <div class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">Product by Category</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </div>
+        <div class="nectar-drawer__subcontent">
+          <ul class="nectar-drawer__sublist" role="list">
+            <li><a href="/collections" class="nectar-drawer__sublink">Nutrition & Herbs</a></li>
+            <li><a href="/collections" class="nectar-drawer__sublink">Organic Beauty</a></li>
+            <li><a href="/collections" class="nectar-drawer__sublink">Plant Proteins</a></li>
+            <li><a href="/collections" class="nectar-drawer__sublink">Natural Juices & Blends</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Item 4: Free Consultation -->
+      <li class="nectar-drawer__item">
+        <a href="/pages/free-consultation" class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">Free Consultation</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </li>
+
+      <!-- Item 5: About Us -->
+      <li class="nectar-drawer__item">
+        <a href="/pages/about-us" class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">About Us</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </li>
+
+      <!-- Item 6: Blogs -->
+      <li class="nectar-drawer__item">
+        <a href="/blogs/news" class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">Blogs</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </li>
+
+      <!-- Item 7: Track Order -->
+      <li class="nectar-drawer__item">
+        <a href="{{ section.settings.track_order_url | default: '/pages/track-order' }}" class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">Track Order</span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </li>
+
+      <!-- Item 8: Login / Sign up -->
+      <li class="nectar-drawer__item">
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="nectar-drawer__link-row">
+          <span class="nectar-drawer__link-text">
+            {% if customer %}
+              {{ customer.name | default: 'My Account' }}
+            {% else %}
+              Login / Sign up
+            {% endif %}
+          </span>
+          <span class="nectar-drawer__chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </li>
     </ul>
-  </div>
-  <div class="nectar-drawer__footer">
-    {%- if section.settings.show_wishlist -%}
-      <a href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}" class="nectar-drawer__footer-link">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-        </svg>
-        Wishlist
-      </a>
-    {%- endif -%}
-    {%- if section.settings.show_account -%}
-      <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="nectar-drawer__footer-link">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        {% if customer %}{{ customer.name | default: 'My Account' }}{% else %}Login / Register{% endif %}
-      </a>
-    {%- endif -%}
+
+    <!-- Bottom Help Card (Image 1) -->
+    <a href="{{ section.settings.help_card_link | default: '/pages/free-consultation' }}" class="nectar-drawer__help-card">
+      <span class="nectar-drawer__help-title">{{ section.settings.help_card_title | default: 'Need help choosing?' }}</span>
+      <span class="nectar-drawer__help-desc">{{ section.settings.help_card_desc | default: 'Talk to our nutritionist for free.' }}</span>
+    </a>
   </div>
 </aside>
 
@@ -623,14 +610,14 @@
     {
       "type": "checkbox",
       "id": "show_top_strip",
-      "label": "Show Top Dark Strip",
-      "default": true
+      "label": "Show Top Dark Strip (When Announcement bar is disabled)",
+      "default": false
     },
     {
       "type": "color",
       "id": "top_strip_color",
-      "label": "Top Strip Color",
-      "default": "#0E3D2F"
+      "label": "Top Accent Color",
+      "default": "#0D3B2B"
     },
     {
       "type": "range",
@@ -724,9 +711,16 @@
       "content": "Navigation Menu (Sub-Bar)"
     },
     {
+      "type": "checkbox",
+      "id": "use_complete_nectar_menu",
+      "label": "Use Complete Nectarflora Menu Structure",
+      "default": true,
+      "info": "Displays full Nectarflora structure (Home, Product by Benefits, Product by Category, Free Consultation, About Us, Blogs)"
+    },
+    {
       "type": "link_list",
       "id": "menu",
-      "label": "Menu",
+      "label": "Custom Link List (When unchecked above)",
       "default": "main-menu"
     },
     {
@@ -756,6 +750,32 @@
       "unit": "px",
       "label": "Menu Font Size",
       "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Drawer Help Card Settings"
+    },
+    {
+      "type": "text",
+      "id": "help_card_title",
+      "label": "Help Card Title",
+      "default": "Need help choosing?"
+    },
+    {
+      "type": "text",
+      "id": "help_card_desc",
+      "label": "Help Card Description",
+      "default": "Talk to our nutritionist for free."
+    },
+    {
+      "type": "url",
+      "id": "help_card_link",
+      "label": "Help Card Link"
+    },
+    {
+      "type": "url",
+      "id": "track_order_url",
+      "label": "Track Order Page URL"
     },
     {
       "type": "header",

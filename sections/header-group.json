@@ -8,8 +8,9 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to Nectarflora",
-            "link": ""
+            "text": "Free shipping on orders above ₹499 • Extra 10% OFF on your first order",
+            "button_label": "Shop Now",
+            "button_link": "/collections/all"
           }
         }
       },
@@ -17,13 +18,8 @@
         "announcement-bar-0"
       ],
       "settings": {
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "color_scheme": "scheme-4",
-        "show_line_separator": false,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false
+        "bg_color": "#0D3B2B",
+        "text_color": "#FFFFFF"
       }
     },
     "header": {
@@ -61,7 +57,7 @@
         "mega_menu_category"
       ],
       "settings": {
-        "show_top_strip": true,
+        "show_top_strip": false,
         "top_strip_color": "#0E3D2F",
         "top_strip_height": 3,
         "logo_orange_color": "#EE5A24",
@@ -88,6 +84,7 @@
     }
   },
   "order": [
+    "announcement-bar",
     "header"
   ]
 }
