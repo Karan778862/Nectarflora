@@ -81,8 +81,9 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
     <div class="page-width">
-      {% render 'nectar-breadcrumbs', product: product %}
-      <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+      {%- if section.settings.gallery_type == 'dawn' -%}
+        {% render 'nectar-breadcrumbs', product: product %}
+        <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
         <div class="grid__item product__media-wrapper">
           {%- if section.settings.gallery_type == 'dawn' -%}
             {% render 'product-media-gallery', variant_images: variant_images %}
@@ -746,6 +747,9 @@
           {{ product.media | where: 'media_type', 'model' | json }}
         </script>
         <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+      {%- endif -%}
+      {%- else -%}
+        {% render 'nectar-product-layout', product: product, section: section %}
       {%- endif -%}
 
       {%- liquid

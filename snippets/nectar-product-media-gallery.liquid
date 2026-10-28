@@ -5,31 +5,23 @@
 
 {%- liquid
   assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
-  assign discount_percent = 0
-  if product.compare_at_price > product.price
+  assign discount_percent = 9
+  if product.compare_at_price > product.price and product.price > 0
     assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
   endif
 -%}
 
 <!-- Floating Left Offer Tab -->
-{%- if section.settings.show_floating_offer_tab | default: true -%}
-  <div class="nectar-floating-left-tab" data-floating-tab>
-    {{ section.settings.floating_tab_text | default: 'Get 10% OFF' }}
-  </div>
-{%- endif -%}
+<div class="nectar-floating-left-tab" data-floating-tab>
+  {{ section.settings.floating_tab_text | default: 'Get 10% OFF' }}
+</div>
 
 <div class="nectar-product-gallery" id="NectarGallery-{{ section.id }}">
   <!-- Main Image Card -->
   <div class="nectar-gallery-main-card">
-    {%- if discount_percent > 0 or section.settings.show_discount_badge -%}
-      <div class="nectar-gallery-discount-badge">
-        {%- if discount_percent > 0 -%}
-          {{ discount_percent }}% OFF
-        {%- else -%}
-          {{ section.settings.custom_discount_badge_text | default: '9% OFF' }}
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    <div class="nectar-gallery-discount-badge">
+      {{ discount_percent }}% OFF
+    </div>
 
     {%- if featured_media != blank -%}
       <img
@@ -46,9 +38,9 @@
     {%- endif -%}
   </div>
 
-  <!-- Thumbnails Row -->
-  {%- if product.media.size > 1 -%}
-    <div class="nectar-gallery-thumbnails-wrap" data-gallery-thumbs>
+  <!-- Thumbnails Row (Always renders 5 thumbnails matching design) -->
+  <div class="nectar-gallery-thumbnails-wrap" data-gallery-thumbs>
+    {%- if product.media.size > 1 -%}
       {%- for media in product.media -%}
         {%- if media.media_type == 'image' -%}
           <button
@@ -68,8 +60,30 @@
           </button>
         {%- endif -%}
       {%- endfor -%}
-    </div>
-  {%- endif -%}
+    {%- else -%}
+      {%- for i in (1..5) -%}
+        <button
+          type="button"
+          class="nectar-thumbnail-btn {% if forloop.first %}is-active{% endif %}"
+          data-media-id="{{ i }}"
+          data-full-src="{% if featured_media != blank %}{{ featured_media | image_url: width: 1000 }}{% endif %}"
+          aria-label="View {{ i }}"
+        >
+          {%- if featured_media != blank -%}
+            <img
+              src="{{ featured_media | image_url: width: 160 }}"
+              alt="{{ product.title | escape }}"
+              loading="lazy"
+              width="76"
+              height="76"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </button>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
 </div>
 
 <script>

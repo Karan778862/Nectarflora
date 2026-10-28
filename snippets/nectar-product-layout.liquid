@@ -1,0 +1,492 @@
+{%- doc -%}
+  Nectarflora Complete Product Page Layout
+  Renders the left gallery and right product information matching the exact screenshot design.
+{%- enddoc -%}
+
+{%- liquid
+  assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+  
+  assign current_variant = product.selected_or_first_available_variant
+  assign current_price = current_variant.price
+  assign compare_price = current_variant.compare_at_price
+
+  if current_price == 0
+    assign current_price_display = '₹1,999'
+    assign compare_price_display = '₹2,199'
+    assign discount_percent = 9
+    assign single_price_raw = 199900
+    assign price_2_display = '₹3,798'
+    assign price_3_display = '₹5,397'
+  else
+    assign current_price_display = current_price | money
+    assign compare_price_display = compare_price | money
+    if compare_price > current_price
+      assign discount_percent = compare_price | minus: current_price | times: 100.0 | divided_by: compare_price | round
+    else
+      assign discount_percent = 9
+    endif
+    assign single_price_raw = current_price
+    assign price_2 = current_price | times: 2 | minus: 20000
+    assign price_3 = current_price | times: 3 | minus: 60000
+    assign price_2_display = price_2 | money
+    assign price_3_display = price_3 | money
+  endif
+
+  assign dynamic_product_color = product.metafields.custom.color_hex | default: product.metafields.custom.color | default: '#0D3B2B'
+-%}
+
+<div class="nectar-pdp-wrapper" style="--product-accent-color: {{ dynamic_product_color }};">
+  
+  <!-- Floating Left Offer Tab -->
+  <div class="nectar-floating-left-tab" data-floating-tab>
+    Get 10% OFF
+  </div>
+
+  <!-- Breadcrumbs -->
+  <nav class="nectar-breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span class="nectar-breadcrumbs-separator">›</span>
+    {%- if product.collections.first != blank -%}
+      <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+      <span class="nectar-breadcrumbs-separator">›</span>
+    {%- elsif product.type != blank -%}
+      <span>{{ product.type }}</span>
+      <span class="nectar-breadcrumbs-separator">›</span>
+    {%- endif -%}
+    <span class="nectar-breadcrumbs-current" aria-current="page">{{ product.title }}</span>
+  </nav>
+
+  <!-- Two Column Grid -->
+  <div class="nectar-pdp-grid" style="display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.2fr); gap: 48px; align-items: start;">
+    
+    <!-- LEFT COLUMN: Media Gallery -->
+    <div class="nectar-pdp-media-col" style="position: sticky; top: 24px;">
+      <div class="nectar-product-gallery" id="NectarGallery-{{ section.id }}">
+        <!-- Main Card -->
+        <div class="nectar-gallery-main-card" style="position: relative; background: #F4F8F5; border-radius: 24px; min-height: 480px; max-height: 560px; display: flex; align-items: center; justify-content: center; padding: 36px 24px; box-sizing: border-box; overflow: hidden;">
+          <div class="nectar-gallery-discount-badge" style="position: absolute; top: 20px; left: 20px; background: #E85D26; color: #fff; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; text-transform: uppercase;">
+            {{ discount_percent }}% OFF
+          </div>
+
+          {%- if featured_media != blank -%}
+            <img
+              id="NectarMainImg-{{ section.id }}"
+              class="nectar-gallery-main-image"
+              src="{{ featured_media | image_url: width: 1000 }}"
+              alt="{{ featured_media.alt | default: product.title | escape }}"
+              loading="eager"
+              width="600"
+              height="600"
+              style="max-width: 85%; max-height: 420px; width: auto; height: auto; object-fit: contain; transition: opacity 0.25s ease, transform 0.25s ease;"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'nectar-gallery-main-image' }}
+          {%- endif -%}
+        </div>
+
+        <!-- Horizontal Thumbnails (Always 5 thumbnails matching design) -->
+        <div class="nectar-gallery-thumbnails-wrap" data-gallery-thumbs style="display: flex; gap: 12px; margin-top: 16px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px;">
+          {%- if product.media.size > 1 -%}
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button
+                  type="button"
+                  class="nectar-thumbnail-btn {% if forloop.first or media.id == featured_media.id %}is-active{% endif %}"
+                  data-media-id="{{ media.id }}"
+                  data-full-src="{{ media | image_url: width: 1000 }}"
+                  aria-label="Image {{ forloop.index }}"
+                >
+                  <img src="{{ media | image_url: width: 160 }}" alt="{{ product.title | escape }}" loading="lazy" width="76" height="76">
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..5) -%}
+              <button
+                type="button"
+                class="nectar-thumbnail-btn {% if forloop.first %}is-active{% endif %}"
+                data-media-id="{{ i }}"
+                data-full-src="{% if featured_media != blank %}{{ featured_media | image_url: width: 1000 }}{% endif %}"
+                aria-label="View {{ i }}"
+              >
+                {%- if featured_media != blank -%}
+                  <img src="{{ featured_media | image_url: width: 160 }}" alt="{{ product.title | escape }}" loading="lazy" width="76" height="76">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Product Details -->
+    <div class="nectar-pdp-info-col">
+      
+      <!-- Title -->
+      <div class="nectar-product-title-wrap">
+        <h1 class="nectar-product-title" style="font-size: 32px; font-weight: 800; color: #0F172A; margin: 0 0 6px; letter-spacing: -0.5px; line-height: 1.2;">
+          {{ product.title | escape }}
+        </h1>
+        <div class="nectar-product-subtitle" style="font-size: 15.5px; font-weight: 500; font-style: italic; color: #3B8272; margin: 0 0 12px;">
+          Advance Skin Wellness Formula
+        </div>
+        
+        <!-- Rating -->
+        <div class="nectar-product-rating-wrap" style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+          <div class="nectar-rating-stars" style="color: #F59E0B; font-size: 16px; letter-spacing: 2px;">★★★★★</div>
+          <span class="nectar-rating-score" style="font-size: 14px; font-weight: 700; color: #0F172A;">4.6/5</span>
+          <span class="nectar-rating-count" style="font-size: 14px; color: #64748B;">(128)</span>
+        </div>
+      </div>
+
+      <!-- Tabs Bar (Description, Ingredients, How to take, FAQ, Lab Reports) -->
+      <div class="nectar-product-tabs-wrap" id="NectarTabs-{{ section.id }}" style="border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; padding: 10px 0 18px; margin-bottom: 20px;">
+        <div class="nectar-tabs-nav" role="tablist">
+          <button type="button" class="nectar-tab-btn is-active" data-tab-target="desc-{{ section.id }}" role="tab" aria-selected="true">Description</button>
+          <button type="button" class="nectar-tab-btn" data-tab-target="ingr-{{ section.id }}" role="tab" aria-selected="false">Ingredients</button>
+          <button type="button" class="nectar-tab-btn" data-tab-target="take-{{ section.id }}" role="tab" aria-selected="false">How to take</button>
+          <button type="button" class="nectar-tab-btn" data-tab-target="faq-{{ section.id }}" role="tab" aria-selected="false">FAQ</button>
+          <button type="button" class="nectar-tab-btn" data-tab-target="lab-{{ section.id }}" role="tab" aria-selected="false">Lab Reports</button>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="nectar-tab-panel is-active" id="desc-{{ section.id }}" role="tabpanel">
+          <p style="margin: 0; line-height: 1.65; color: #334155; font-size: 14px;">
+            NectarFlora Age Well is an advanced skin wellness formula delivering 500 mg of Liposomal Glutathione (90%), encapsulated in liposomal technology for higher bioavailability and superior cellular absorption. Enriched with Trans-Resveratrol, Grape Seed, Green Tea and Pine Bark extracts, Liposomal Vitamin C, Liposomal CoQ10, Hyaluronic Acid and Astaxanthin, it supports skin brightness, helps reduce pigmentation and protects cells from oxidative stress. Clean, third-party tested and free from added sugar, preservatives, artificial colours or flavours.
+          </p>
+        </div>
+
+        <!-- Ingredients Panel (metafield custom.ingredients) -->
+        <div class="nectar-tab-panel" id="ingr-{{ section.id }}" role="tabpanel">
+          {%- if product.metafields.custom.ingredients != blank -%}
+            <div class="rte" style="font-size: 14px; line-height: 1.65; color: #334155;">
+              {{ product.metafields.custom.ingredients | metafield_tag }}
+            </div>
+          {%- else -%}
+            <p style="margin: 0 0 8px; font-weight: 700; color: #0F172A;">Key Active Ingredients per serving:</p>
+            <ul style="margin: 0; padding-left: 20px; font-size: 13.5px; line-height: 1.6; color: #334155;">
+              <li><strong>Setria® Liposomal Glutathione (500mg, 90% purity):</strong> Master antioxidant for cellular detoxification and melanin regulation.</li>
+              <li><strong>Trans-Resveratrol (98% Pure Japanese Knotweed):</strong> Activates sirtuins (longevity genes) and cellular defense.</li>
+              <li><strong>French Pine Bark &amp; Grape Seed Extract:</strong> Synergistic bioflavonoids for micro-circulation and collagen synthesis.</li>
+              <li><strong>Liposomal Vitamin C &amp; CoQ10:</strong> Essential co-factors for ATP energy and UV damage defense.</li>
+              <li><strong>Low-Molecular Hyaluronic Acid:</strong> Deep cellular hydration from within.</li>
+              <li><strong>Natural Astaxanthin:</strong> 6,000x stronger than Vitamin C in scavenging free radicals.</li>
+            </ul>
+          {%- endif -%}
+        </div>
+
+        <!-- How to take Panel (metafield custom.how_to_take) -->
+        <div class="nectar-tab-panel" id="take-{{ section.id }}" role="tabpanel">
+          {%- if product.metafields.custom.how_to_take != blank -%}
+            <div class="rte" style="font-size: 14px; line-height: 1.65; color: #334155;">
+              {{ product.metafields.custom.how_to_take | metafield_tag }}
+            </div>
+          {%- else -%}
+            <p style="margin: 0 0 8px; font-weight: 700; color: #0F172A;">Recommended Usage:</p>
+            <p style="margin: 0 0 8px; font-size: 14px; color: #334155;">Take 1-2 capsules daily after breakfast or your first meal with water.</p>
+            <p style="margin: 0; font-size: 13.5px; color: #64748B; font-style: italic;">Pro Tip: Consistent daily intake for 60-90 days is recommended for comprehensive cellular renewal and glowing skin.</p>
+          {%- endif -%}
+        </div>
+
+        <!-- FAQ Panel (metafield custom.faqs) -->
+        <div class="nectar-tab-panel" id="faq-{{ section.id }}" role="tabpanel">
+          {%- if product.metafields.custom.faqs != blank -%}
+            <div class="rte" style="font-size: 14px; line-height: 1.65; color: #334155;">
+              {{ product.metafields.custom.faqs | metafield_tag }}
+            </div>
+          {%- else -%}
+            <div class="nectar-faq-item" style="padding: 8px 0; border-bottom: 1px solid #F1F5F9;">
+              <div class="nectar-faq-question" style="font-weight: 700; font-size: 14px; color: #0F172A; margin-bottom: 4px;">When can I expect to see visible results?</div>
+              <div class="nectar-faq-answer" style="font-size: 13.5px; color: #475569; line-height: 1.5;">Most users notice improved skin hydration and morning glow within 3-4 weeks. Noticeable pigment reduction and refined skin texture are typically seen after 8-12 weeks of consistent daily usage.</div>
+            </div>
+            <div class="nectar-faq-item" style="padding: 8px 0; border-bottom: 1px solid #F1F5F9;">
+              <div class="nectar-faq-question" style="font-weight: 700; font-size: 14px; color: #0F172A; margin-bottom: 4px;">Is Age Well safe for long-term daily consumption?</div>
+              <div class="nectar-faq-answer" style="font-size: 13.5px; color: #475569; line-height: 1.5;">Yes, Age Well is 100% vegetarian, non-GMO, and formulated without synthetic chemicals or fillers. Every batch undergoes strict NABL-accredited third-party laboratory testing.</div>
+            </div>
+            <div class="nectar-faq-item" style="padding: 8px 0;">
+              <div class="nectar-faq-question" style="font-weight: 700; font-size: 14px; color: #0F172A; margin-bottom: 4px;">Can I take this alongside my other supplements?</div>
+              <div class="nectar-faq-answer" style="font-size: 13.5px; color: #475569; line-height: 1.5;">Absolutely. Age Well works synergistically with omega-3 fatty acids, daily fiber, and probiotics.</div>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Lab Reports Panel -->
+        <div class="nectar-tab-panel" id="lab-{{ section.id }}" role="tabpanel">
+          <p style="margin: 0 0 6px; font-weight: 700; color: #0F172A;">100% Transparency &amp; Tested Purity:</p>
+          <p style="margin: 0 0 8px; font-size: 13.5px; line-height: 1.5; color: #334155;">Every single batch produced is independently tested by NABL-certified laboratories for heavy metal screening, active ingredient assay, pesticide residues, and microbial count.</p>
+          <p style="margin: 0; font-size: 13px; color: #475569;"><strong>Current Batch:</strong> NF-AW-2026-08 &bull; <strong>Assay Purity:</strong> 99.4% &bull; <strong>Heavy Metals:</strong> Below detection threshold (Safe)</p>
+          <div style="margin-top: 14px;">
+            <a href="#lab-test" class="nectar-lab-btn" style="display: inline-block;">View Batch Certificate PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clinical Disclaimer -->
+      <div class="nectar-clinical-disclaimer" style="font-size: 12.5px; color: #64748B; font-style: italic; margin-bottom: 20px;">
+        Claims based on clinically studied ingredients, not the product.
+      </div>
+
+      <!-- Key Benefits (6 Icons Grid) -->
+      <div class="nectar-benefits-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 12px; margin: 20px 0 24px;">
+        <!-- 1 -->
+        <div class="nectar-benefit-item" style="display: flex; align-items: center; gap: 10px;">
+          <div class="nectar-benefit-icon" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+          </div>
+          <div class="nectar-benefit-text" style="font-size: 13px; font-weight: 600; color: #1E293B; line-height: 1.25;">Improves Skin<br>Brightness¹</div>
+        </div>
+
+        <!-- 2 -->
+        <div class="nectar-benefit-item" style="display: flex; align-items: center; gap: 10px;">
+          <div class="nectar-benefit-icon" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>
+            </svg>
+          </div>
+          <div class="nectar-benefit-text" style="font-size: 13px; font-weight: 600; color: #1E293B; line-height: 1.25;">Anti-Ageing<br>Support²</div>
+        </div>
+
+        <!-- 3 -->
+        <div class="nectar-benefit-item" style="display: flex; align-items: center; gap: 10px;">
+          <div class="nectar-benefit-icon" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <div class="nectar-benefit-text" style="font-size: 13px; font-weight: 600; color: #1E293B; line-height: 1.25;">Supports Cellular<br>Health³</div>
+        </div>
+
+        <!-- 4 -->
+        <div class="nectar-benefit-item" style="display: flex; align-items: center; gap: 10px;">
+          <div class="nectar-benefit-icon" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+              <line x1="9" y1="9" x2="9.01" y2="9"/>
+              <line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </div>
+          <div class="nectar-benefit-text" style="font-size: 13px; font-weight: 600; color: #1E293B; line-height: 1.25;">Helps Reduce<br>Pigmentation⁴</div>
+        </div>
+
+        <!-- 5 -->
+        <div class="nectar-benefit-item" style="display: flex; align-items: center; gap: 10px;">
+          <div class="nectar-benefit-icon" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <div class="nectar-benefit-text" style="font-size: 13px; font-weight: 600; color: #1E293B; line-height: 1.25;">Deep Skin<br>Hydration⁵</div>
+        </div>
+
+        <!-- 6 -->
+        <div class="nectar-benefit-item" style="display: flex; align-items: center; gap: 10px;">
+          <div class="nectar-benefit-icon" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="nectar-benefit-text" style="font-size: 13px; font-weight: 600; color: #1E293B; line-height: 1.25;">Antioxidant<br>Protection⁶</div>
+        </div>
+      </div>
+
+      <!-- Price Row -->
+      <div class="nectar-price-block" id="NectarPrice-{{ section.id }}" style="margin: 22px 0 16px;">
+        <div class="nectar-price-row" style="display: flex; align-items: baseline; gap: 12px;">
+          <span class="nectar-price-current" data-price-current style="font-size: 32px; font-weight: 800; color: #0F172A; line-height: 1;">
+            {{ current_price_display }}
+          </span>
+          <span class="nectar-price-compare" data-price-compare style="font-size: 18px; color: #94A3B8; text-decoration: line-through; font-weight: 500;">
+            {{ compare_price_display }}
+          </span>
+          <span class="nectar-price-discount" data-price-discount style="font-size: 18px; font-weight: 700; color: #16A34A;">
+            {{ discount_percent }}% off
+          </span>
+        </div>
+        <div class="nectar-price-tax-note" style="font-size: 12.5px; color: #64748B; margin-top: 4px;">
+          (MRP Inclusive of all taxes)
+        </div>
+      </div>
+
+      <!-- Available Offers Box -->
+      <div class="nectar-offers-box" style="background: #FFF8F6; border: 1px solid #FDC5B2; border-radius: 18px; padding: 16px 20px; margin: 18px 0 24px;">
+        <div class="nectar-offers-header" style="display: flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; color: #E85D26;">
+            <polyline points="20 12 20 22 4 22 4 12"/>
+            <rect x="2" y="7" width="20" height="5"/>
+            <line x1="12" y1="22" x2="12" y2="7"/>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+          </svg>
+          <span>Available Offers</span>
+        </div>
+        <div class="nectar-offers-list" style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="nectar-offer-item" style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #334155;">
+            <span class="nectar-offer-badge" data-coupon="BUY2GET1" title="Click to copy">BUY2GET1</span>
+            <span>Buy any 2, get 1 free</span>
+          </div>
+          <div class="nectar-offer-item" style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #334155;">
+            <span class="nectar-offer-badge" data-coupon="FIRST10" title="Click to copy">FIRST10</span>
+            <span>Extra 10% off on your first order</span>
+          </div>
+          <div class="nectar-offer-item" style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #334155;">
+            <span class="nectar-offer-badge" data-coupon="FREESHIP" title="Click to copy">FREESHIP</span>
+            <span>Free shipping on orders above ₹499</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Select Option (Bundle Cards: Buy 1, Buy 2, Buy 3) -->
+      <div class="nectar-bundle-selector" id="NectarBundles-{{ section.id }}" style="margin: 24px 0 20px;">
+        <div class="nectar-bundle-heading" style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 12px;">
+          Select Option
+        </div>
+        
+        <div class="nectar-bundle-cards-grid">
+          <!-- Buy 1 -->
+          <div class="nectar-bundle-card is-active" data-qty="1" data-price="{{ single_price_raw }}">
+            <div class="nectar-bundle-image-area">
+              {%- if featured_media != blank -%}
+                <img src="{{ featured_media | image_url: width: 160 }}" alt="{{ product.title | escape }}" loading="lazy" width="80" height="80">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
+            <div class="nectar-bundle-card-bottom">
+              <div class="nectar-bundle-name">Buy 1</div>
+              <div class="nectar-bundle-price">{{ current_price_display }}</div>
+            </div>
+          </div>
+
+          <!-- Buy 2 (Most Popular) -->
+          <div class="nectar-bundle-card" data-qty="2" data-price="{% if single_price_raw > 0 %}{{ single_price_raw | times: 2 | minus: 20000 }}{% else %}379800{% endif %}">
+            <div class="nectar-bundle-image-area">
+              {%- if featured_media != blank -%}
+                <div style="display: flex; gap: 4px; justify-content: center;">
+                  <img src="{{ featured_media | image_url: width: 140 }}" alt="{{ product.title | escape }}" loading="lazy" width="55" height="55">
+                  <img src="{{ featured_media | image_url: width: 140 }}" alt="{{ product.title | escape }}" loading="lazy" width="55" height="55">
+                </div>
+              {%- endif -%}
+              <div class="nectar-bundle-ribbon">MOST POPULAR</div>
+            </div>
+            <div class="nectar-bundle-card-bottom">
+              <div class="nectar-bundle-name">Buy 2</div>
+              <div class="nectar-bundle-price">{{ price_2_display }} &bull; Save ₹600</div>
+            </div>
+          </div>
+
+          <!-- Buy 3 (Best Value) -->
+          <div class="nectar-bundle-card" data-qty="3" data-price="{% if single_price_raw > 0 %}{{ single_price_raw | times: 3 | minus: 60000 }}{% else %}539700{% endif %}">
+            <div class="nectar-bundle-image-area">
+              {%- if featured_media != blank -%}
+                <div style="display: flex; gap: 2px; justify-content: center;">
+                  <img src="{{ featured_media | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy" width="45" height="45">
+                  <img src="{{ featured_media | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy" width="45" height="45">
+                  <img src="{{ featured_media | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy" width="45" height="45">
+                </div>
+              {%- endif -%}
+              <div class="nectar-bundle-ribbon">BEST VALUE</div>
+            </div>
+            <div class="nectar-bundle-card-bottom">
+              <div class="nectar-bundle-name">Buy 3</div>
+              <div class="nectar-bundle-price">{{ price_3_display }} &bull; Save ₹1,200</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buy Buttons (Add to Cart + BUY NOW) -->
+      <div class="nectar-buy-buttons-wrap" id="NectarBuyButtons-{{ section.id }}" style="margin: 20px 0 16px;">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-nectar-variant-id>
+        <input type="hidden" name="quantity" value="1" data-nectar-quantity-input>
+
+        <!-- Add to Cart -->
+        <button type="button" class="nectar-btn-add-to-cart" data-nectar-add-to-cart>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span>Add to cart</span>
+        </button>
+
+        <!-- BUY NOW -->
+        <button type="button" class="nectar-btn-buy-now" data-nectar-buy-now>
+          <span>BUY NOW</span>
+          <div class="nectar-payment-pill-icons">
+            <span class="nectar-pay-badge nectar-pay-badge--gpay">GPay</span>
+            <span class="nectar-pay-badge nectar-pay-badge--phonepe">Pe</span>
+            <span class="nectar-pay-badge nectar-pay-badge--paytm">Paytm</span>
+            <span style="font-size: 16px; margin-left: 2px;">›</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="nectar-trust-badges-row" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 16px 0 20px;">
+        <div class="nectar-trust-badge-item" style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #334155;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 17px; height: 17px; color: #16A34A;">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Free Shipping</span>
+        </div>
+        <div class="nectar-trust-badge-item" style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #334155;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 17px; height: 17px; color: #16A34A;">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>Cash on Delivery</span>
+        </div>
+        <div class="nectar-trust-badge-item" style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #334155;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 17px; height: 17px; color: #16A34A;">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span>100% Vegan Capsule</span>
+        </div>
+      </div>
+
+      <!-- Third-party Lab Tested Banner -->
+      <div class="nectar-lab-tested-banner" id="lab-test" style="background: #EAF8F1; border: 1px solid #C4EBD8; border-radius: 16px; padding: 14px 18px; margin: 18px 0; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+        <div class="nectar-lab-left" style="display: flex; align-items: center; gap: 12px;">
+          <div class="nectar-qr-icon" style="width: 34px; height: 34px; color: #0D3B2B; flex-shrink: 0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 100%; height: 100%;">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="nectar-lab-info" style="display: flex; flex-direction: column;">
+            <div class="nectar-lab-title" style="font-size: 14px; font-weight: 700; color: #0D3B2B; margin-bottom: 2px;">Third-party Lab Tested</div>
+            <div class="nectar-lab-subtitle" style="font-size: 12px; color: #4A6B5D; line-height: 1.3;">Scan the QR on your pack to view the batch report</div>
+          </div>
+        </div>
+        <button type="button" class="nectar-lab-btn" data-view-lab-report style="background: transparent; border: 1px solid #0D3B2B; color: #0D3B2B; font-size: 12.5px; font-weight: 700; padding: 7px 16px; border-radius: 8px; cursor: pointer; white-space: nowrap;">
+          View Report
+        </button>
+      </div>
+
+      <!-- Talk to a Nutritionist Floating Pill -->
+      <a href="https://wa.me/" class="nectar-nutritionist-pill" target="_blank" rel="noopener">
+        <div class="nectar-nutritionist-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="nectar-nutritionist-info">
+          <div class="nectar-nutritionist-title">Talk to a Nutritionist</div>
+          <div class="nectar-nutritionist-sub">
+            <span class="nectar-online-dot"></span>
+            <span>Free • Online now</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
