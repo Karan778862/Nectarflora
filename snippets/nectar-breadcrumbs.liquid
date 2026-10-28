@@ -12,6 +12,9 @@
   {%- elsif product.type != blank -%}
     <span>{{ product.type }}</span>
     <span class="nectar-breadcrumbs-separator">›</span>
+  {%- else -%}
+    <a href="{{ routes.all_products_collection_url }}">Skin</a>
+    <span class="nectar-breadcrumbs-separator">›</span>
   {%- endif -%}
 
   <span class="nectar-breadcrumbs-current" aria-current="page">{{ product.title }}</span>

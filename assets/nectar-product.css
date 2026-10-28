@@ -1,17 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap');
+
 /* ==========================================================================
-   NECTARFLORA CUSTOM PRODUCT DETAIL PAGE (PDP) STYLES
+   NECTARFLORA CUSTOM PRODUCT DETAIL PAGE (PDP) - ULTRA PREMIUM STYLES
    ========================================================================== */
 
 :root {
   --nectar-green: #0D3B2B;
-  --nectar-green-light: #EBF8F2;
-  --nectar-green-border: #C4EBD8;
+  --nectar-green-light: #EAF7EE;
+  --nectar-green-border: #D1EEDB;
   --nectar-orange: #E85D26;
   --nectar-peach-bg: #FFF8F6;
-  --nectar-peach-border: #FDC5B2;
+  --nectar-peach-border: #FFE4DD;
   --nectar-card-bg: #F4F8F5;
-  --nectar-text-dark: #0F172A;
-  --nectar-text-muted: #64748B;
+  --nectar-text-dark: #111827;
+  --nectar-text-muted: #4B5563;
+  --nectar-font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Enforce Modern Font Across All PDP Elements */
+.nectar-pdp-layout,
+.nectar-pdp-layout *,
+.nectar-breadcrumbs,
+.nectar-breadcrumbs *,
+.product__info-container,
+.product__info-container *,
+.nectar-floating-left-tab {
+  font-family: var(--nectar-font-primary) !important;
+  box-sizing: border-box;
+}
+
+/* Hide default duplicate tax note since MRP inclusive is already present */
+.product__tax,
+.product__tax.caption.rte {
+  display: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -23,15 +44,16 @@
   flex-wrap: wrap;
   gap: 8px;
   font-size: 13px;
-  color: var(--nectar-text-muted);
-  margin-bottom: 24px;
+  color: #6B7280;
+  margin-bottom: 20px;
   padding: 0;
   list-style: none;
 }
 
 .nectar-breadcrumbs a {
-  color: var(--nectar-text-muted);
+  color: #6B7280;
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
@@ -40,13 +62,13 @@
 }
 
 .nectar-breadcrumbs-separator {
-  color: #94A3B8;
+  color: #9CA3AF;
   font-size: 11px;
 }
 
 .nectar-breadcrumbs-current {
   color: var(--nectar-text-dark);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
@@ -60,13 +82,13 @@
   transform-origin: left bottom;
   background-color: var(--nectar-orange);
   color: #FFFFFF;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  padding: 8px 18px;
-  border-radius: 8px 8px 0 0;
-  z-index: 99;
+  padding: 7px 18px;
+  border-radius: 6px 6px 0 0;
+  z-index: 999;
   box-shadow: 0 4px 14px rgba(232, 93, 38, 0.35);
   cursor: pointer;
   white-space: nowrap;
@@ -78,8 +100,25 @@
 }
 
 /* --------------------------------------------------------------------------
+   Layout Grid
+   -------------------------------------------------------------------------- */
+.nectar-pdp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+  gap: 48px;
+  align-items: start;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
    Media Gallery (Left Column)
    -------------------------------------------------------------------------- */
+.product__media-wrapper {
+  position: sticky;
+  top: 24px;
+}
+
 .nectar-product-gallery {
   position: relative;
   width: 100%;
@@ -94,10 +133,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: 36px 24px;
   box-sizing: border-box;
   aspect-ratio: 1 / 1;
-  min-height: 440px;
+  min-height: 520px;
+  height: 520px;
 }
 
 .nectar-gallery-discount-badge {
@@ -106,11 +146,11 @@
   left: 20px;
   background-color: var(--nectar-orange);
   color: #FFFFFF;
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  padding: 5px 12px;
-  border-radius: 8px;
+  padding: 4px 10px;
+  border-radius: 6px;
   z-index: 2;
   box-shadow: 0 2px 8px rgba(232, 93, 38, 0.25);
   text-transform: uppercase;
@@ -118,10 +158,11 @@
 
 .nectar-gallery-main-image {
   max-width: 85%;
-  max-height: 85%;
+  max-height: 450px;
   width: auto;
   height: auto;
   object-fit: contain;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.08));
   transition: opacity 0.25s ease, transform 0.3s ease;
   user-select: none;
 }
@@ -129,12 +170,13 @@
 /* Thumbnails row */
 .nectar-gallery-thumbnails-wrap {
   display: flex;
-  gap: 14px;
-  margin-top: 18px;
+  gap: 12px;
+  margin-top: 16px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
   padding: 4px 2px;
+  justify-content: flex-start;
 }
 
 .nectar-gallery-thumbnails-wrap::-webkit-scrollbar {
@@ -165,7 +207,7 @@
 
 .nectar-thumbnail-btn.is-active {
   border: 2.5px solid var(--product-accent-color, var(--nectar-green));
-  box-shadow: 0 4px 12px rgba(13, 59, 43, 0.12);
+  box-shadow: 0 4px 12px rgba(13, 59, 43, 0.15);
 }
 
 .nectar-thumbnail-btn img {
@@ -175,43 +217,40 @@
 }
 
 /* --------------------------------------------------------------------------
-   Product Title & Tagline
+   Product Title, Subtitle, Rating
    -------------------------------------------------------------------------- */
-.nectar-product-title-wrap {
-  margin-bottom: 6px;
+.nectar-block-title-wrap {
+  margin-bottom: 4px;
 }
 
 .nectar-product-title {
   font-size: 32px;
   font-weight: 800;
   color: var(--nectar-text-dark);
-  line-height: 1.2;
-  margin: 0 0 8px;
-  letter-spacing: -0.5px;
+  line-height: 1.22;
+  margin: 0 0 6px;
+  letter-spacing: -0.4px;
 }
 
 .nectar-product-subtitle {
-  font-size: 15.5px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   font-style: italic;
-  color: #3B8272;
-  margin: 0 0 14px;
+  color: #2F7C60;
+  margin: 0 0 10px;
   line-height: 1.4;
 }
 
-/* --------------------------------------------------------------------------
-   Rating Block
-   -------------------------------------------------------------------------- */
 .nectar-product-rating-wrap {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .nectar-rating-stars {
   color: #F59E0B;
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: 2px;
   line-height: 1;
 }
@@ -232,20 +271,19 @@
    Tabs Block (Description, Ingredients, How to take, FAQ, Lab Reports)
    -------------------------------------------------------------------------- */
 .nectar-product-tabs-wrap {
-  margin-bottom: 20px;
-  border-top: 1px solid #F1F5F9;
-  border-bottom: 1px solid #F1F5F9;
-  padding: 6px 0 18px;
+  margin-bottom: 12px;
+  border-top: 1px solid #E5E7EB;
+  padding-top: 10px;
   position: relative;
 }
 
 .nectar-tabs-nav {
   display: flex;
-  gap: 22px;
-  border-bottom: 1px solid #E2E8F0;
+  gap: 20px;
+  border-bottom: 1.5px solid #E5E7EB;
   overflow-x: auto;
   scrollbar-width: none;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .nectar-tabs-nav::-webkit-scrollbar {
@@ -255,10 +293,10 @@
 .nectar-tab-btn {
   background: none;
   border: none;
-  padding: 10px 4px 12px;
-  font-size: 14px;
+  padding: 8px 4px 10px;
+  font-size: 13.5px;
   font-weight: 600;
-  color: #64748B;
+  color: #6B7280;
   cursor: pointer;
   position: relative;
   white-space: nowrap;
@@ -278,7 +316,7 @@
   content: '';
   position: absolute;
   left: 0;
-  bottom: -1px;
+  bottom: -1.5px;
   width: 100%;
   height: 2.5px;
   background-color: var(--product-accent-color, var(--nectar-green));
@@ -287,9 +325,9 @@
 
 .nectar-tab-panel {
   display: none;
-  font-size: 14px;
-  line-height: 1.65;
-  color: #334155;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #374151;
   animation: nectarFadeIn 0.3s ease;
 }
 
@@ -298,35 +336,34 @@
 }
 
 @keyframes nectarFadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* FAQ item inside tab */
 .nectar-faq-item {
   border-bottom: 1px solid #F1F5F9;
-  padding: 10px 0;
+  padding: 8px 0;
 }
 
 .nectar-faq-question {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--nectar-text-dark);
   margin-bottom: 4px;
 }
 
 .nectar-faq-answer {
-  color: #475569;
-  font-size: 13.5px;
+  color: #4B5563;
+  font-size: 13px;
   line-height: 1.5;
 }
 
 /* Clinical disclaimer */
 .nectar-clinical-disclaimer {
-  font-size: 12.5px;
-  color: #64748B;
-  margin-top: 14px;
-  font-style: italic;
+  font-size: 12px;
+  color: #4B5563;
+  margin-top: 10px;
+  margin-bottom: 16px;
   line-height: 1.4;
 }
 
@@ -336,132 +373,53 @@
 .nectar-benefits-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px 12px;
-  margin: 22px 0;
-  padding: 14px 0;
+  gap: 12px 8px;
+  margin-bottom: 22px;
+  padding-top: 4px;
 }
 
 .nectar-benefit-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .nectar-benefit-icon {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   border-radius: 50%;
-  border: 1.5px solid #CBD5E1;
-  background-color: #FFFFFF;
+  border: 1.5px solid #111827;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #334155;
 }
 
 .nectar-benefit-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  color: #111827;
 }
 
 .nectar-benefit-text {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1E293B;
-  line-height: 1.25;
-}
-
-/* --------------------------------------------------------------------------
-   Talk to a Nutritionist (Floating / Sticky Pill)
-   -------------------------------------------------------------------------- */
-.nectar-nutritionist-pill {
-  position: fixed;
-  right: 24px;
-  bottom: 28px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 10px 18px 10px 12px;
-  border-radius: 50px;
-  z-index: 98;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.nectar-nutritionist-pill:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
-}
-
-.nectar-nutritionist-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #C6E7D2;
-  color: #0D3B2B;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.nectar-nutritionist-avatar svg {
-  width: 22px;
-  height: 22px;
-}
-
-.nectar-nutritionist-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.nectar-nutritionist-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--nectar-text-dark);
-  line-height: 1.2;
-}
-
-.nectar-nutritionist-sub {
   font-size: 11.5px;
-  color: #16A34A;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.nectar-online-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #16A34A;
-  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
-  animation: nectarPulse 2s infinite;
-}
-
-@keyframes nectarPulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+  color: #111827;
+  line-height: 1.25;
 }
 
 /* --------------------------------------------------------------------------
    Price Row
    -------------------------------------------------------------------------- */
 .nectar-price-block {
-  margin: 18px 0;
+  margin-bottom: 16px;
 }
 
 .nectar-price-row {
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 10px;
 }
 
 .nectar-price-current {
@@ -472,21 +430,23 @@
 }
 
 .nectar-price-compare {
-  font-size: 18px;
-  color: #94A3B8;
+  font-size: 15px;
+  color: #9CA3AF;
   text-decoration: line-through;
   font-weight: 500;
 }
 
-.nectar-price-discount {
-  font-size: 18px;
-  font-weight: 700;
+.nectar-price-discount,
+.nectar-price-badge {
   color: #16A34A;
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.nectar-price-tax-note {
-  font-size: 12.5px;
-  color: #64748B;
+.nectar-price-tax-note,
+.nectar-price-mrp {
+  font-size: 12px;
+  color: #6B7280;
   margin-top: 4px;
 }
 
@@ -496,48 +456,48 @@
 .nectar-offers-box {
   background-color: var(--nectar-peach-bg);
   border: 1px solid var(--nectar-peach-border);
-  border-radius: 18px;
-  padding: 16px 20px;
-  margin: 20px 0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 16px 0;
 }
 
 .nectar-offers-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--nectar-text-dark);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .nectar-offers-header svg {
   color: var(--nectar-orange);
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .nectar-offers-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .nectar-offer-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13.5px;
-  color: #334155;
+  font-size: 12.5px;
+  color: #374151;
 }
 
 .nectar-offer-badge {
   background-color: var(--nectar-orange);
   color: #FFFFFF;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 800;
   padding: 3px 8px;
-  border-radius: 5px;
+  border-radius: 4px;
   letter-spacing: 0.5px;
   cursor: pointer;
   user-select: none;
@@ -552,103 +512,113 @@
    Bundle / Variant Option Selector (Quantity Breaks / Cards)
    -------------------------------------------------------------------------- */
 .nectar-bundle-selector {
-  margin: 24px 0 20px;
+  margin: 20px 0 16px;
 }
 
 .nectar-bundle-heading {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--nectar-text-dark);
   margin-bottom: 12px;
 }
 
-.nectar-bundle-cards-grid {
+.nectar-bundle-cards-grid,
+.nectar-bundle-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 12px;
 }
 
 .nectar-bundle-card {
-  border: 1.5px solid #E2E8F0;
-  border-radius: 18px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
   overflow: hidden;
   background: #FFFFFF;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   text-align: center;
 }
 
 .nectar-bundle-card:hover {
   border-color: #94A3B8;
-  transform: translateY(-2px);
 }
 
-.nectar-bundle-card.is-active {
-  border: 2px solid var(--product-accent-color, var(--nectar-green));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+.nectar-bundle-card.is-active,
+.nectar-bundle-card.is-selected {
+  border-color: var(--product-accent-color, var(--nectar-green));
+  box-shadow: 0 4px 14px rgba(13, 59, 43, 0.12);
 }
 
-.nectar-bundle-image-area {
-  padding: 18px 12px 14px;
+.nectar-bundle-image-area,
+.nectar-bundle-image-wrap {
+  padding: 14px 8px 10px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 120px;
+  min-height: 85px;
 }
 
-.nectar-bundle-image-area img {
-  max-width: 80px;
-  max-height: 80px;
+.nectar-bundle-image-area img,
+.nectar-bundle-image-wrap img,
+.nectar-bundle-image-wrap svg {
+  max-width: 65px;
+  max-height: 65px;
   object-fit: contain;
 }
 
-.nectar-bundle-ribbon {
+.nectar-bundle-ribbon,
+.nectar-bundle-badge {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: var(--nectar-green);
+  background-color: var(--product-accent-color, var(--nectar-green));
   color: #FFFFFF;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  padding: 4px 6px;
+  padding: 3px 4px;
   box-sizing: border-box;
 }
 
-/* Bottom Bar - DYNAMIC COLOR from metafield */
-.nectar-bundle-card-bottom {
-  padding: 12px 8px;
-  background-color: #F8FAFC;
-  border-top: 1px solid #E2E8F0;
-  transition: background-color 0.25s ease, color 0.25s ease;
+.nectar-bundle-card-bottom,
+.nectar-bundle-btn {
+  padding: 8px 4px;
+  background-color: #FFFFFF;
+  border-top: 1px solid #E5E7EB;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s ease;
 }
 
-.nectar-bundle-card.is-active .nectar-bundle-card-bottom {
+.nectar-bundle-card.is-active .nectar-bundle-card-bottom,
+.nectar-bundle-card.is-selected .nectar-bundle-btn {
   background-color: var(--product-accent-color, var(--nectar-green));
   color: #FFFFFF;
   border-top-color: transparent;
 }
 
 .nectar-bundle-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: inherit;
   margin-bottom: 2px;
 }
 
-.nectar-bundle-price {
-  font-size: 12px;
+.nectar-bundle-price,
+.nectar-bundle-subtext {
+  font-size: 10.5px;
   font-weight: 500;
   color: inherit;
-  opacity: 0.9;
+  opacity: 0.88;
 }
 
 /* --------------------------------------------------------------------------
@@ -657,65 +627,67 @@
 .nectar-buy-buttons-wrap {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin: 22px 0 16px;
+  gap: 10px;
+  margin: 20px 0 16px;
 }
 
-.nectar-btn-add-to-cart {
+.nectar-btn-add-to-cart,
+.nectar-add-to-cart-btn {
   width: 100%;
-  padding: 15px 24px;
-  border-radius: 12px;
-  border: 1.5px solid var(--nectar-text-dark);
+  height: 48px;
+  border-radius: 8px;
+  border: 1.5px solid #111827;
   background-color: #FFFFFF;
-  color: var(--nectar-text-dark);
-  font-size: 15.5px;
+  color: #111827;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.nectar-btn-add-to-cart:hover,
+.nectar-add-to-cart-btn:hover {
+  background-color: #F8FAFC;
+}
+
+.nectar-btn-add-to-cart svg,
+.nectar-add-to-cart-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nectar-btn-buy-now,
+.nectar-buy-now-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1F2937;
+  color: #FFFFFF;
+  font-size: 14.5px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: all 0.2s ease;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
 }
 
-.nectar-btn-add-to-cart:hover {
-  background-color: #F8FAFC;
-  border-color: #000000;
-}
-
-.nectar-btn-add-to-cart svg {
-  width: 19px;
-  height: 19px;
-}
-
-.nectar-btn-buy-now {
-  width: 100%;
-  padding: 15px 24px;
-  border-radius: 12px;
-  border: none;
-  background-color: #1A231F;
-  color: #FFFFFF;
-  font-size: 15.5px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.nectar-btn-buy-now:hover {
-  background-color: #0F172A;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+.nectar-btn-buy-now:hover,
+.nectar-buy-now-btn:hover {
+  background-color: #111827;
 }
 
 .nectar-payment-pill-icons {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .nectar-pay-badge {
@@ -724,9 +696,9 @@
   justify-content: center;
   background: #FFFFFF;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  font-size: 9.5px;
   font-weight: 800;
   color: #000;
   overflow: hidden;
@@ -754,7 +726,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 16px 0 20px;
+  margin: 16px 0;
   padding: 4px 0;
 }
 
@@ -762,16 +734,16 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
-  color: #334155;
+  color: #111827;
   white-space: nowrap;
 }
 
 .nectar-trust-badge-item svg {
   color: #16A34A;
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
 }
 
 /* --------------------------------------------------------------------------
@@ -780,9 +752,9 @@
 .nectar-lab-tested-banner {
   background-color: var(--nectar-green-light);
   border: 1px solid var(--nectar-green-border);
-  border-radius: 16px;
-  padding: 14px 18px;
-  margin: 18px 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 16px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -796,9 +768,9 @@
 }
 
 .nectar-qr-icon {
-  width: 34px;
-  height: 34px;
-  color: var(--nectar-green);
+  width: 28px;
+  height: 28px;
+  color: #16A34A;
   flex-shrink: 0;
 }
 
@@ -813,26 +785,26 @@
 }
 
 .nectar-lab-title {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
-  color: var(--nectar-green);
+  color: #111827;
   margin-bottom: 2px;
 }
 
 .nectar-lab-subtitle {
-  font-size: 12px;
-  color: #4A6B5D;
+  font-size: 11.5px;
+  color: #4B5563;
   line-height: 1.3;
 }
 
 .nectar-lab-btn {
-  background: transparent;
-  border: 1px solid var(--nectar-green);
-  color: var(--nectar-green);
-  font-size: 12.5px;
-  font-weight: 700;
-  padding: 7px 16px;
-  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid #16A34A;
+  color: #16A34A;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -840,53 +812,148 @@
 }
 
 .nectar-lab-btn:hover {
-  background-color: var(--nectar-green);
+  background-color: #16A34A;
   color: #FFFFFF;
 }
 
 /* --------------------------------------------------------------------------
-   RESPONSIVENESS
+   Talk to a Nutritionist Pill
+   -------------------------------------------------------------------------- */
+.nectar-nutritionist-pill {
+  position: fixed;
+  right: 24px;
+  bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid #D1EEDB;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 8px 16px 8px 10px;
+  border-radius: 40px;
+  z-index: 98;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nectar-nutritionist-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+}
+
+.nectar-nutritionist-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #C6E7D2;
+  color: #0D3B2B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.nectar-nutritionist-avatar svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nectar-nutritionist-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nectar-nutritionist-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--nectar-text-dark);
+  line-height: 1.2;
+}
+
+.nectar-nutritionist-sub {
+  font-size: 11px;
+  color: #16A34A;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nectar-online-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #16A34A;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
+  animation: nectarPulse 2s infinite;
+}
+
+@keyframes nectarPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVENESS (Mobile: smaller padding, stacked layout, fluid width)
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 989px) {
+  .nectar-pdp-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .product__media-wrapper {
+    position: static;
+  }
+
   .nectar-gallery-main-card {
-    min-height: 360px;
-    padding: 30px 16px;
+    min-height: 420px;
+    height: 420px;
+    padding: 24px 16px;
   }
 
   .nectar-benefits-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .nectar-bundle-cards-grid {
+  .nectar-bundle-cards-grid,
+  .nectar-bundle-cards {
     gap: 10px;
   }
 
   .nectar-nutritionist-pill {
     bottom: 20px;
     right: 16px;
-    padding: 8px 14px 8px 10px;
   }
 }
 
 @media screen and (max-width: 749px) {
   .nectar-gallery-main-card {
-    min-height: 300px;
-    border-radius: 18px;
-    padding: 24px 12px;
+    min-height: 340px;
+    height: 340px;
+    border-radius: 20px;
+    padding: 20px 12px;
   }
 
   .nectar-product-title {
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .nectar-price-current {
-    font-size: 27px;
+    font-size: 28px;
+  }
+
+  .nectar-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 10px;
   }
 
   .nectar-trust-badges-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .nectar-lab-tested-banner {
@@ -903,3 +970,15 @@
     display: none;
   }
 }
+
+/* Prevent accidental duplicate block rendering */
+.nectar-offers-box ~ .nectar-offers-box,
+.nectar-price-block ~ .nectar-price-block,
+.nectar-bundle-selector ~ .nectar-bundle-selector,
+.nectar-trust-badges-row ~ .nectar-trust-badges-row,
+.nectar-lab-tested-banner ~ .nectar-lab-tested-banner,
+.nectar-nutritionist-pill ~ .nectar-nutritionist-pill,
+.nectar-benefits-grid ~ .nectar-benefits-grid {
+  display: none !important;
+}
+

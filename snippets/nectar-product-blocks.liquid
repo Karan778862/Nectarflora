@@ -3,7 +3,8 @@
   Renders custom blocks for main-product.liquid with dynamic metafield support.
 {%- enddoc -%}
 
-{%- case block.type -%}
+{%- assign block_type = forced_type | default: block.type -%}
+{%- case block_type -%}
 
   {%- when 'subtitle' -%}
     {%- liquid
