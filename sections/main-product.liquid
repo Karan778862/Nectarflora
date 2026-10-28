@@ -15,6 +15,7 @@
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'nectar-product.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -26,6 +27,10 @@
   {%- endif -%}
 
   {%- style -%}
+    #MainProduct-{{ section.id }} {
+      --product-accent-color: {{ product.metafields.custom.color_hex | default: product.metafields.custom.color | default: '#0D3B2B' }};
+    }
+
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -41,6 +46,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'nectar-product.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -75,9 +81,14 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
     <div class="page-width">
+      {% render 'nectar-breadcrumbs', product: product %}
       <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
         <div class="grid__item product__media-wrapper">
-          {% render 'product-media-gallery', variant_images: variant_images %}
+          {%- if section.settings.gallery_type == 'dawn' -%}
+            {% render 'product-media-gallery', variant_images: variant_images %}
+          {%- else -%}
+            {% render 'nectar-product-media-gallery', product: product, variant_images: variant_images %}
+          {%- endif -%}
         </div>
         <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <section
@@ -88,6 +99,8 @@
 
             {%- for block in section.blocks -%}
               {%- case block.type -%}
+                {%- when 'subtitle', 'nectar_rating', 'product_tabs', 'clinical_claims', 'key_benefits', 'nectar_price', 'available_offers', 'bundle_selector', 'nectar_buy_buttons', 'trust_badges', 'lab_tested', 'nutritionist_badge' -%}
+                  {% render 'nectar-product-blocks', block: block, product: product, section: section %}
                 {%- when '@app' -%}
                   {% render block %}
                 {%- when 'text' -%}
@@ -758,6 +771,207 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "subtitle",
+      "name": "Product Subtitle / Tagline",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Subtitle Text",
+          "default": "Advance Skin Wellness Formula",
+          "info": "Falls back to custom.subtitle metafield if left blank"
+        }
+      ]
+    },
+    {
+      "type": "nectar_rating",
+      "name": "Rating & Reviews",
+      "settings": [
+        {
+          "type": "text",
+          "id": "score",
+          "label": "Rating Score",
+          "default": "4.6"
+        },
+        {
+          "type": "text",
+          "id": "reviews_count",
+          "label": "Reviews Count",
+          "default": "128"
+        }
+      ]
+    },
+    {
+      "type": "product_tabs",
+      "name": "Product Tabs (Accordion/Tabs)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_1_title",
+          "label": "Tab 1 Title",
+          "default": "Description"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_title",
+          "label": "Tab 2 Title",
+          "default": "Ingredients"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_title",
+          "label": "Tab 3 Title",
+          "default": "How to take"
+        },
+        {
+          "type": "text",
+          "id": "tab_4_title",
+          "label": "Tab 4 Title",
+          "default": "FAQ"
+        },
+        {
+          "type": "text",
+          "id": "tab_5_title",
+          "label": "Tab 5 Title",
+          "default": "Lab Reports"
+        }
+      ]
+    },
+    {
+      "type": "clinical_claims",
+      "name": "Clinical Claims Note",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Disclaimer Text",
+          "default": "Claims based on clinically studied ingredients, not the product."
+        }
+      ]
+    },
+    {
+      "type": "key_benefits",
+      "name": "Key Benefits (6 Icons)",
+      "settings": []
+    },
+    {
+      "type": "nectar_price",
+      "name": "Price (Custom Layout)",
+      "settings": []
+    },
+    {
+      "type": "available_offers",
+      "name": "Available Offers Box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Available Offers"
+        },
+        {
+          "type": "text",
+          "id": "offer_1_text",
+          "label": "Offer 1",
+          "default": "Buy any 2, get 1 free"
+        },
+        {
+          "type": "text",
+          "id": "offer_2_text",
+          "label": "Offer 2",
+          "default": "Extra 10% off on your first order"
+        },
+        {
+          "type": "text",
+          "id": "offer_3_text",
+          "label": "Offer 3",
+          "default": "Free shipping on orders above ₹499"
+        }
+      ]
+    },
+    {
+      "type": "bundle_selector",
+      "name": "Select Option (Bundle Cards)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Select Option"
+        }
+      ]
+    },
+    {
+      "type": "nectar_buy_buttons",
+      "name": "Buy Buttons (Add to Cart + Buy Now)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "add_to_cart_label",
+          "label": "Add to Cart Label",
+          "default": "Add to cart"
+        },
+        {
+          "type": "text",
+          "id": "buy_now_label",
+          "label": "Buy Now Label",
+          "default": "BUY NOW"
+        }
+      ]
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust Badges (Shipping, COD, Vegan)",
+      "settings": []
+    },
+    {
+      "type": "lab_tested",
+      "name": "Third-party Lab Tested Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Third-party Lab Tested"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Scan the QR on your pack to view the batch report"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "View Report"
+        }
+      ]
+    },
+    {
+      "type": "nutritionist_badge",
+      "name": "Talk to a Nutritionist Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Talk to a Nutritionist"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Free • Online now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "WhatsApp or Consultation Link"
+        }
+      ]
     },
     {
       "type": "text",
@@ -2144,6 +2358,46 @@
     }
   ],
   "settings": [
+    {
+      "type": "select",
+      "id": "gallery_type",
+      "options": [
+        {
+          "value": "nectar",
+          "label": "Nectarflora Custom Gallery (Thumbnails & Badge)"
+        },
+        {
+          "value": "dawn",
+          "label": "Standard Dawn Gallery"
+        }
+      ],
+      "default": "nectar",
+      "label": "Gallery Type"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "default": true,
+      "label": "Show Discount Badge on Main Image"
+    },
+    {
+      "type": "text",
+      "id": "custom_discount_badge_text",
+      "default": "9% OFF",
+      "label": "Default Discount Badge Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_floating_offer_tab",
+      "default": true,
+      "label": "Show Left Floating Offer Tab"
+    },
+    {
+      "type": "text",
+      "id": "floating_tab_text",
+      "default": "Get 10% OFF",
+      "label": "Floating Tab Text"
+    },
     {
       "type": "checkbox",
       "id": "enable_sticky_info",

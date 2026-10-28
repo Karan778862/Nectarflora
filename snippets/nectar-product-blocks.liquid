@@ -1,0 +1,400 @@
+{%- doc -%}
+  Nectarflora Product Page Dynamic Blocks
+  Renders custom blocks for main-product.liquid with dynamic metafield support.
+{%- enddoc -%}
+
+{%- case block.type -%}
+
+  {%- when 'subtitle' -%}
+    {%- liquid
+      assign subtitle_text = block.settings.text
+      if subtitle_text == blank
+        assign subtitle_text = product.metafields.custom.subtitle.value | default: product.metafields.custom.subtitle | default: 'Advance Skin Wellness Formula'
+      endif
+    -%}
+    {%- if subtitle_text != blank -%}
+      <div class="nectar-product-subtitle" {{ block.shopify_attributes }}>
+        {{ subtitle_text }}
+      </div>
+    {%- endif -%}
+
+  {%- when 'nectar_rating' -%}
+    <div class="nectar-product-rating-wrap" {{ block.shopify_attributes }}>
+      <div class="nectar-rating-stars">★★★★★</div>
+      <span class="nectar-rating-score">{{ block.settings.score | default: '4.6' }}/5</span>
+      <span class="nectar-rating-count">({{ block.settings.reviews_count | default: '128' }})</span>
+    </div>
+
+  {%- when 'product_tabs' -%}
+    <div class="nectar-product-tabs-wrap" id="NectarTabs-{{ section.id }}" {{ block.shopify_attributes }}>
+      <div class="nectar-tabs-nav" role="tablist">
+        <button type="button" class="nectar-tab-btn is-active" data-tab-target="desc-{{ section.id }}" role="tab" aria-selected="true">
+          {{ block.settings.tab_1_title | default: 'Description' }}
+        </button>
+        <button type="button" class="nectar-tab-btn" data-tab-target="ingr-{{ section.id }}" role="tab" aria-selected="false">
+          {{ block.settings.tab_2_title | default: 'Ingredients' }}
+        </button>
+        <button type="button" class="nectar-tab-btn" data-tab-target="take-{{ section.id }}" role="tab" aria-selected="false">
+          {{ block.settings.tab_3_title | default: 'How to take' }}
+        </button>
+        <button type="button" class="nectar-tab-btn" data-tab-target="faq-{{ section.id }}" role="tab" aria-selected="false">
+          {{ block.settings.tab_4_title | default: 'FAQ' }}
+        </button>
+        <button type="button" class="nectar-tab-btn" data-tab-target="lab-{{ section.id }}" role="tab" aria-selected="false">
+          {{ block.settings.tab_5_title | default: 'Lab Reports' }}
+        </button>
+      </div>
+
+      <!-- Description Panel -->
+      <div class="nectar-tab-panel is-active" id="desc-{{ section.id }}" role="tabpanel">
+        {%- if product.description != blank -%}
+          <div class="product__description rte">
+            {{ product.description }}
+          </div>
+        {%- else -%}
+          <p>NectarFlora Age Well is an advanced skin wellness formula delivering 500 mg of Liposomal Glutathione (90%), encapsulated in liposomal technology for higher bioavailability and superior cellular absorption. Enriched with Trans-Resveratrol, Grape Seed, Green Tea and Pine Bark extracts, Liposomal Vitamin C, Liposomal CoQ10, Hyaluronic Acid and Astaxanthin, it supports skin brightness, helps reduce pigmentation and protects cells from oxidative stress. Clean, third-party tested and free from added sugar, preservatives, artificial colours or flavours.</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Ingredients Panel (metafield custom.ingredients) -->
+      <div class="nectar-tab-panel" id="ingr-{{ section.id }}" role="tabpanel">
+        {%- if product.metafields.custom.ingredients != blank -%}
+          <div class="rte">
+            {{ product.metafields.custom.ingredients | metafield_tag }}
+          </div>
+        {%- else -%}
+          <p><strong>Key Active Ingredients per serving:</strong></p>
+          <ul>
+            <li><strong>Setria® Liposomal Glutathione (500mg, 90% purity):</strong> Master antioxidant for cellular detoxification and melanin regulation.</li>
+            <li><strong>Trans-Resveratrol (98% Pure Japanese Knotweed):</strong> Activates sirtuins (longevity genes) and cellular defense.</li>
+            <li><strong>French Pine Bark &amp; Grape Seed Extract:</strong> Synergistic bioflavonoids for micro-circulation and collagen synthesis.</li>
+            <li><strong>Liposomal Vitamin C &amp; CoQ10:</strong> Essential co-factors for ATP energy and UV damage defense.</li>
+            <li><strong>Low-Molecular Hyaluronic Acid:</strong> Deep cellular hydration from within.</li>
+            <li><strong>Natural Astaxanthin:</strong> 6,000x stronger than Vitamin C in scavenging free radicals.</li>
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <!-- How to take Panel (metafield custom.how_to_take) -->
+      <div class="nectar-tab-panel" id="take-{{ section.id }}" role="tabpanel">
+        {%- if product.metafields.custom.how_to_take != blank -%}
+          <div class="rte">
+            {{ product.metafields.custom.how_to_take | metafield_tag }}
+          </div>
+        {%- else -%}
+          <p><strong>Recommended Usage:</strong></p>
+          <p>Take 1-2 capsules daily after breakfast or your first meal with water.</p>
+          <p><em>Pro Tip:</em> Consistent daily intake for 60-90 days is recommended for comprehensive cellular renewal and glowing skin.</p>
+        {%- endif -%}
+      </div>
+
+      <!-- FAQ Panel (metafield custom.faqs) -->
+      <div class="nectar-tab-panel" id="faq-{{ section.id }}" role="tabpanel">
+        {%- if product.metafields.custom.faqs != blank -%}
+          <div class="rte">
+            {{ product.metafields.custom.faqs | metafield_tag }}
+          </div>
+        {%- else -%}
+          <div class="nectar-faq-item">
+            <div class="nectar-faq-question">When can I expect to see visible results?</div>
+            <div class="nectar-faq-answer">Most users notice improved skin hydration and morning glow within 3-4 weeks. Noticeable pigment reduction and refined skin texture are typically seen after 8-12 weeks of consistent daily usage.</div>
+          </div>
+          <div class="nectar-faq-item">
+            <div class="nectar-faq-question">Is Age Well safe for long-term daily consumption?</div>
+            <div class="nectar-faq-answer">Yes, Age Well is 100% vegetarian, non-GMO, and formulated without synthetic chemicals or fillers. Every batch undergoes strict NABL-accredited third-party laboratory testing.</div>
+          </div>
+          <div class="nectar-faq-item">
+            <div class="nectar-faq-question">Can I take this alongside my other supplements?</div>
+            <div class="nectar-faq-answer">Absolutely. Age Well works synergistically with omega-3 fatty acids, daily fiber, and probiotics.</div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Lab Reports Panel -->
+      <div class="nectar-tab-panel" id="lab-{{ section.id }}" role="tabpanel">
+        <p><strong>100% Transparency &amp; Tested Purity:</strong></p>
+        <p>Every single batch produced is independently tested by NABL-certified laboratories for heavy metal screening, active ingredient assay, pesticide residues, and microbial count.</p>
+        <p><strong>Current Batch:</strong> NF-AW-2026-08 &bull; <strong>Assay Purity:</strong> 99.4% &bull; <strong>Heavy Metals:</strong> Below detection threshold (Safe)</p>
+        <div style="margin-top: 14px;">
+          <a href="#lab-test" class="nectar-lab-btn" style="display: inline-block;">View Batch Certificate PDF</a>
+        </div>
+      </div>
+    </div>
+
+  {%- when 'clinical_claims' -%}
+    <div class="nectar-clinical-disclaimer" {{ block.shopify_attributes }}>
+      {{ block.settings.text | default: 'Claims based on clinically studied ingredients, not the product.' }}
+    </div>
+
+  {%- when 'key_benefits' -%}
+    <div class="nectar-benefits-grid" {{ block.shopify_attributes }}>
+      <!-- 1: Improves Skin Brightness -->
+      <div class="nectar-benefit-item">
+        <div class="nectar-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+        </div>
+        <div class="nectar-benefit-text">Improves Skin<br>Brightness¹</div>
+      </div>
+
+      <!-- 2: Anti-Ageing Support -->
+      <div class="nectar-benefit-item">
+        <div class="nectar-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>
+          </svg>
+        </div>
+        <div class="nectar-benefit-text">Anti-Ageing<br>Support²</div>
+      </div>
+
+      <!-- 3: Supports Cellular Health -->
+      <div class="nectar-benefit-item">
+        <div class="nectar-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <div class="nectar-benefit-text">Supports Cellular<br>Health³</div>
+      </div>
+
+      <!-- 4: Helps Reduce Pigmentation -->
+      <div class="nectar-benefit-item">
+        <div class="nectar-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+        <div class="nectar-benefit-text">Helps Reduce<br>Pigmentation⁴</div>
+      </div>
+
+      <!-- 5: Deep Skin Hydration -->
+      <div class="nectar-benefit-item">
+        <div class="nectar-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div class="nectar-benefit-text">Deep Skin<br>Hydration⁵</div>
+      </div>
+
+      <!-- 6: Antioxidant Protection -->
+      <div class="nectar-benefit-item">
+        <div class="nectar-benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="nectar-benefit-text">Antioxidant<br>Protection⁶</div>
+      </div>
+    </div>
+
+  {%- when 'nectar_price' -%}
+    {%- liquid
+      assign current_variant = product.selected_or_first_available_variant
+      assign current_price = current_variant.price
+      assign compare_price = current_variant.compare_at_price
+      assign discount_percent = 0
+      if compare_price > current_price
+        assign discount_percent = compare_price | minus: current_price | times: 100.0 | divided_by: compare_price | round
+      endif
+    -%}
+    <div class="nectar-price-block" id="NectarPrice-{{ section.id }}" {{ block.shopify_attributes }}>
+      <div class="nectar-price-row">
+        <span class="nectar-price-current" data-price-current>{{ current_price | money }}</span>
+        {%- if compare_price > current_price -%}
+          <span class="nectar-price-compare" data-price-compare>{{ compare_price | money }}</span>
+          <span class="nectar-price-discount" data-price-discount>{{ discount_percent }}% off</span>
+        {%- endif -%}
+      </div>
+      <div class="nectar-price-tax-note">(MRP Inclusive of all taxes)</div>
+    </div>
+
+  {%- when 'available_offers' -%}
+    <div class="nectar-offers-box" {{ block.shopify_attributes }}>
+      <div class="nectar-offers-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 12 20 22 4 22 4 12"/>
+          <rect x="2" y="7" width="20" height="5"/>
+          <line x1="12" y1="22" x2="12" y2="7"/>
+          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+        </svg>
+        <span>{{ block.settings.heading | default: 'Available Offers' }}</span>
+      </div>
+      <div class="nectar-offers-list">
+        <div class="nectar-offer-item">
+          <span class="nectar-offer-badge" data-coupon="BUY2GET1" title="Click to copy">BUY2GET1</span>
+          <span>{{ block.settings.offer_1_text | default: 'Buy any 2, get 1 free' }}</span>
+        </div>
+        <div class="nectar-offer-item">
+          <span class="nectar-offer-badge" data-coupon="FIRST10" title="Click to copy">FIRST10</span>
+          <span>{{ block.settings.offer_2_text | default: 'Extra 10% off on your first order' }}</span>
+        </div>
+        <div class="nectar-offer-item">
+          <span class="nectar-offer-badge" data-coupon="FREESHIP" title="Click to copy">FREESHIP</span>
+          <span>{{ block.settings.offer_3_text | default: 'Free shipping on orders above ₹499' }}</span>
+        </div>
+      </div>
+    </div>
+
+  {%- when 'bundle_selector' -%}
+    {%- liquid
+      assign single_price = product.selected_or_first_available_variant.price
+      assign price_2 = single_price | times: 2 | minus: 20000
+      assign price_3 = single_price | times: 3 | minus: 60000
+      if price_2 < single_price
+        assign price_2 = single_price | times: 2
+      endif
+      if price_3 < single_price
+        assign price_3 = single_price | times: 3
+      endif
+    -%}
+    <div class="nectar-bundle-selector" id="NectarBundles-{{ section.id }}" {{ block.shopify_attributes }}>
+      <div class="nectar-bundle-heading">{{ block.settings.heading | default: 'Select Option' }}</div>
+      
+      <div class="nectar-bundle-cards-grid">
+        <!-- Option 1: Buy 1 -->
+        <div class="nectar-bundle-card is-active" data-qty="1" data-price="{{ single_price }}">
+          <div class="nectar-bundle-image-area">
+            {%- if product.featured_image != blank -%}
+              <img src="{{ product.featured_image | image_url: width: 160 }}" alt="{{ product.title | escape }}" loading="lazy" width="80" height="80">
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+          <div class="nectar-bundle-card-bottom">
+            <div class="nectar-bundle-name">Buy 1</div>
+            <div class="nectar-bundle-price">{{ single_price | money }}</div>
+          </div>
+        </div>
+
+        <!-- Option 2: Buy 2 (Most Popular) -->
+        <div class="nectar-bundle-card" data-qty="2" data-price="{{ price_2 }}">
+          <div class="nectar-bundle-image-area">
+            {%- if product.featured_image != blank -%}
+              <div style="display: flex; gap: 4px; justify-content: center;">
+                <img src="{{ product.featured_image | image_url: width: 140 }}" alt="{{ product.title | escape }}" loading="lazy" width="55" height="55">
+                <img src="{{ product.featured_image | image_url: width: 140 }}" alt="{{ product.title | escape }}" loading="lazy" width="55" height="55">
+              </div>
+            {%- endif -%}
+            <div class="nectar-bundle-ribbon">MOST POPULAR</div>
+          </div>
+          <div class="nectar-bundle-card-bottom">
+            <div class="nectar-bundle-name">Buy 2</div>
+            <div class="nectar-bundle-price">{{ price_2 | money }} &bull; Save ₹600</div>
+          </div>
+        </div>
+
+        <!-- Option 3: Buy 3 (Best Value) -->
+        <div class="nectar-bundle-card" data-qty="3" data-price="{{ price_3 }}">
+          <div class="nectar-bundle-image-area">
+            {%- if product.featured_image != blank -%}
+              <div style="display: flex; gap: 2px; justify-content: center;">
+                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy" width="45" height="45">
+                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy" width="45" height="45">
+                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy" width="45" height="45">
+              </div>
+            {%- endif -%}
+            <div class="nectar-bundle-ribbon">BEST VALUE</div>
+          </div>
+          <div class="nectar-bundle-card-bottom">
+            <div class="nectar-bundle-name">Buy 3</div>
+            <div class="nectar-bundle-price">{{ price_3 | money }} &bull; Save ₹1,200</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {%- when 'nectar_buy_buttons' -%}
+    <div class="nectar-buy-buttons-wrap" id="NectarBuyButtons-{{ section.id }}" {{ block.shopify_attributes }}>
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-nectar-variant-id>
+      <input type="hidden" name="quantity" value="1" data-nectar-quantity-input>
+
+      <!-- Add to cart -->
+      <button type="button" class="nectar-btn-add-to-cart" data-nectar-add-to-cart>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span>{{ block.settings.add_to_cart_label | default: 'Add to cart' }}</span>
+      </button>
+
+      <!-- BUY NOW with payment badges -->
+      <button type="button" class="nectar-btn-buy-now" data-nectar-buy-now>
+        <span>{{ block.settings.buy_now_label | default: 'BUY NOW' }}</span>
+        <div class="nectar-payment-pill-icons">
+          <span class="nectar-pay-badge nectar-pay-badge--gpay">GPay</span>
+          <span class="nectar-pay-badge nectar-pay-badge--phonepe">Pe</span>
+          <span class="nectar-pay-badge nectar-pay-badge--paytm">Paytm</span>
+          <span style="font-size: 16px; margin-left: 2px;">›</span>
+        </div>
+      </button>
+    </div>
+
+  {%- when 'trust_badges' -%}
+    <div class="nectar-trust-badges-row" {{ block.shopify_attributes }}>
+      <div class="nectar-trust-badge-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>Free Shipping</span>
+      </div>
+      <div class="nectar-trust-badge-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>Cash on Delivery</span>
+      </div>
+      <div class="nectar-trust-badge-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span>100% Vegan Capsule</span>
+      </div>
+    </div>
+
+  {%- when 'lab_tested' -%}
+    <div class="nectar-lab-tested-banner" id="lab-test" {{ block.shopify_attributes }}>
+      <div class="nectar-lab-left">
+        <div class="nectar-qr-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="nectar-lab-info">
+          <div class="nectar-lab-title">{{ block.settings.title | default: 'Third-party Lab Tested' }}</div>
+          <div class="nectar-lab-subtitle">{{ block.settings.subtitle | default: 'Scan the QR on your pack to view the batch report' }}</div>
+        </div>
+      </div>
+      <button type="button" class="nectar-lab-btn" data-view-lab-report>
+        {{ block.settings.btn_label | default: 'View Report' }}
+      </button>
+    </div>
+
+  {%- when 'nutritionist_badge' -%}
+    <a href="{{ block.settings.link | default: 'https://wa.me/' }}" class="nectar-nutritionist-pill" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+      <div class="nectar-nutritionist-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="nectar-nutritionist-info">
+        <div class="nectar-nutritionist-title">{{ block.settings.title | default: 'Talk to a Nutritionist' }}</div>
+        <div class="nectar-nutritionist-sub">
+          <span class="nectar-online-dot"></span>
+          <span>{{ block.settings.subtitle | default: 'Free • Online now' }}</span>
+        </div>
+      </div>
+    </a>
+
+{%- endcase -%}

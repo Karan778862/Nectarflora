@@ -1,0 +1,119 @@
+{%- doc -%}
+  Nectarflora Custom Product Media Gallery
+  Renders the main product image card with discount badge, floating offer tab, and horizontal thumbnails.
+{%- enddoc -%}
+
+{%- liquid
+  assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+  assign discount_percent = 0
+  if product.compare_at_price > product.price
+    assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+-%}
+
+<!-- Floating Left Offer Tab -->
+{%- if section.settings.show_floating_offer_tab | default: true -%}
+  <div class="nectar-floating-left-tab" data-floating-tab>
+    {{ section.settings.floating_tab_text | default: 'Get 10% OFF' }}
+  </div>
+{%- endif -%}
+
+<div class="nectar-product-gallery" id="NectarGallery-{{ section.id }}">
+  <!-- Main Image Card -->
+  <div class="nectar-gallery-main-card">
+    {%- if discount_percent > 0 or section.settings.show_discount_badge -%}
+      <div class="nectar-gallery-discount-badge">
+        {%- if discount_percent > 0 -%}
+          {{ discount_percent }}% OFF
+        {%- else -%}
+          {{ section.settings.custom_discount_badge_text | default: '9% OFF' }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if featured_media != blank -%}
+      <img
+        id="NectarMainImg-{{ section.id }}"
+        class="nectar-gallery-main-image"
+        src="{{ featured_media | image_url: width: 1000 }}"
+        alt="{{ featured_media.alt | default: product.title | escape }}"
+        loading="eager"
+        width="600"
+        height="600"
+      >
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'nectar-gallery-main-image placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <!-- Thumbnails Row -->
+  {%- if product.media.size > 1 -%}
+    <div class="nectar-gallery-thumbnails-wrap" data-gallery-thumbs>
+      {%- for media in product.media -%}
+        {%- if media.media_type == 'image' -%}
+          <button
+            type="button"
+            class="nectar-thumbnail-btn {% if forloop.first or media.id == featured_media.id %}is-active{% endif %}"
+            data-media-id="{{ media.id }}"
+            data-full-src="{{ media | image_url: width: 1000 }}"
+            aria-label="Image {{ forloop.index }}"
+          >
+            <img
+              src="{{ media | image_url: width: 160 }}"
+              alt="{{ media.alt | default: product.title | escape }}"
+              loading="lazy"
+              width="76"
+              height="76"
+            >
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function() {
+    function initNectarGallery() {
+      const gallery = document.getElementById('NectarGallery-{{ section.id }}');
+      if (!gallery) return;
+
+      const mainImg = gallery.querySelector('#NectarMainImg-{{ section.id }}');
+      const thumbs = gallery.querySelectorAll('.nectar-thumbnail-btn');
+      if (!mainImg || !thumbs.length) return;
+
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener('click', function() {
+          const fullSrc = this.getAttribute('data-full-src');
+          if (!fullSrc) return;
+
+          thumbs.forEach(t => t.classList.remove('is-active'));
+          this.classList.add('is-active');
+
+          mainImg.style.opacity = '0.3';
+          mainImg.style.transform = 'scale(0.98)';
+          
+          const newImg = new Image();
+          newImg.src = fullSrc;
+          newImg.onload = function() {
+            mainImg.src = fullSrc;
+            mainImg.style.opacity = '1';
+            mainImg.style.transform = 'scale(1)';
+          };
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initNectarGallery);
+    } else {
+      initNectarGallery();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+        initNectarGallery();
+      }
+    });
+  })();
+</script>

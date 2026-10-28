@@ -1,1 +1,148 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["vendor","title","price","variant_picker","quantity_selector","buy_buttons","description","share"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"large","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"stacked","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":12}},"disclosures":{"type":"disclosures","settings":{"padding_top":36,"padding_bottom":0}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}}},"order":["main","disclosures","related-products"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "text": "Advance Skin Wellness Formula"
+          }
+        },
+        "rating": {
+          "type": "nectar_rating",
+          "settings": {
+            "score": "4.6",
+            "reviews_count": "128"
+          }
+        },
+        "product_tabs": {
+          "type": "product_tabs",
+          "settings": {
+            "tab_1_title": "Description",
+            "tab_2_title": "Ingredients",
+            "tab_3_title": "How to take",
+            "tab_4_title": "FAQ",
+            "tab_5_title": "Lab Reports"
+          }
+        },
+        "clinical_claims": {
+          "type": "clinical_claims",
+          "settings": {
+            "text": "Claims based on clinically studied ingredients, not the product."
+          }
+        },
+        "key_benefits": {
+          "type": "key_benefits",
+          "settings": {}
+        },
+        "price": {
+          "type": "nectar_price",
+          "settings": {}
+        },
+        "available_offers": {
+          "type": "available_offers",
+          "settings": {
+            "heading": "Available Offers",
+            "offer_1_text": "Buy any 2, get 1 free",
+            "offer_2_text": "Extra 10% off on your first order",
+            "offer_3_text": "Free shipping on orders above ₹499"
+          }
+        },
+        "bundle_selector": {
+          "type": "bundle_selector",
+          "settings": {
+            "heading": "Select Option"
+          }
+        },
+        "buy_buttons": {
+          "type": "nectar_buy_buttons",
+          "settings": {
+            "add_to_cart_label": "Add to cart",
+            "buy_now_label": "BUY NOW"
+          }
+        },
+        "trust_badges": {
+          "type": "trust_badges",
+          "settings": {}
+        },
+        "lab_tested": {
+          "type": "lab_tested",
+          "settings": {
+            "title": "Third-party Lab Tested",
+            "subtitle": "Scan the QR on your pack to view the batch report",
+            "btn_label": "View Report"
+          }
+        },
+        "nutritionist_badge": {
+          "type": "nutritionist_badge",
+          "settings": {
+            "title": "Talk to a Nutritionist",
+            "subtitle": "Free • Online now"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "subtitle",
+        "rating",
+        "product_tabs",
+        "clinical_claims",
+        "key_benefits",
+        "price",
+        "available_offers",
+        "bundle_selector",
+        "buy_buttons",
+        "trust_badges",
+        "lab_tested",
+        "nutritionist_badge"
+      ],
+      "settings": {
+        "gallery_type": "nectar",
+        "show_discount_badge": true,
+        "custom_discount_badge_text": "9% OFF",
+        "show_floating_offer_tab": true,
+        "floating_tab_text": "Get 10% OFF",
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 48
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}

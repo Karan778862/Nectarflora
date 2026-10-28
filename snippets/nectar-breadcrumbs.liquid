@@ -1,0 +1,18 @@
+{%- doc -%}
+  Nectarflora Breadcrumbs
+{%- enddoc -%}
+
+<nav class="nectar-breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a>
+  <span class="nectar-breadcrumbs-separator">›</span>
+
+  {%- if product.collections.first != blank -%}
+    <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+    <span class="nectar-breadcrumbs-separator">›</span>
+  {%- elsif product.type != blank -%}
+    <span>{{ product.type }}</span>
+    <span class="nectar-breadcrumbs-separator">›</span>
+  {%- endif -%}
+
+  <span class="nectar-breadcrumbs-current" aria-current="page">{{ product.title }}</span>
+</nav>
