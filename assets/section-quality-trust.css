@@ -1,0 +1,208 @@
+/* ==========================================================================
+   NECTARFLORA QUALITY TRUST SECTION
+   ========================================================================== */
+
+.nectar-trust-section {
+  width: 100%;
+  position: relative;
+  background-color: var(--trust-bg, #EAF5EE);
+  padding-top: var(--trust-pt, 56px);
+  padding-bottom: var(--trust-pb, 56px);
+  font-family: inherit;
+}
+
+.nectar-trust-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.nectar-trust-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 46px;
+}
+
+.nectar-trust-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--trust-heading-color, #0D3B2B);
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+.nectar-trust-subtitle {
+  font-size: 15px;
+  color: var(--trust-subheading-color, #475569);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* Grid layout for 6 trust badges */
+.nectar-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.nectar-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nectar-trust-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: var(--trust-circle-bg, #FFFFFF);
+  border: 1.5px solid var(--trust-circle-border, #A3D9B8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  color: var(--trust-icon-color, #0A8754);
+  box-shadow: 0 4px 12px rgba(10, 135, 84, 0.08);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.nectar-trust-item:hover .nectar-trust-circle {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(10, 135, 84, 0.16);
+  border-color: var(--trust-icon-color, #0A8754);
+}
+
+.nectar-trust-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nectar-trust-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+.nectar-trust-img {
+  max-width: 38px;
+  max-height: 38px;
+  object-fit: contain;
+}
+
+.nectar-trust-content {
+  width: 100%;
+}
+
+.nectar-trust-item-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--trust-heading-color, #0F172A);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.nectar-trust-item-text {
+  font-size: 12.5px;
+  color: var(--trust-subheading-color, #64748B);
+  margin: 0;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   RESPONSIVENESS
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+  .nectar-trust-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 20px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nectar-trust-section {
+    padding-top: var(--trust-pt-mob, 38px);
+    padding-bottom: var(--trust-pb-mob, 38px);
+  }
+
+  .nectar-trust-container {
+    padding: 0 16px;
+  }
+
+  .nectar-trust-header {
+    margin-bottom: 28px;
+  }
+
+  .nectar-trust-title {
+    font-size: 24px;
+    letter-spacing: -0.3px;
+  }
+
+  .nectar-trust-subtitle {
+    font-size: 13.5px;
+  }
+
+  /* Default mobile 2-column grid */
+  .nectar-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 14px;
+  }
+
+  /* Optional 3-column mobile layout */
+  .nectar-trust-grid--3-mob {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 10px;
+  }
+
+  .nectar-trust-circle {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+  }
+
+  .nectar-trust-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nectar-trust-item-title {
+    font-size: 13.5px;
+    margin-bottom: 4px;
+  }
+
+  .nectar-trust-item-text {
+    font-size: 11.5px;
+    line-height: 1.35;
+  }
+
+  /* Optional swipe carousel on mobile */
+  .nectar-trust-grid--swipe-mob {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding-bottom: 8px;
+  }
+
+  .nectar-trust-grid--swipe-mob::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nectar-trust-grid--swipe-mob .nectar-trust-item {
+    flex: 0 0 150px;
+    scroll-snap-align: start;
+  }
+}

@@ -303,12 +303,87 @@
         "padding_top": 48,
         "padding_bottom": 48
       }
+    },
+    "quality_trust": {
+      "type": "quality-trust",
+      "blocks": {
+        "trust_gmp": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "factory",
+            "title": "GMP Certified",
+            "text": "WHO-GMP certified facility"
+          }
+        },
+        "trust_haccp": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "clipboard",
+            "title": "HACCP",
+            "text": "Food safety management"
+          }
+        },
+        "trust_gluten_free": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "gluten_free",
+            "title": "Gluten Free",
+            "text": "No gluten, no fillers"
+          }
+        },
+        "trust_fssai": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "certified_badge",
+            "title": "FSSAI Certified",
+            "text": "Licensed by FSSAI, India"
+          }
+        },
+        "trust_non_gmo": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "leaf",
+            "title": "Non-GMO",
+            "text": "Clean, natural sourcing"
+          }
+        },
+        "trust_lab_tested": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "microscope",
+            "title": "Lab Tested",
+            "text": "Third-party tested batches"
+          }
+        }
+      },
+      "block_order": [
+        "trust_gmp",
+        "trust_haccp",
+        "trust_gluten_free",
+        "trust_fssai",
+        "trust_non_gmo",
+        "trust_lab_tested"
+      ],
+      "settings": {
+        "heading": "Quality You Can Trust",
+        "subheading": "Our whole-food ingredients and full-spectrum herbal blends are made in certified facilities",
+        "bg_color": "#EAF5EE",
+        "heading_color": "#0D3B2B",
+        "subheading_color": "#4A6B5D",
+        "circle_bg": "#FFFFFF",
+        "circle_border": "#A3D9B8",
+        "icon_color": "#0A8754",
+        "layout_mobile": "grid_2",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     }
   },
   "order": [
     "image_banner",
     "shop_by_concern",
     "bestsellers",
+    "quality_trust",
     "shop_by_category"
   ]
 }
