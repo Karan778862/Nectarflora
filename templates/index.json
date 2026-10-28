@@ -234,7 +234,7 @@
         "collection": "all",
         "products_to_show": 4,
         "layout_desktop": "grid",
-        "layout_mobile": "carousel",
+        "layout_mobile": "grid_2",
         "show_view_all": true,
         "view_all_label": "View All Products",
         "view_all_link": "shopify://collections/all",
@@ -309,7 +309,7 @@
         "subheading": "Explore our full range, category by category",
         "products_to_show": 4,
         "layout_desktop": "grid",
-        "layout_mobile": "carousel",
+        "layout_mobile": "grid_2",
         "padding_top": 48,
         "padding_bottom": 48
       }
