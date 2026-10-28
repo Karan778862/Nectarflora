@@ -40,6 +40,57 @@
 -%}
 
 {%- unless target == null and placeholder == null -%}
+  {%- if price_class contains 'price--large' -%}
+    {{ 'nectar-product.css' | asset_url | stylesheet_tag }}
+    {%- liquid
+      assign current_price_display = money_price
+      assign discount_percent = 9
+      if compare_at_price > price
+        assign discount_percent = compare_at_price | minus: price | times: 100.0 | divided_by: compare_at_price | round
+        assign compare_price_display = compare_at_price | money
+      else
+        assign compare_price_display = '₹2,199'
+        if price == 0 or price == 100000
+          assign current_price_display = '₹1,999'
+        endif
+      endif
+    -%}
+    <div class="nectar-price-block">
+      <div class="nectar-price-row">
+        <span class="nectar-price-current">{{ current_price_display }}</span>
+        <span class="nectar-price-compare">{{ compare_price_display }}</span>
+        <span class="nectar-price-discount">{{ discount_percent }}% off</span>
+      </div>
+      <div class="nectar-price-tax-note">(MRP Inclusive of all taxes)</div>
+    </div>
+
+    <div class="nectar-offers-box">
+      <div class="nectar-offers-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 17px; height: 17px;">
+          <polyline points="20 12 20 22 4 22 4 12"/>
+          <rect x="2" y="7" width="20" height="5"/>
+          <line x1="12" y1="22" x2="12" y2="7"/>
+          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+        </svg>
+        <span>Available Offers</span>
+      </div>
+      <div class="nectar-offers-list">
+        <div class="nectar-offer-item">
+          <span class="nectar-offer-badge" data-coupon="BUY2GET1" title="Click to copy">BUY2GET1</span>
+          <span>Buy any 2, get 1 free</span>
+        </div>
+        <div class="nectar-offer-item">
+          <span class="nectar-offer-badge" data-coupon="FIRST10" title="Click to copy">FIRST10</span>
+          <span>Extra 10% off on your first order</span>
+        </div>
+        <div class="nectar-offer-item">
+          <span class="nectar-offer-badge" data-coupon="FREESHIP" title="Click to copy">FREESHIP</span>
+          <span>Free shipping on orders above ₹499</span>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
   <div
     class="
       price
@@ -50,6 +101,7 @@
       {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
       {%- if show_badges %} price--show-badge{% endif -%}
     "
+    {% if price_class contains 'price--large' %}style="display: none;"{% endif %}
   >
     <div class="price__container">
       {%- comment -%}

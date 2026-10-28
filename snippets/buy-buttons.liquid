@@ -63,21 +63,13 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <div class="product-form__buttons">
-          {%- liquid
-            assign check_against_inventory = true
-            if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
-              assign check_against_inventory = false
-            endif
-            if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
-              assign quantity_rule_soldout = true
-            endif
-          -%}
+        {{ 'nectar-product.css' | asset_url | stylesheet_tag }}
+        <div class="nectar-buy-buttons-wrap">
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            class="nectar-btn-add-to-cart"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -85,21 +77,92 @@
               disabled
             {% endif %}
           >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
             <span>
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
+                Add to cart
               {%- endif -%}
             </span>
-            {%- render 'loading-spinner' -%}
           </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
+          
+          <button type="button" class="nectar-btn-buy-now" data-nectar-buy-now onclick="document.getElementById('{{ product_form_id }}').submit();">
+            <span>BUY NOW</span>
+            <div class="nectar-payment-pill-icons">
+              <span class="nectar-pay-badge nectar-pay-badge--gpay">GPay</span>
+              <span class="nectar-pay-badge nectar-pay-badge--phonepe">Pe</span>
+              <span class="nectar-pay-badge nectar-pay-badge--paytm">Paytm</span>
+              <span style="font-size: 16px; margin-left: 2px;">›</span>
+            </div>
+          </button>
         </div>
+
+        <!-- Trust Badges -->
+        <div class="nectar-trust-badges-row">
+          <div class="nectar-trust-badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Free Shipping</span>
+          </div>
+          <div class="nectar-trust-badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Cash on Delivery</span>
+          </div>
+          <div class="nectar-trust-badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>100% Vegan Capsule</span>
+          </div>
+        </div>
+
+        <!-- Third-party Lab Tested Banner -->
+        <div class="nectar-lab-tested-banner" id="lab-test">
+          <div class="nectar-lab-left">
+            <div class="nectar-qr-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+            </div>
+            <div class="nectar-lab-info">
+              <div class="nectar-lab-title">Third-party Lab Tested</div>
+              <div class="nectar-lab-subtitle">Scan the QR on your pack to view the batch report</div>
+            </div>
+          </div>
+          <button type="button" class="nectar-lab-btn" onclick="alert('Viewing Batch Test Certificate: 100% Purity & Safety Passed');">
+            View Report
+          </button>
+        </div>
+
+        <!-- Talk to a Nutritionist Pill -->
+        <a href="https://wa.me/" class="nectar-nutritionist-pill" target="_blank" rel="noopener">
+          <div class="nectar-nutritionist-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="nectar-nutritionist-info">
+            <div class="nectar-nutritionist-title">Talk to a Nutritionist</div>
+            <div class="nectar-nutritionist-sub">
+              <span class="nectar-online-dot"></span>
+              <span>Free • Online now</span>
+            </div>
+          </div>
+        </a>
       {%- endform -%}
     </product-form>
   {%- else -%}

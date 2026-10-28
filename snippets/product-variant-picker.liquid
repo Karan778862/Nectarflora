@@ -9,9 +9,13 @@
   @example
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {%- enddoc -%}
+{{ 'nectar-product.css' | asset_url | stylesheet_tag }}
+{% render 'nectar-product-blocks', block: block, product: product, section: section %}
+
 {%- unless product.has_only_default_variant -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
+    style="display: none;"
     data-section="{{ section.id }}"
     data-product-handle="{{ product.handle }}"
     data-product-title="{{ product.title | escape }}"

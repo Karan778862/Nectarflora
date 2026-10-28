@@ -42,9 +42,13 @@
   endif
 -%}
 
+{{ 'nectar-product.css' | asset_url | stylesheet_tag }}
+{% render 'nectar-product-media-gallery', product: product, variant_images: variant_images %}
+
 <media-gallery
   id="MediaGallery-{{ section.id }}"
   role="region"
+  style="display: none;"
   {% if section.settings.enable_sticky_info %}
     class="product__column-sticky"
   {% endif %}
