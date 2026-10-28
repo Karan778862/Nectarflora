@@ -496,6 +496,54 @@
         "padding_top": 56,
         "padding_bottom": 56
       }
+    },
+    "customer_testimonials": {
+      "type": "customer-testimonials",
+      "blocks": {
+        "test_1": {
+          "type": "testimonial",
+          "settings": {
+            "text": "This daily fibre is like a holy grail for my body. I mix it into different drinks and my gut and skin feel refreshed. Happy gut, happy me!",
+            "author_name": "Malika Singh",
+            "author_role": "Nutritionist • Verified Buyer",
+            "avatar_initials": "MS"
+          }
+        },
+        "test_2": {
+          "type": "testimonial",
+          "settings": {
+            "text": "As a vegan, finding the right protein was hard. This plant protein is gluten-free, has added enzymes and keeps my energy up through a busy schedule.",
+            "author_name": "Aarav Khanna",
+            "author_role": "Fitness Coach • Verified Buyer",
+            "avatar_initials": "AK"
+          }
+        },
+        "test_3": {
+          "type": "testimonial",
+          "settings": {
+            "text": "Made from traceable superfoods, so I know it is safe and good for me. I feel light, healthy and guilt-free. You won't be disappointed!",
+            "author_name": "Sanaa Qureshi",
+            "author_role": "Dance Instructor • Verified Buyer",
+            "avatar_initials": "SQ"
+          }
+        }
+      },
+      "block_order": [
+        "test_1",
+        "test_2",
+        "test_3"
+      ],
+      "settings": {
+        "heading": "Hear from our Customers",
+        "subheading": "Discover why so many people trust us with their daily wellbeing",
+        "bg_color": "#FFFFFF",
+        "enable_autoplay": true,
+        "autoplay_interval": 5,
+        "show_arrows": true,
+        "show_dots": true,
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
     }
   },
   "order": [
@@ -505,6 +553,7 @@
     "shop_by_category",
     "quality_trust",
     "customer_reels",
+    "customer_testimonials",
     "experts_science"
   ]
 }

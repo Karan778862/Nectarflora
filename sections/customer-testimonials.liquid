@@ -1,0 +1,409 @@
+{{ 'section-customer-testimonials.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #CustomerTestimonials-{{ section.id }} {
+    --testimonials-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --testimonials-pt: {{ section.settings.padding_top }}px;
+    --testimonials-pb: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="nectar-testimonials-section" id="CustomerTestimonials-{{ section.id }}" aria-label="{{ section.settings.heading | escape }}">
+  <div class="nectar-testimonials-container">
+    
+    <!-- Section Header -->
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nectar-testimonials-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="nectar-testimonials-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="nectar-testimonials-subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Slider Wrap -->
+    <div class="nectar-testimonials-slider-wrap">
+      {%- if section.settings.show_arrows -%}
+        <button type="button" class="nectar-testimonials-arrow nectar-testimonials-arrow--prev" data-testimonials-prev aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      {%- endif -%}
+
+      <div class="nectar-testimonials-track" data-testimonials-track>
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign is_center = false
+            if forloop.index == 2
+              assign is_center = true
+            endif
+          -%}
+          <div
+            class="nectar-testimonial-card {% if is_center %}is-center{% endif %}"
+            data-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}
+          >
+            <!-- Top Quotation Icon -->
+            <div class="nectar-testimonial-quote-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
+              </svg>
+            </div>
+
+            <!-- 5 Golden Stars -->
+            <div class="nectar-testimonial-stars" aria-label="5 stars">★★★★★</div>
+
+            <!-- Review Text -->
+            {%- if block.settings.text != blank -%}
+              <div class="nectar-testimonial-text">
+                {{ block.settings.text | escape }}
+              </div>
+            {%- endif -%}
+
+            <!-- Author Row -->
+            <div class="nectar-testimonial-author">
+              <div class="nectar-testimonial-avatar">
+                {%- if block.settings.avatar_image != blank -%}
+                  <img
+                    src="{{ block.settings.avatar_image | image_url: width: 90 }}"
+                    alt="{{ block.settings.author_name | escape }}"
+                    loading="lazy"
+                    width="44"
+                    height="44"
+                  >
+                {%- else -%}
+                  <span>{{ block.settings.avatar_initials | default: 'MS' }}</span>
+                {%- endif -%}
+              </div>
+
+              <div class="nectar-testimonial-info">
+                {%- if block.settings.author_name != blank -%}
+                  <div class="nectar-testimonial-name">{{ block.settings.author_name | escape }}</div>
+                {%- endif -%}
+                {%- if block.settings.author_role != blank -%}
+                  <div class="nectar-testimonial-role">{{ block.settings.author_role | escape }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_arrows -%}
+        <button type="button" class="nectar-testimonials-arrow nectar-testimonials-arrow--next" data-testimonials-next aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      {%- endif -%}
+    </div>
+
+    <!-- Dots Pagination -->
+    {%- if section.settings.show_dots -%}
+      <div class="nectar-testimonials-dots" data-testimonials-dots>
+        {%- for block in section.blocks -%}
+          <button
+            type="button"
+            class="nectar-testimonial-dot {% if forloop.index == 2 %}is-active{% endif %}"
+            data-dot-index="{{ forloop.index0 }}"
+            aria-label="Slide {{ forloop.index }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    function initTestimonialsSlider() {
+      const section = document.getElementById('CustomerTestimonials-{{ section.id }}');
+      if (!section) return;
+
+      const track = section.querySelector('[data-testimonials-track]');
+      const cards = section.querySelectorAll('.nectar-testimonial-card');
+      const dots = section.querySelectorAll('.nectar-testimonial-dot');
+      const prevBtn = section.querySelector('[data-testimonials-prev]');
+      const nextBtn = section.querySelector('[data-testimonials-next]');
+      const enableAutoplay = {{ section.settings.enable_autoplay | default: true }};
+      const autoplayInterval = {{ section.settings.autoplay_interval | default: 5 }} * 1000;
+
+      let currentIndex = 1; // Start with center card (Card 2)
+      if (cards.length === 1) currentIndex = 0;
+      let autoPlayTimer = null;
+
+      function updateActiveState(index, shouldScroll = true) {
+        if (!cards.length) return;
+        currentIndex = (index + cards.length) % cards.length;
+
+        cards.forEach((card, i) => {
+          if (i === currentIndex) {
+            card.classList.add('is-center');
+          } else {
+            card.classList.remove('is-center');
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          if (i === currentIndex) {
+            dot.classList.add('is-active');
+          } else {
+            dot.classList.remove('is-active');
+          }
+        });
+
+        // Scroll into view
+        if (shouldScroll && track && cards[currentIndex]) {
+          const cardLeft = cards[currentIndex].offsetLeft;
+          const cardWidth = cards[currentIndex].offsetWidth;
+          const trackWidth = track.offsetWidth;
+          track.scrollTo({
+            left: cardLeft - (trackWidth / 2) + (cardWidth / 2),
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          stopAutoplay();
+          updateActiveState(currentIndex - 1);
+          startAutoplay();
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          stopAutoplay();
+          updateActiveState(currentIndex + 1);
+          startAutoplay();
+        });
+      }
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const targetIndex = parseInt(dot.getAttribute('data-dot-index'), 10);
+          stopAutoplay();
+          updateActiveState(targetIndex);
+          startAutoplay();
+        });
+      });
+
+      cards.forEach((card, i) => {
+        card.addEventListener('click', () => {
+          stopAutoplay();
+          updateActiveState(i);
+          startAutoplay();
+        });
+      });
+
+      // Mobile touch-swipe detection to sync active dot & is-center
+      let scrollTimeout;
+      if (track) {
+        track.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const trackCenter = track.scrollLeft + (track.offsetWidth / 2);
+            let closestIndex = currentIndex;
+            let closestDist = Infinity;
+            cards.forEach((card, idx) => {
+              const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+              const dist = Math.abs(trackCenter - cardCenter);
+              if (dist < closestDist) {
+                closestDist = dist;
+                closestIndex = idx;
+              }
+            });
+            if (closestIndex !== currentIndex) {
+              updateActiveState(closestIndex, false);
+            }
+          }, 80);
+        }, { passive: true });
+      }
+
+      function startAutoplay() {
+        if (!enableAutoplay || cards.length <= 1) return;
+        stopAutoplay();
+        autoPlayTimer = setInterval(() => {
+          updateActiveState(currentIndex + 1);
+        }, autoplayInterval);
+      }
+
+      function stopAutoplay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
+      // Pause on hover & touch
+      section.addEventListener('mouseenter', stopAutoplay);
+      section.addEventListener('mouseleave', startAutoplay);
+      section.addEventListener('touchstart', stopAutoplay, { passive: true });
+      section.addEventListener('touchend', startAutoplay, { passive: true });
+
+      startAutoplay();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTestimonialsSlider);
+    } else {
+      initTestimonialsSlider();
+    }
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail && event.detail.sectionId === '{{ section.id }}') {
+        initTestimonialsSlider();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Customer Testimonials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Hear from our Customers",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Discover why so many people trust us with their daily wellbeing",
+      "label": "Subheading"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "default": "#FFFFFF",
+      "label": "Section Background"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "default": true,
+      "label": "Enable Auto-Slider"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-Slide Interval (seconds)",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "default": true,
+      "label": "Show Navigation Arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "default": true,
+      "label": "Show Dots Pagination"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial Card",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Customer Review",
+          "default": "This daily fibre is like a holy grail for my body. I mix it into different drinks and my gut and skin feel refreshed. Happy gut, happy me!"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Customer Name",
+          "default": "Malika Singh"
+        },
+        {
+          "type": "text",
+          "id": "author_role",
+          "label": "Role / Tagline",
+          "default": "Nutritionist • Verified Buyer"
+        },
+        {
+          "type": "text",
+          "id": "avatar_initials",
+          "label": "Avatar Initials",
+          "default": "MS"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_image",
+          "label": "Optional Customer Photo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "This daily fibre is like a holy grail for my body. I mix it into different drinks and my gut and skin feel refreshed. Happy gut, happy me!",
+            "author_name": "Malika Singh",
+            "author_role": "Nutritionist • Verified Buyer",
+            "avatar_initials": "MS"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "As a vegan, finding the right protein was hard. This plant protein is gluten-free, has added enzymes and keeps my energy up through a busy schedule.",
+            "author_name": "Aarav Khanna",
+            "author_role": "Fitness Coach • Verified Buyer",
+            "avatar_initials": "AK"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "Made from traceable superfoods, so I know it is safe and good for me. I feel light, healthy and guilt-free. You won't be disappointed!",
+            "author_name": "Sanaa Qureshi",
+            "author_role": "Dance Instructor • Verified Buyer",
+            "avatar_initials": "SQ"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
