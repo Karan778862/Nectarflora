@@ -18,14 +18,14 @@
       </div>
     {%- endif -%}
 
-  {%- when 'nectar_rating' -%}
+  {%- when 'nectar_rating', 'rating' -%}
     <div class="nectar-product-rating-wrap" {{ block.shopify_attributes }}>
       <div class="nectar-rating-stars">★★★★★</div>
       <span class="nectar-rating-score">{{ block.settings.score | default: '4.6' }}/5</span>
       <span class="nectar-rating-count">({{ block.settings.reviews_count | default: '128' }})</span>
     </div>
 
-  {%- when 'product_tabs' -%}
+  {%- when 'product_tabs', 'description' -%}
     <div class="nectar-product-tabs-wrap" id="NectarTabs-{{ section.id }}" {{ block.shopify_attributes }}>
       <div class="nectar-tabs-nav" role="tablist">
         <button type="button" class="nectar-tab-btn is-active" data-tab-target="desc-{{ section.id }}" role="tab" aria-selected="true">
@@ -193,21 +193,30 @@
       </div>
     </div>
 
-  {%- when 'nectar_price' -%}
+  {%- when 'nectar_price', 'price' -%}
     {%- liquid
       assign current_variant = product.selected_or_first_available_variant
       assign current_price = current_variant.price
       assign compare_price = current_variant.compare_at_price
-      assign discount_percent = 0
-      if compare_price > current_price
-        assign discount_percent = compare_price | minus: current_price | times: 100.0 | divided_by: compare_price | round
+      if current_price == 0 or current_price == nil
+        assign current_price_display = '₹1,999'
+        assign compare_price_display = '₹2,199'
+        assign discount_percent = 9
+      else
+        assign current_price_display = current_price | money
+        assign compare_price_display = compare_price | money
+        if compare_price > current_price
+          assign discount_percent = compare_price | minus: current_price | times: 100.0 | divided_by: compare_price | round
+        else
+          assign discount_percent = 9
+        endif
       endif
     -%}
     <div class="nectar-price-block" id="NectarPrice-{{ section.id }}" {{ block.shopify_attributes }}>
       <div class="nectar-price-row">
-        <span class="nectar-price-current" data-price-current>{{ current_price | money }}</span>
-        {%- if compare_price > current_price -%}
-          <span class="nectar-price-compare" data-price-compare>{{ compare_price | money }}</span>
+        <span class="nectar-price-current" data-price-current>{{ current_price_display }}</span>
+        {%- if compare_price_display != blank and compare_price_display != current_price_display -%}
+          <span class="nectar-price-compare" data-price-compare>{{ compare_price_display }}</span>
           <span class="nectar-price-discount" data-price-discount>{{ discount_percent }}% off</span>
         {%- endif -%}
       </div>
@@ -242,16 +251,28 @@
       </div>
     </div>
 
-  {%- when 'bundle_selector' -%}
+  {%- when 'bundle_selector', 'quantity_selector', 'variant_picker' -%}
     {%- liquid
       assign single_price = product.selected_or_first_available_variant.price
-      assign price_2 = single_price | times: 2 | minus: 20000
-      assign price_3 = single_price | times: 3 | minus: 60000
-      if price_2 < single_price
-        assign price_2 = single_price | times: 2
-      endif
-      if price_3 < single_price
-        assign price_3 = single_price | times: 3
+      if single_price == 0 or single_price == nil
+        assign single_price = 199900
+        assign single_price_display = '₹1,999'
+        assign price_2 = 379800
+        assign price_3 = 539700
+        assign price_2_display = '₹3,798'
+        assign price_3_display = '₹5,397'
+      else
+        assign single_price_display = single_price | money
+        assign price_2 = single_price | times: 2 | minus: 20000
+        assign price_3 = single_price | times: 3 | minus: 60000
+        if price_2 < single_price
+          assign price_2 = single_price | times: 2
+        endif
+        if price_3 < single_price
+          assign price_3 = single_price | times: 3
+        endif
+        assign price_2_display = price_2 | money
+        assign price_3_display = price_3 | money
       endif
     -%}
     <div class="nectar-bundle-selector" id="NectarBundles-{{ section.id }}" {{ block.shopify_attributes }}>
@@ -269,7 +290,7 @@
           </div>
           <div class="nectar-bundle-card-bottom">
             <div class="nectar-bundle-name">Buy 1</div>
-            <div class="nectar-bundle-price">{{ single_price | money }}</div>
+            <div class="nectar-bundle-price">{{ single_price_display }}</div>
           </div>
         </div>
 
@@ -286,7 +307,7 @@
           </div>
           <div class="nectar-bundle-card-bottom">
             <div class="nectar-bundle-name">Buy 2</div>
-            <div class="nectar-bundle-price">{{ price_2 | money }} &bull; Save ₹600</div>
+            <div class="nectar-bundle-price">{{ price_2_display }} &bull; Save ₹600</div>
           </div>
         </div>
 
@@ -304,13 +325,13 @@
           </div>
           <div class="nectar-bundle-card-bottom">
             <div class="nectar-bundle-name">Buy 3</div>
-            <div class="nectar-bundle-price">{{ price_3 | money }} &bull; Save ₹1,200</div>
+            <div class="nectar-bundle-price">{{ price_3_display }} &bull; Save ₹1,200</div>
           </div>
         </div>
       </div>
     </div>
 
-  {%- when 'nectar_buy_buttons' -%}
+  {%- when 'nectar_buy_buttons', 'buy_buttons' -%}
     <div class="nectar-buy-buttons-wrap" id="NectarBuyButtons-{{ section.id }}" {{ block.shopify_attributes }}>
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-nectar-variant-id>
       <input type="hidden" name="quantity" value="1" data-nectar-quantity-input>
