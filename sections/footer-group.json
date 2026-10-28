@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Footer",
   "type": "footer",
@@ -5,27 +14,6 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "bg_color": "#0B3526",
-        "text_color": "#C2D6CC",
-        "company_description": "[Brand Name] is a brand owned by [Company Name] Pvt. Ltd.",
-        "address": "Plot No. 00, Industrial Area, City, State - 000000",
-        "fssai_no": "00000000000000",
-        "phone": "+91 00000 00000",
-        "email": "care@yourbrand.com",
-        "heading_concern": "Shop by Concern",
-        "heading_category": "Shop by Category",
-        "heading_quick_links": "Quick Links",
-        "show_payments": true,
-        "heading_payments": "Pay securely using",
-        "show_socials": true,
-        "heading_socials": "Show us some love on",
-        "show_certificates": true,
-        "heading_certificates": "Affiliated Certificates",
-        "cert_1": "FSSAI",
-        "cert_2": "GMP",
-        "cert_3": "HACCP",
-        "copyright_text": "© 2026 [Brand Name]. All rights reserved.",
-        "disclaimer_text": "Products are not intended to diagnose, treat, cure or prevent any disease.",
         "padding_top": 56,
         "padding_bottom": 24
       }
