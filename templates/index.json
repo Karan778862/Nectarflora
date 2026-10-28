@@ -39,6 +39,174 @@
         "show_text_below": false
       }
     },
+    "shop_by_concern": {
+      "type": "shop-by-concern",
+      "blocks": {
+        "concern_skin": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Skin",
+            "link": "shopify://collections/all",
+            "bottle_color": "#1C6747",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_hair": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Hair",
+            "link": "shopify://collections/all",
+            "bottle_color": "#E5A000",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_sleep": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Sleep & Stress",
+            "link": "shopify://collections/all",
+            "bottle_color": "#583F8A",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_liver": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Liver & Digestion",
+            "link": "shopify://collections/all",
+            "bottle_color": "#A85324",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_brain": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Brain",
+            "link": "shopify://collections/all",
+            "bottle_color": "#15657B",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_women": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Women Health",
+            "link": "shopify://collections/all",
+            "bottle_color": "#C01E5B",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_weight": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Weight",
+            "link": "shopify://collections/all",
+            "bottle_color": "#289E49",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "concern_immunity": {
+          "type": "concern_item",
+          "settings": {
+            "title": "Immunity",
+            "link": "shopify://collections/all",
+            "bottle_color": "#E65A28",
+            "circle_bg_color": "#E6F5ED"
+          }
+        },
+        "tag_ashwagandha": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "KSM-66 Ashwagandha"
+          }
+        },
+        "tag_myo_inositol": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Myo-Inositol"
+          }
+        },
+        "tag_shatavari": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Shatavari"
+          }
+        },
+        "tag_milk_thistle": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Milk Thistle"
+          }
+        },
+        "tag_nac": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "NAC"
+          }
+        },
+        "tag_glutathione": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Liposomal Glutathione"
+          }
+        },
+        "tag_resveratrol": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Trans-Resveratrol"
+          }
+        },
+        "tag_saw_palmetto": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Saw Palmetto"
+          }
+        },
+        "tag_biotin": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Biotin"
+          }
+        },
+        "tag_magnesium": {
+          "type": "trending_tag",
+          "settings": {
+            "title": "Magnesium Bisglycinate"
+          }
+        }
+      },
+      "block_order": [
+        "concern_skin",
+        "concern_hair",
+        "concern_sleep",
+        "concern_liver",
+        "concern_brain",
+        "concern_women",
+        "concern_weight",
+        "concern_immunity",
+        "tag_ashwagandha",
+        "tag_myo_inositol",
+        "tag_shatavari",
+        "tag_milk_thistle",
+        "tag_nac",
+        "tag_glutathione",
+        "tag_resveratrol",
+        "tag_saw_palmetto",
+        "tag_biotin",
+        "tag_magnesium"
+      ],
+      "settings": {
+        "heading": "Shop by Concern",
+        "subheading": "Find the right support for your wellness goals",
+        "heading_color": "#0F3D2C",
+        "subheading_color": "#64748B",
+        "bg_color": "#FFFFFF",
+        "show_trending": true,
+        "trending_label": "Trending:",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -70,6 +238,7 @@
   },
   "order": [
     "image_banner",
+    "shop_by_concern",
     "featured_collection"
   ]
 }
