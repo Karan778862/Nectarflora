@@ -1,0 +1,330 @@
+{%- comment -%}
+  Nectarflora 5-Tab Navigation Bar & Detail Panels
+  Matching exact design reference:
+  - 5 Tabs in outer border box: Description (active in #FFF4E8), Ingredients, How to take, FAQ, Lab Reports
+  - Description panel with "Talk to a Nutritionist" floating pill
+  - Clinical Disclaimer note
+  - 6 Key Benefit Outlined Circular Badges
+{%- endcomment -%}
+
+<div class="nectar-product-tabs-wrap" id="NectarTabs-{{ section.id }}">
+  <!-- 5-Tab Bar (Outer Border Box) -->
+  <div class="nectar-tabs-nav" role="tablist" aria-label="Product Information Tabs">
+    <button
+      type="button"
+      class="nectar-tab-btn is-active"
+      data-tab-target="desc-{{ section.id }}"
+      role="tab"
+      aria-selected="true"
+      aria-controls="desc-{{ section.id }}"
+    >
+      Description
+    </button>
+    <button
+      type="button"
+      class="nectar-tab-btn"
+      data-tab-target="ingr-{{ section.id }}"
+      role="tab"
+      aria-selected="false"
+      aria-controls="ingr-{{ section.id }}"
+    >
+      Ingredients
+    </button>
+    <button
+      type="button"
+      class="nectar-tab-btn"
+      data-tab-target="take-{{ section.id }}"
+      role="tab"
+      aria-selected="false"
+      aria-controls="take-{{ section.id }}"
+    >
+      How to take
+    </button>
+    <button
+      type="button"
+      class="nectar-tab-btn"
+      data-tab-target="faq-{{ section.id }}"
+      role="tab"
+      aria-selected="false"
+      aria-controls="faq-{{ section.id }}"
+    >
+      FAQ
+    </button>
+    <button
+      type="button"
+      class="nectar-tab-btn"
+      data-tab-target="lab-{{ section.id }}"
+      role="tab"
+      aria-selected="false"
+      aria-controls="lab-{{ section.id }}"
+    >
+      Lab Reports
+    </button>
+  </div>
+
+  <!-- 1. Description Panel -->
+  <div class="nectar-tab-panel is-active" id="desc-{{ section.id }}" role="tabpanel">
+    <div class="nectar-desc-content-wrap">
+      <!-- Talk to a Nutritionist Floating Pill -->
+      <a
+        href="https://wa.me/919999999999?text=Hi%20Nectarflora,%20I%20would%20like%20to%20talk%20to%20a%20nutritionist%20about%20Age%20Well."
+        target="_blank"
+        rel="noopener"
+        class="nectar-nutritionist-floating-pill"
+        title="Chat with certified nutritionist"
+      >
+        <div class="nectar-nutritionist-avatar-wrap">
+          <div class="nectar-nutritionist-avatar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D3B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="nectar-nutritionist-online-dot"></span>
+        </div>
+        <div class="nectar-nutritionist-text-wrap">
+          <span class="nectar-nutritionist-heading">Talk to a Nutritionist</span>
+          <span class="nectar-nutritionist-sub">Free &bull; Online now</span>
+        </div>
+      </a>
+
+      {%- if product.description != blank -%}
+        <div class="product__description rte">
+          {{ product.description }}
+        </div>
+      {%- else -%}
+        <p>NectarFlora Age Well is an advanced skin wellness formula delivering 500 mg of Liposomal Glutathione (90%), encapsulated in liposomal technology for higher bioavailability and superior cellular absorption. Enriched with Trans-Resveratrol, Grape Seed, Green Tea and Pine Bark extracts, Liposomal Vitamin C, Liposomal CoQ10, Hyaluronic Acid and Astaxanthin, it supports skin brightness, helps reduce pigmentation and protects cells from oxidative stress. Clean, third-party tested and free from added sugar, preservatives, artificial colours or flavours.</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- 2. Ingredients Panel (Dynamic Metafield custom.ingredients support) -->
+  <div class="nectar-tab-panel" id="ingr-{{ section.id }}" role="tabpanel">
+    {%- if product.metafields.custom.ingredients != blank -%}
+      <div class="rte">
+        {{ product.metafields.custom.ingredients | metafield_tag }}
+      </div>
+    {%- else -%}
+      <div class="nectar-ingredients-grid">
+        <div class="nectar-ingredient-card">
+          <div class="nectar-ingredient-name">Setria® Liposomal Glutathione (500mg)</div>
+          <div class="nectar-ingredient-desc">Master cellular antioxidant with liposomal bilayer protection for superior absorption and melanin regulation.</div>
+        </div>
+        <div class="nectar-ingredient-card">
+          <div class="nectar-ingredient-name">Trans-Resveratrol (98% Pure)</div>
+          <div class="nectar-ingredient-desc">Activates longevity sirtuin pathways and shields skin cells from oxidative UV damage.</div>
+        </div>
+        <div class="nectar-ingredient-card">
+          <div class="nectar-ingredient-name">French Pine Bark &amp; Grape Seed Extract</div>
+          <div class="nectar-ingredient-desc">High-potency bioflavonoids enhancing dermal micro-circulation and collagen synthesis.</div>
+        </div>
+        <div class="nectar-ingredient-card">
+          <div class="nectar-ingredient-name">Liposomal Vitamin C &amp; CoQ10</div>
+          <div class="nectar-ingredient-desc">Supports ATP cellular renewal and collagen matrix formation against photoageing.</div>
+        </div>
+        <div class="nectar-ingredient-card">
+          <div class="nectar-ingredient-name">Low-Molecular Hyaluronic Acid</div>
+          <div class="nectar-ingredient-desc">Binds up to 1,000x its weight in water for cellular hydration, plumpness, and elasticity.</div>
+        </div>
+        <div class="nectar-ingredient-card">
+          <div class="nectar-ingredient-name">Natural Astaxanthin</div>
+          <div class="nectar-ingredient-desc">6,000x more potent than Vitamin C in combating free radicals and environmental stress.</div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- 3. How to take Panel (Dynamic Metafield custom.how_to_take support) -->
+  <div class="nectar-tab-panel" id="take-{{ section.id }}" role="tabpanel">
+    {%- if product.metafields.custom.how_to_take != blank -%}
+      <div class="rte">
+        {{ product.metafields.custom.how_to_take | metafield_tag }}
+      </div>
+    {%- else -%}
+      <div class="nectar-usage-steps">
+        <div class="nectar-usage-step">
+          <div class="nectar-step-num">1</div>
+          <div class="nectar-step-content">
+            <strong>Recommended Dosage:</strong> Take 1 to 2 capsules daily.
+          </div>
+        </div>
+        <div class="nectar-usage-step">
+          <div class="nectar-step-num">2</div>
+          <div class="nectar-step-content">
+            <strong>Ideal Timing:</strong> Consume after breakfast or your first morning meal with a full glass of water.
+          </div>
+        </div>
+        <div class="nectar-usage-step">
+          <div class="nectar-step-num">3</div>
+          <div class="nectar-step-content">
+            <strong>Consistency:</strong> Maintain consistent daily intake for 60 to 90 days for peak cellular renewal and lasting glow.
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- 4. FAQ Panel (Accordion Toggle with Metafield custom.faqs support) -->
+  <div class="nectar-tab-panel" id="faq-{{ section.id }}" role="tabpanel">
+    {%- if product.metafields.custom.faqs != blank -%}
+      <div class="rte">
+        {{ product.metafields.custom.faqs | metafield_tag }}
+      </div>
+    {%- else -%}
+      <div class="nectar-faq-accordion" data-nectar-accordion>
+        <div class="nectar-faq-item is-open">
+          <button type="button" class="nectar-faq-question" aria-expanded="true">
+            <span>When can I expect to see visible results?</span>
+            <span class="nectar-faq-toggle-icon">−</span>
+          </button>
+          <div class="nectar-faq-answer" style="display: block;">
+            <p>Most users report noticeable skin hydration and morning radiance within 3–4 weeks of daily use. Significant reduction in pigmentation, melasma spots, and enhanced skin elasticity are clinically documented after 8–12 weeks of continuous supplementation.</p>
+          </div>
+        </div>
+
+        <div class="nectar-faq-item">
+          <button type="button" class="nectar-faq-question" aria-expanded="false">
+            <span>What makes Liposomal Glutathione superior to regular glutathione?</span>
+            <span class="nectar-faq-toggle-icon">+</span>
+          </button>
+          <div class="nectar-faq-answer">
+            <p>Regular glutathione is largely degraded by harsh stomach acids before cellular absorption. Our Setria® Liposomal technology encapsulates 500mg pure glutathione inside natural lipid bilayers, ensuring up to 90% bioavailability directly into your cells.</p>
+          </div>
+        </div>
+
+        <div class="nectar-faq-item">
+          <button type="button" class="nectar-faq-question" aria-expanded="false">
+            <span>How and when should I take Age Well capsules?</span>
+            <span class="nectar-faq-toggle-icon">+</span>
+          </button>
+          <div class="nectar-faq-answer">
+            <p>Take 1 to 2 capsules daily with a full glass of water, ideally after breakfast or your first morning meal. For peak anti-ageing and antioxidant benefits, consistent daily intake for 60–90 days is strongly recommended.</p>
+          </div>
+        </div>
+
+        <div class="nectar-faq-item">
+          <button type="button" class="nectar-faq-question" aria-expanded="false">
+            <span>Are there any side effects or synthetic fillers?</span>
+            <span class="nectar-faq-toggle-icon">+</span>
+          </button>
+          <div class="nectar-faq-answer">
+            <p>NectarFlora Age Well is 100% vegetarian, non-GMO, and formulated with zero added sugar, synthetic preservatives, artificial colours, or fillers. Every production batch undergoes strict third-party NABL-accredited safety and purity screening.</p>
+          </div>
+        </div>
+
+        <div class="nectar-faq-item">
+          <button type="button" class="nectar-faq-question" aria-expanded="false">
+            <span>Can I take Age Well alongside my other skincare &amp; vitamins?</span>
+            <span class="nectar-faq-toggle-icon">+</span>
+          </button>
+          <div class="nectar-faq-answer">
+            <p>Yes, absolutely. Age Well works from within and complements topical skincare (Vitamin C serums, Niacinamide, Retinol) as well as daily wellness supplements like Omega-3, Collagen, and multivitamins.</p>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- 5. Lab Reports Panel -->
+  <div class="nectar-tab-panel" id="lab-{{ section.id }}" role="tabpanel">
+    <div class="nectar-lab-panel-card">
+      <div class="nectar-lab-panel-badge">NABL Certified &bull; 100% Purity Verified</div>
+      <div class="nectar-lab-panel-grid">
+        <div class="nectar-lab-panel-item">
+          <span class="nectar-lab-panel-label">Current Batch:</span>
+          <span class="nectar-lab-panel-val">NF-AW-2026-08</span>
+        </div>
+        <div class="nectar-lab-panel-item">
+          <span class="nectar-lab-panel-label">Active Assay:</span>
+          <span class="nectar-lab-panel-val" style="color: #16A34A;">99.4% (Passed)</span>
+        </div>
+        <div class="nectar-lab-panel-item">
+          <span class="nectar-lab-panel-label">Heavy Metals:</span>
+          <span class="nectar-lab-panel-val" style="color: #16A34A;">Below Limit (Safe)</span>
+        </div>
+        <div class="nectar-lab-panel-item">
+          <span class="nectar-lab-panel-label">Microbial Screen:</span>
+          <span class="nectar-lab-panel-val" style="color: #16A34A;">Clean &bull; Negative</span>
+        </div>
+      </div>
+      <a href="#lab-test" class="nectar-lab-btn" style="display: inline-block; margin-top: 14px;">View Batch Certificate PDF</a>
+    </div>
+  </div>
+</div>
+
+<!-- Clinical Disclaimer Line -->
+<div class="nectar-clinical-disclaimer">
+  Claims based on clinically studied ingredients, not the product.
+</div>
+
+<!-- 6 Key Benefit Outlined Circular Badges -->
+<div class="nectar-benefits-grid">
+  <!-- 1: Improves Skin Brightness -->
+  <div class="nectar-benefit-item">
+    <div class="nectar-benefit-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3c0 4.2-3 7.8-7.5 9 4.5 1.2 7.5 4.8 7.5 9 0-4.2 3-7.8 7.5-9-4.5-1.2-7.5-4.8-7.5-9z"/>
+      </svg>
+    </div>
+    <div class="nectar-benefit-text">Improves Skin<br>Brightness¹</div>
+  </div>
+
+  <!-- 2: Anti-Ageing Support -->
+  <div class="nectar-benefit-item">
+    <div class="nectar-benefit-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 4h12M6 20h12M7 4.5c0 3.8 3 6.2 5 7.5-2 1.3-5 3.7-5 7.5M17 4.5c0 3.8-3 6.2-5 7.5 2 1.3 5 3.7 5 7.5"/>
+      </svg>
+    </div>
+    <div class="nectar-benefit-text">Anti-Ageing<br>Support²</div>
+  </div>
+
+  <!-- 3: Supports Cellular Health -->
+  <div class="nectar-benefit-item">
+    <div class="nectar-benefit-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6c3 1.5 5 4.5 8 6s5 4.5 8 6"/>
+        <path d="M20 6c-3 1.5-5 4.5-8 6s-5 4.5-8 6"/>
+        <line x1="7.5" y1="7.8" x2="6" y2="10.8"/>
+        <line x1="16.5" y1="13.2" x2="18" y2="16.2"/>
+        <line x1="10" y1="10.5" x2="14" y2="13.5"/>
+      </svg>
+    </div>
+    <div class="nectar-benefit-text">Supports Cellular<br>Health³</div>
+  </div>
+
+  <!-- 4: Helps Reduce Pigmentation -->
+  <div class="nectar-benefit-item">
+    <div class="nectar-benefit-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M4 17v2a1 1 0 0 0 1 1h2M17 20h2a1 1 0 0 0 1-1v-2"/>
+        <circle cx="9" cy="11" r="1" fill="currentColor"/>
+        <circle cx="15" cy="11" r="1" fill="currentColor"/>
+        <path d="M9.5 14.5c.8.8 1.6 1.1 2.5 1.1s1.7-.3 2.5-1.1"/>
+      </svg>
+    </div>
+    <div class="nectar-benefit-text">Helps Reduce<br>Pigmentation⁴</div>
+  </div>
+
+  <!-- 5: Deep Skin Hydration -->
+  <div class="nectar-benefit-item">
+    <div class="nectar-benefit-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a9 9 0 0 0-7 9.5c0 4.2 3.3 7.5 7 7.5s7-3.3 7-7.5A9 9 0 0 0 12 3z"/>
+        <path d="M12 9.5a4 4 0 0 0-3 3.8c0 1.8 1.4 3.2 3 3.2s3-1.4 3-3.2A4 4 0 0 0 12 9.5z"/>
+      </svg>
+    </div>
+    <div class="nectar-benefit-text">Deep Skin<br>Hydration⁵</div>
+  </div>
+
+  <!-- 6: Antioxidant Protection -->
+  <div class="nectar-benefit-item">
+    <div class="nectar-benefit-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z"/>
+        <polyline points="9 12 11.2 14.2 15.5 9.8"/>
+      </svg>
+    </div>
+    <div class="nectar-benefit-text">Antioxidant<br>Protection⁶</div>
+  </div>
+</div>
