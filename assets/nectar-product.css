@@ -343,19 +343,20 @@
    Tabs Block (Description, Ingredients, How to take, FAQ, Lab Reports)
    -------------------------------------------------------------------------- */
 .nectar-product-tabs-wrap {
-  margin-bottom: 12px;
-  border-top: 1px solid #E5E7EB;
-  padding-top: 10px;
+  margin-bottom: 14px;
   position: relative;
 }
 
 .nectar-tabs-nav {
   display: flex;
-  gap: 20px;
-  border-bottom: 1.5px solid #E5E7EB;
+  align-items: stretch;
+  border: 1px solid #F1E5D5;
+  background: #FFFFFF;
+  border-radius: 4px;
   overflow-x: auto;
   scrollbar-width: none;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .nectar-tabs-nav::-webkit-scrollbar {
@@ -363,36 +364,33 @@
 }
 
 .nectar-tab-btn {
-  background: none;
+  background: transparent;
   border: none;
-  padding: 8px 4px 10px;
+  padding: 10px 18px;
   font-size: 13.5px;
   font-weight: 600;
-  color: #6B7280;
+  color: #55697C;
   cursor: pointer;
   position: relative;
   white-space: nowrap;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
+  border-radius: 0;
+  outline: none;
+  font-family: inherit;
 }
 
 .nectar-tab-btn:hover {
-  color: var(--product-accent-color, var(--nectar-green));
+  color: #0D3B2B;
 }
 
 .nectar-tab-btn.is-active {
-  color: var(--product-accent-color, var(--nectar-green));
-  font-weight: 700;
+  background-color: #FFF4E8 !important;
+  color: #0D3B2B !important;
+  font-weight: 800;
 }
 
 .nectar-tab-btn.is-active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -1.5px;
-  width: 100%;
-  height: 2.5px;
-  background-color: var(--product-accent-color, var(--nectar-green));
-  border-radius: 2px 2px 0 0;
+  display: none !important;
 }
 
 .nectar-tab-panel {
@@ -400,84 +398,293 @@
   font-size: 13.5px;
   line-height: 1.6;
   color: #374151;
-  animation: nectarFadeIn 0.3s ease;
+  animation: nectarFadeIn 0.25s ease;
 }
 
 .nectar-tab-panel.is-active {
   display: block;
 }
 
-@keyframes nectarFadeIn {
-  from { opacity: 0; transform: translateY(3px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Floating "Talk to a Nutritionist" Pill */
+.nectar-nutritionist-floating-pill {
+  float: right;
+  margin: 0 0 14px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 7px 18px 7px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nectar-nutritionist-floating-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.08);
+}
+
+.nectar-nutritionist-avatar-wrap {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.nectar-nutritionist-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #D1F4E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0F3D2E;
+}
+
+.nectar-nutritionist-avatar svg {
+  width: 20px;
+  height: 20px;
+}
+
+.nectar-nutritionist-online-dot {
+  position: absolute;
+  bottom: 0px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #16A34A;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.2);
+}
+
+.nectar-nutritionist-text-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.nectar-nutritionist-heading {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0D3B2B;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.nectar-nutritionist-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: #16A34A;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* FAQ Accordion Styling */
+.nectar-faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
 }
 
 .nectar-faq-item {
-  border-bottom: 1px solid #F1F5F9;
-  padding: 8px 0;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: #FFFFFF;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.nectar-faq-item.is-open {
+  border-color: #0D3B2B;
+  box-shadow: 0 2px 10px rgba(13, 59, 43, 0.06);
 }
 
 .nectar-faq-question {
-  font-weight: 700;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 16px;
+  background: transparent;
+  border: none;
   font-size: 13.5px;
-  color: var(--nectar-text-dark);
-  margin-bottom: 4px;
+  font-weight: 700;
+  color: #0F172A;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  outline: none;
+}
+
+.nectar-faq-question:hover {
+  color: #0D3B2B;
+}
+
+.nectar-faq-toggle-icon {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0D3B2B;
+  line-height: 1;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .nectar-faq-answer {
-  color: #4B5563;
+  display: none;
+  padding: 0 16px 14px;
   font-size: 13px;
-  line-height: 1.5;
+  color: #4B5563;
+  line-height: 1.6;
+  border-top: 1px solid #F1F5F9;
+  margin-top: 2px;
+  padding-top: 10px;
 }
 
-/* Clinical disclaimer */
-.nectar-clinical-disclaimer {
+.nectar-faq-item.is-open .nectar-faq-answer {
+  display: block;
+}
+
+/* Ingredients Grid Styling */
+.nectar-ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.nectar-ingredient-card {
+  background: #F8FAF9;
+  border: 1px solid #E2ECE6;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.nectar-ingredient-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0D3B2B;
+  margin-bottom: 2px;
+}
+
+.nectar-ingredient-desc {
   font-size: 12px;
-  color: #4B5563;
-  margin-top: 10px;
-  margin-bottom: 16px;
+  color: #64748B;
   line-height: 1.4;
 }
 
-/* --------------------------------------------------------------------------
-   Key Benefits Grid (6 Icons)
-   -------------------------------------------------------------------------- */
-.nectar-benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px 8px;
-  margin-bottom: 22px;
-  padding-top: 4px;
-}
-
-.nectar-benefit-item {
+/* Usage Steps */
+.nectar-usage-steps {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.nectar-benefit-icon {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+.nectar-usage-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: #FAFAFA;
+  border-radius: 8px;
+  border: 1px solid #F1F5F9;
+}
+
+.nectar-step-num {
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  border: 1.5px solid #111827;
+  background: #0D3B2B;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
+.nectar-step-content {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.45;
+}
+
+/* Lab Panel Card */
+.nectar-lab-panel-card {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 8px;
+}
+
+/* Clinical disclaimer */
+.nectar-clinical-disclaimer {
+  font-size: 12px;
+  color: #475569;
+  margin-top: 14px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+  clear: both;
+}
+
+/* --------------------------------------------------------------------------
+   Key Benefits Grid (6 Circular Icons)
+   -------------------------------------------------------------------------- */
+.nectar-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 12px;
+  margin-bottom: 24px;
+  padding-top: 4px;
+}
+
+.nectar-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nectar-benefit-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #475569;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.nectar-benefit-item:hover .nectar-benefit-icon {
+  border-color: #0D3B2B;
+  transform: scale(1.05);
+}
+
 .nectar-benefit-icon svg {
-  width: 18px;
-  height: 18px;
-  color: #111827;
+  width: 22px;
+  height: 22px;
+  color: #334155;
 }
 
 .nectar-benefit-text {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: #111827;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0F172A;
   line-height: 1.25;
 }
 

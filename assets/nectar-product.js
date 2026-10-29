@@ -201,6 +201,36 @@
           });
       });
     });
+
+    // ------------------------------------------------------------------------
+    // 7. FAQ Accordion Expand / Collapse
+    // ------------------------------------------------------------------------
+    const faqContainers = document.querySelectorAll('[data-nectar-accordion]');
+    faqContainers.forEach((container) => {
+      const questions = container.querySelectorAll('.nectar-faq-question');
+      questions.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          const item = this.closest('.nectar-faq-item');
+          if (!item) return;
+          const isOpen = item.classList.contains('is-open');
+
+          container.querySelectorAll('.nectar-faq-item').forEach((other) => {
+            other.classList.remove('is-open');
+            const toggle = other.querySelector('.nectar-faq-toggle-icon');
+            if (toggle) toggle.textContent = '+';
+            const q = other.querySelector('.nectar-faq-question');
+            if (q) q.setAttribute('aria-expanded', 'false');
+          });
+
+          if (!isOpen) {
+            item.classList.add('is-open');
+            const toggle = item.querySelector('.nectar-faq-toggle-icon');
+            if (toggle) toggle.textContent = '−';
+            this.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    });
   }
 
   if (document.readyState === 'loading') {
