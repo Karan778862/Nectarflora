@@ -16,10 +16,28 @@
           "type": "title",
           "settings": {}
         },
-        "description": {
-          "type": "description",
-          "disabled": true,
-          "settings": {}
+        "subtitle": {
+          "type": "subtitle",
+          "settings": {
+            "text": "Advance Skin Wellness Formula"
+          }
+        },
+        "rating": {
+          "type": "nectar_rating",
+          "settings": {
+            "score": "4.6",
+            "reviews_count": "128"
+          }
+        },
+        "product_tabs": {
+          "type": "product_tabs",
+          "settings": {
+            "tab_1_title": "Description",
+            "tab_2_title": "Ingredients",
+            "tab_3_title": "How to take",
+            "tab_4_title": "FAQ",
+            "tab_5_title": "Lab Reports"
+          }
         },
         "price": {
           "type": "price",
@@ -42,7 +60,9 @@
       },
       "block_order": [
         "title",
-        "description",
+        "subtitle",
+        "rating",
+        "product_tabs",
         "price",
         "variant_picker",
         "buy_buttons"
