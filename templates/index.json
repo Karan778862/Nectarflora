@@ -135,6 +135,7 @@
         },
         "slide_C8R83N": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "banner_link": "",
             "full_banner_link": false,
