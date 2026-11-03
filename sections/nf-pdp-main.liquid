@@ -11,7 +11,7 @@
         {% for media in product.media %}<div class="nf-product__slide" data-nf-media="{{ media.id }}" {% unless forloop.first %}hidden{% endunless %}>{% if media.media_type == 'image' %}{{ media | image_url: width: 1400 | image_tag: widths: '360,540,750,1000,1400', sizes: '(min-width: 990px) 45vw, 100vw', loading: 'eager', class: 'nf-product__image' }}{% else %}{{ media | media_tag: image_size: '1000x', controls: true, preload: 'none' }}{% endif %}</div>{% endfor %}
       {% else %}{{ 'product-1' | placeholder_svg_tag: 'nf-product__placeholder' }}{% endif %}
     </div>
-    {% if product.media.size > 1 %}<div class="nf-product__thumbnails">{% for media in product.media %}<button type="button" data-nf-thumbnail="{{ media.id }}" aria-label="{{ section.settings.image_label | escape }} {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px' }}</button>{% endfor %}</div>{% endif %}
+    {% if product.media.size > 0 %}<div class="nf-product__thumbnails">{% for media in product.media %}<button type="button" data-nf-thumbnail="{{ media.id }}" aria-label="{{ section.settings.image_label | escape }} {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px' }}</button>{% endfor %}</div>{% endif %}
   </div>
   <div class="nf-product__details">
     {% for block in section.blocks %}
