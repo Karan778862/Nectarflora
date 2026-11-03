@@ -1,1 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66"><circle stroke-width="6" cx="33" cy="33" r="30" fill="none" class="path"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66" width="20" height="20" aria-hidden="true" focusable="false" style="width:20px;height:20px;max-width:20px;max-height:20px;flex-shrink:0"><circle stroke-width="6" cx="33" cy="33" r="30" fill="none" class="path"/></svg>

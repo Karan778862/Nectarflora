@@ -84,3 +84,14 @@ body > .nectar-drawer .nectar-drawer__content {
   min-height: 0; overflow-y: auto; overscroll-behavior: contain;
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+
+svg.spinner {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+  flex-shrink: 0;
+}
+.loading__spinner.hidden {
+  display: none !important;
+}
