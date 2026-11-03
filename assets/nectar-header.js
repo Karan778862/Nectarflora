@@ -140,3 +140,16 @@ function updateCartBadge() {
     })
     .catch((err) => console.debug('Cart update fetch:', err));
 }
+
+function nfMeasureStickyHeader() {
+  const header = document.querySelector('.nectar-header-wrapper.is-sticky');
+  const section = header?.closest('.shopify-section-group-header-group');
+  document.documentElement.style.setProperty('--nf-sticky-header-height', (section ? Math.ceil(section.getBoundingClientRect().height) : 0) + 'px');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('.nectar-header-wrapper');
+  if (header && window.ResizeObserver) new ResizeObserver(nfMeasureStickyHeader).observe(header);
+  nfMeasureStickyHeader();
+});
+window.addEventListener('resize', nfMeasureStickyHeader, { passive: true });
+document.addEventListener('shopify:section:load', nfMeasureStickyHeader);

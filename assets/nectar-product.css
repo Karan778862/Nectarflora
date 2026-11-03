@@ -187,8 +187,8 @@
    Media Gallery (Left Column)
    -------------------------------------------------------------------------- */
 .product__media-wrapper {
-  position: sticky;
-  top: 24px;
+  position: static;
+  top: auto;
 }
 
 .nectar-product-gallery {
@@ -1246,3 +1246,33 @@
   display: none !important;
 }
 
+
+@media screen and (max-width: 749px) {
+  product-info .product__media-wrapper,
+  product-info .product__media-wrapper .product__column-sticky,
+  product-info .product__media-wrapper media-gallery,
+  .nectar-pdp-layout .product__media-wrapper {
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+    align-self: auto !important;
+  }
+}
+@media screen and (min-width: 750px) {
+  product-info .product { align-items: start; }
+  product-info .product__media-wrapper,
+  .nectar-pdp-layout .product__media-wrapper {
+    position: sticky !important;
+    top: calc(var(--nf-sticky-header-height, 160px) + 16px) !important;
+    align-self: start !important;
+    z-index: 1;
+  }
+  product-info .product__media-wrapper .product__column-sticky {
+    position: static !important;
+    top: auto !important;
+  }
+  product-info .product__info-container.product__column-sticky {
+    position: relative !important;
+    top: auto !important;
+  }
+}
