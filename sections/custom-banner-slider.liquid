@@ -1,0 +1,2098 @@
+{% comment %}
+  AUTO HEIGHT CUSTOM BANNER SLIDER
+  --------------------------------
+  - NO fixed height
+  - NO min-height
+  - Image aspect ratio decides section height
+  - Separate desktop/mobile images
+  - Autoplay
+  - Infinite loop
+  - Swipe
+  - Arrows
+  - Dots
+  - Overlay
+  - Optional content
+{% endcomment %}
+
+<section
+  id="CBS-{{ section.id }}"
+  class="cbs"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  data-pause-hover="{{ section.settings.pause_hover }}"
+>
+
+  <div class="cbs__viewport">
+
+    <div class="cbs__track">
+
+      {% for block in section.blocks %}
+
+        <div
+          class="cbs__slide{% if forloop.first %} is-active{% endif %}"
+          data-slide="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+
+          {% if block.settings.banner_link != blank and block.settings.full_banner_link %}
+            <a
+              href="{{ block.settings.banner_link }}"
+              class="cbs__full-link"
+              aria-label="{{ block.settings.heading | default: 'View banner' | escape }}"
+            ></a>
+          {% endif %}
+
+
+          <!-- =========================
+               IMAGE
+          ========================== -->
+
+          <picture class="cbs__picture">
+
+            {% if block.settings.mobile_image != blank %}
+
+              <source
+                media="(max-width: 749px)"
+                srcset="
+                  {{ block.settings.mobile_image | image_url: width: 375 }} 375w,
+                  {{ block.settings.mobile_image | image_url: width: 550 }} 550w,
+                  {{ block.settings.mobile_image | image_url: width: 750 }} 750w,
+                  {{ block.settings.mobile_image | image_url: width: 1000 }} 1000w,
+                  {{ block.settings.mobile_image | image_url: width: 1500 }} 1500w
+                "
+                sizes="100vw"
+              >
+
+            {% endif %}
+
+
+            {% if block.settings.desktop_image != blank %}
+
+              {{
+                block.settings.desktop_image
+                | image_url: width: 3000
+                | image_tag:
+                  class: 'cbs__image',
+                  loading: 'eager',
+                  widths: '750, 1000, 1200, 1500, 1800, 1920, 2200, 2600, 3000',
+                  sizes: '100vw'
+              }}
+
+            {% else %}
+
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'cbs__image cbs__placeholder' }}
+
+            {% endif %}
+
+          </picture>
+
+
+          <!-- =========================
+               OVERLAY
+          ========================== -->
+
+          {% if block.settings.overlay_opacity > 0 %}
+
+            <div
+              class="cbs__overlay"
+              style="
+                background: {{ block.settings.overlay_color }};
+                opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};
+              "
+            ></div>
+
+          {% endif %}
+
+
+          <!-- =========================
+               CONTENT
+          ========================== -->
+
+          {% if block.settings.heading != blank
+            or block.settings.description != blank
+            or block.settings.button_label != blank
+          %}
+
+            <div
+              class="
+                cbs__content-wrapper
+                cbs__desktop-position--{{ block.settings.desktop_content_position }}
+                cbs__mobile-position--{{ block.settings.mobile_content_position }}
+              "
+            >
+
+              <div
+                class="
+                  cbs__content
+                  cbs__desktop-align--{{ block.settings.desktop_text_alignment }}
+                  cbs__mobile-align--{{ block.settings.mobile_text_alignment }}
+                  {% if block.settings.hide_content_mobile %}cbs__hide-content-mobile{% endif %}
+                "
+                style="
+                  --cbs-content-width: {{ block.settings.content_width }}px;
+                  --cbs-heading-color: {{ block.settings.heading_color }};
+                  --cbs-text-color: {{ block.settings.text_color }};
+                  --cbs-button-bg: {{ block.settings.button_background }};
+                  --cbs-button-color: {{ block.settings.button_color }};
+                "
+              >
+
+                {% if block.settings.heading != blank %}
+
+                  <h2 class="cbs__heading">
+                    {{ block.settings.heading }}
+                  </h2>
+
+                {% endif %}
+
+
+                {% if block.settings.description != blank %}
+
+                  <div class="cbs__description">
+                    {{ block.settings.description }}
+                  </div>
+
+                {% endif %}
+
+
+                {% if block.settings.button_label != blank %}
+
+                  {% if block.settings.banner_link != blank %}
+
+                    <a
+                      href="{{ block.settings.banner_link }}"
+                      class="cbs__button"
+                    >
+                      {{ block.settings.button_label }}
+                    </a>
+
+                  {% else %}
+
+                    <span class="cbs__button">
+                      {{ block.settings.button_label }}
+                    </span>
+
+                  {% endif %}
+
+                {% endif %}
+
+              </div>
+
+            </div>
+
+          {% endif %}
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+
+    <!-- =========================
+         ARROWS
+    ========================== -->
+
+    {% if section.blocks.size > 1 and section.settings.show_arrows %}
+
+      <button
+        type="button"
+        class="cbs__arrow cbs__arrow--prev"
+        aria-label="Previous slide"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M15 18L9 12L15 6"></path>
+        </svg>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="cbs__arrow cbs__arrow--next"
+        aria-label="Next slide"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M9 6L15 12L9 18"></path>
+        </svg>
+
+      </button>
+
+    {% endif %}
+
+
+    <!-- =========================
+         DOTS
+    ========================== -->
+
+    {% if section.blocks.size > 1 and section.settings.show_dots %}
+
+      <div class="cbs__dots">
+
+        {% for block in section.blocks %}
+
+          <button
+            type="button"
+            class="cbs__dot{% if forloop.first %} is-active{% endif %}"
+            data-dot="{{ forloop.index0 }}"
+            aria-label="Go to slide {{ forloop.index }}"
+          ></button>
+
+        {% endfor %}
+
+      </div>
+
+    {% endif %}
+
+  </div>
+
+</section>
+
+
+<style>
+
+  /* ==================================================
+     ROOT
+  ================================================== */
+
+  #CBS-{{ section.id }} {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+  }
+
+
+  #CBS-{{ section.id }},
+  #CBS-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+
+  /* ==================================================
+     VIEWPORT
+
+     IMPORTANT:
+     NO HEIGHT
+     NO MIN HEIGHT
+     NO ASPECT RATIO
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__viewport {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+  }
+
+
+  /* ==================================================
+     TRACK
+
+     IMPORTANT:
+     Active slide controls the height.
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__track {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+  }
+
+
+  /* ==================================================
+     SLIDE
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__slide {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    transition:
+      opacity {{ section.settings.transition_speed }}ms ease,
+      visibility {{ section.settings.transition_speed }}ms ease;
+  }
+
+
+  /*
+    ONLY active slide stays relative.
+
+    Because it is relative, its image creates
+    the natural height of the whole slider.
+  */
+
+  #CBS-{{ section.id }} .cbs__slide.is-active {
+
+    position: relative;
+
+    opacity: 1;
+    visibility: visible;
+
+    pointer-events: auto;
+
+    z-index: 2;
+  }
+
+
+  /* ==================================================
+     PICTURE
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__picture {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    line-height: 0;
+  }
+
+
+  /* ==================================================
+     IMAGE
+
+     THIS IS THE MAIN AUTO HEIGHT FIX
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__image {
+
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    height: auto !important;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+
+    border: 0;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__placeholder {
+
+    width: 100%;
+
+    height: auto;
+
+    min-height: 300px;
+
+    background: #eeeeee;
+  }
+
+
+  /* ==================================================
+     OVERLAY
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 2;
+  }
+
+
+  /* ==================================================
+     FULL BANNER LINK
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__full-link {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 3;
+  }
+
+
+  /* ==================================================
+     CONTENT WRAPPER
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__content-wrapper {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    padding:
+      {{ section.settings.desktop_padding_vertical }}px
+      {{ section.settings.desktop_padding_horizontal }}px;
+
+    pointer-events: none;
+
+    z-index: 4;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__content {
+
+    position: relative;
+
+    width: min(100%, var(--cbs-content-width));
+
+    pointer-events: auto;
+  }
+
+
+  /* ==================================================
+     DESKTOP CONTENT POSITION
+  ================================================== */
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--top-left {
+
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--top-center {
+
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--top-right {
+
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--middle-left {
+
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--middle-center {
+
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--middle-right {
+
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--bottom-left {
+
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--bottom-center {
+
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-position--bottom-right {
+
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+
+  /* ==================================================
+     DESKTOP TEXT ALIGN
+  ================================================== */
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-align--left {
+    text-align: left;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-align--center {
+    text-align: center;
+  }
+
+
+  #CBS-{{ section.id }}
+  .cbs__desktop-align--right {
+    text-align: right;
+  }
+
+
+  /* ==================================================
+     HEADING
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__heading {
+
+    margin: 0;
+
+    color: var(--cbs-heading-color);
+
+    font-size: {{ section.settings.desktop_heading_size }}px;
+
+    line-height: 1.1;
+
+    font-weight: 600;
+
+    letter-spacing: -0.02em;
+  }
+
+
+  /* ==================================================
+     DESCRIPTION
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__description {
+
+    margin-top: 14px;
+
+    color: var(--cbs-text-color);
+
+    font-size: {{ section.settings.desktop_text_size }}px;
+
+    line-height: 1.5;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__description p {
+
+    margin: 0;
+  }
+
+
+  /* ==================================================
+     BUTTON
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__button {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 22px;
+
+    padding: 13px 26px;
+
+    min-height: 44px;
+
+    color: var(--cbs-button-color);
+
+    background: var(--cbs-button-bg);
+
+    border-radius: {{ section.settings.button_radius }}px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    transition:
+      transform .25s ease,
+      opacity .25s ease;
+
+    z-index: 5;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__button:hover {
+
+    transform: translateY(-2px);
+
+    opacity: .9;
+  }
+
+
+  /* ==================================================
+     ARROWS
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: {{ section.settings.arrow_size }}px;
+    height: {{ section.settings.arrow_size }}px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: {{ section.settings.arrow_background }};
+
+    color: {{ section.settings.arrow_color }};
+
+    cursor: pointer;
+
+    z-index: 20;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+
+    transition:
+      transform .25s ease,
+      opacity .25s ease;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__arrow:hover {
+
+    transform:
+      translateY(-50%)
+      scale(1.07);
+  }
+
+
+  #CBS-{{ section.id }} .cbs__arrow svg {
+
+    display: block;
+
+    width: 45%;
+    height: 45%;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__arrow--prev {
+
+    left: {{ section.settings.arrow_spacing }}px;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__arrow--next {
+
+    right: {{ section.settings.arrow_spacing }}px;
+  }
+
+
+  /* ==================================================
+     DOTS
+  ================================================== */
+
+  #CBS-{{ section.id }} .cbs__dots {
+
+    position: absolute;
+
+    left: 50%;
+    bottom: {{ section.settings.dots_bottom }}px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    z-index: 20;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__dot {
+
+    display: block;
+
+    width: {{ section.settings.dot_size }}px;
+    height: {{ section.settings.dot_size }}px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50px;
+
+    background: {{ section.settings.dot_color }};
+
+    opacity: .45;
+
+    cursor: pointer;
+
+    transition:
+      opacity .25s ease,
+      transform .25s ease;
+  }
+
+
+  #CBS-{{ section.id }} .cbs__dot.is-active {
+
+    opacity: 1;
+
+    transform: scale(1.2);
+  }
+
+
+  /* ==================================================
+     MOBILE
+  ================================================== */
+
+  @media screen and (max-width: 749px) {
+
+
+    /*
+      IMPORTANT
+
+      Still:
+      NO fixed height
+      NO aspect-ratio
+      NO min-height
+
+      Mobile image decides mobile slider height.
+    */
+
+
+    #CBS-{{ section.id }} .cbs__viewport {
+
+      height: auto;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__track {
+
+      height: auto;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__slide {
+
+      height: auto;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__slide.is-active {
+
+      position: relative;
+
+      height: auto;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__picture {
+
+      display: block;
+
+      width: 100%;
+
+      height: auto;
+
+      line-height: 0;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__image {
+
+      display: block;
+
+      width: 100%;
+      max-width: 100%;
+
+      height: auto !important;
+
+      object-fit: contain;
+    }
+
+
+    /* Mobile content */
+
+    #CBS-{{ section.id }} .cbs__content-wrapper {
+
+      padding:
+        {{ section.settings.mobile_padding_vertical }}px
+        {{ section.settings.mobile_padding_horizontal }}px;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--top-left {
+
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--top-center {
+
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--top-right {
+
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--middle-left {
+
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--middle-center {
+
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--middle-right {
+
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--bottom-left {
+
+      align-items: flex-end;
+      justify-content: flex-start;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--bottom-center {
+
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-position--bottom-right {
+
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+
+    /* Mobile text alignment */
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-align--left {
+
+      text-align: left;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-align--center {
+
+      text-align: center;
+    }
+
+
+    #CBS-{{ section.id }}
+    .cbs__mobile-align--right {
+
+      text-align: right;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__heading {
+
+      font-size:
+        {{ section.settings.mobile_heading_size }}px;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__description {
+
+      margin-top: 10px;
+
+      font-size:
+        {{ section.settings.mobile_text_size }}px;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__button {
+
+      margin-top: 16px;
+
+      min-height: 40px;
+
+      padding: 11px 20px;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__hide-content-mobile {
+
+      display: none;
+    }
+
+
+    /* Mobile arrows */
+
+    #CBS-{{ section.id }} .cbs__arrow {
+
+      width: 36px;
+      height: 36px;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__arrow--prev {
+
+      left: 10px;
+    }
+
+
+    #CBS-{{ section.id }} .cbs__arrow--next {
+
+      right: 10px;
+    }
+
+  }
+
+
+  /* ==================================================
+     REDUCED MOTION
+  ================================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+
+    #CBS-{{ section.id }} .cbs__slide,
+    #CBS-{{ section.id }} .cbs__button,
+    #CBS-{{ section.id }} .cbs__arrow,
+    #CBS-{{ section.id }} .cbs__dot {
+
+      transition: none !important;
+    }
+
+  }
+
+</style>
+
+
+<script>
+(function () {
+
+  const SECTION_ID = 'CBS-{{ section.id }}';
+
+
+  function initCBS() {
+
+    const section = document.getElementById(SECTION_ID);
+
+    if (!section) return;
+
+
+    /*
+      Prevent duplicate JS
+      when Shopify theme editor reloads section
+    */
+
+    if (section.dataset.initialized === 'true') {
+      return;
+    }
+
+    section.dataset.initialized = 'true';
+
+
+    const slides =
+      Array.from(section.querySelectorAll('.cbs__slide'));
+
+    const dots =
+      Array.from(section.querySelectorAll('.cbs__dot'));
+
+    const previousButton =
+      section.querySelector('.cbs__arrow--prev');
+
+    const nextButton =
+      section.querySelector('.cbs__arrow--next');
+
+
+    if (!slides.length) return;
+
+
+    let currentIndex = 0;
+
+    let timer = null;
+
+    let touchStartX = 0;
+
+    let touchEndX = 0;
+
+
+    const autoplay =
+      section.dataset.autoplay === 'true';
+
+    const pauseHover =
+      section.dataset.pauseHover === 'true';
+
+    const autoplaySpeed =
+      parseInt(section.dataset.speed, 10) || 5000;
+
+
+    /* ==================================
+       SHOW SLIDE
+    ================================== */
+
+    function showSlide(index) {
+
+      if (index >= slides.length) {
+
+        index = 0;
+
+      }
+
+
+      if (index < 0) {
+
+        index = slides.length - 1;
+
+      }
+
+
+      slides.forEach(function (slide, i) {
+
+        slide.classList.toggle(
+          'is-active',
+          i === index
+        );
+
+      });
+
+
+      dots.forEach(function (dot, i) {
+
+        dot.classList.toggle(
+          'is-active',
+          i === index
+        );
+
+      });
+
+
+      currentIndex = index;
+
+    }
+
+
+    /* ==================================
+       NEXT
+    ================================== */
+
+    function nextSlide() {
+
+      showSlide(currentIndex + 1);
+
+    }
+
+
+    /* ==================================
+       PREVIOUS
+    ================================== */
+
+    function previousSlide() {
+
+      showSlide(currentIndex - 1);
+
+    }
+
+
+    /* ==================================
+       AUTOPLAY
+    ================================== */
+
+    function stopAutoplay() {
+
+      if (!timer) return;
+
+      clearInterval(timer);
+
+      timer = null;
+
+    }
+
+
+    function startAutoplay() {
+
+      stopAutoplay();
+
+
+      if (!autoplay) return;
+
+      if (slides.length <= 1) return;
+
+
+      timer = setInterval(function () {
+
+        nextSlide();
+
+      }, autoplaySpeed);
+
+    }
+
+
+    /* ==================================
+       NEXT BUTTON
+    ================================== */
+
+    if (nextButton) {
+
+      nextButton.addEventListener(
+        'click',
+        function () {
+
+          nextSlide();
+
+          startAutoplay();
+
+        }
+      );
+
+    }
+
+
+    /* ==================================
+       PREVIOUS BUTTON
+    ================================== */
+
+    if (previousButton) {
+
+      previousButton.addEventListener(
+        'click',
+        function () {
+
+          previousSlide();
+
+          startAutoplay();
+
+        }
+      );
+
+    }
+
+
+    /* ==================================
+       DOTS
+    ================================== */
+
+    dots.forEach(function (dot) {
+
+      dot.addEventListener(
+        'click',
+        function () {
+
+          const index =
+            parseInt(
+              dot.dataset.dot,
+              10
+            );
+
+
+          if (Number.isNaN(index)) return;
+
+
+          showSlide(index);
+
+          startAutoplay();
+
+        }
+      );
+
+    });
+
+
+    /* ==================================
+       PAUSE ON HOVER
+    ================================== */
+
+    if (pauseHover) {
+
+      section.addEventListener(
+        'mouseenter',
+        function () {
+
+          if (
+            window.matchMedia(
+              '(hover: hover)'
+            ).matches
+          ) {
+
+            stopAutoplay();
+
+          }
+
+        }
+      );
+
+
+      section.addEventListener(
+        'mouseleave',
+        function () {
+
+          if (
+            window.matchMedia(
+              '(hover: hover)'
+            ).matches
+          ) {
+
+            startAutoplay();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* ==================================
+       MOBILE SWIPE
+    ================================== */
+
+    section.addEventListener(
+      'touchstart',
+      function (event) {
+
+        touchStartX =
+          event.changedTouches[0].clientX;
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    section.addEventListener(
+      'touchend',
+      function (event) {
+
+        touchEndX =
+          event.changedTouches[0].clientX;
+
+
+        const distance =
+          touchStartX - touchEndX;
+
+
+        if (Math.abs(distance) < 50) {
+          return;
+        }
+
+
+        if (distance > 0) {
+
+          nextSlide();
+
+        } else {
+
+          previousSlide();
+
+        }
+
+
+        startAutoplay();
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    /* ==================================
+       TAB VISIBILITY
+    ================================== */
+
+    document.addEventListener(
+      'visibilitychange',
+      function () {
+
+        if (document.hidden) {
+
+          stopAutoplay();
+
+        } else {
+
+          startAutoplay();
+
+        }
+
+      }
+    );
+
+
+    showSlide(0);
+
+    startAutoplay();
+
+  }
+
+
+  if (document.readyState === 'loading') {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      initCBS
+    );
+
+  } else {
+
+    initCBS();
+
+  }
+
+
+  /*
+    SHOPIFY THEME EDITOR
+  */
+
+  document.addEventListener(
+    'shopify:section:load',
+    function (event) {
+
+      const section =
+        event.target.querySelector(
+          '#CBS-{{ section.id }}'
+        );
+
+
+      if (section) {
+
+        section.dataset.initialized = 'false';
+
+        initCBS();
+
+      }
+
+    }
+  );
+
+})();
+</script>
+
+
+{% schema %}
+{
+  "name": "Auto Banner Slider",
+  "tag": "section",
+  "class": "auto-banner-slider",
+  "max_blocks": 10,
+
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto play",
+      "default": true
+    },
+
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slide every",
+      "default": 5
+    },
+
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "min": 200,
+      "max": 1200,
+      "step": 100,
+      "unit": "ms",
+      "label": "Fade speed",
+      "default": 500
+    },
+
+    {
+      "type": "checkbox",
+      "id": "pause_hover",
+      "label": "Pause autoplay on hover",
+      "default": true
+    },
+
+
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "min": 30,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "label": "Arrow size",
+      "default": 44
+    },
+
+    {
+      "type": "range",
+      "id": "arrow_spacing",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Arrow side spacing",
+      "default": 20
+    },
+
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Arrow background",
+      "default": "#ffffff"
+    },
+
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow icon",
+      "default": "#111111"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
+    },
+
+    {
+      "type": "range",
+      "id": "dot_size",
+      "min": 5,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "label": "Dot size",
+      "default": 8
+    },
+
+    {
+      "type": "range",
+      "id": "dots_bottom",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Dots bottom spacing",
+      "default": 20
+    },
+
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dots color",
+      "default": "#ffffff"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Desktop content"
+    },
+
+    {
+      "type": "range",
+      "id": "desktop_padding_horizontal",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Side spacing",
+      "default": 60
+    },
+
+    {
+      "type": "range",
+      "id": "desktop_padding_vertical",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Top bottom spacing",
+      "default": 50
+    },
+
+    {
+      "type": "range",
+      "id": "desktop_heading_size",
+      "min": 20,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+
+    {
+      "type": "range",
+      "id": "desktop_text_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 17
+    },
+
+
+    {
+      "type": "header",
+      "content": "Mobile content"
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Side spacing",
+      "default": 20
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_padding_vertical",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Top bottom spacing",
+      "default": 24
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "min": 18,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 30
+    },
+
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 15
+    },
+
+
+    {
+      "type": "header",
+      "content": "Button"
+    },
+
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button radius",
+      "default": 4
+    }
+
+  ],
+
+
+  "blocks": [
+
+    {
+      "type": "slide",
+      "name": "Banner",
+
+      "settings": [
+
+        {
+          "type": "header",
+          "content": "Banner images"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Banner link"
+        },
+
+        {
+          "type": "url",
+          "id": "banner_link",
+          "label": "Link"
+        },
+
+        {
+          "type": "checkbox",
+          "id": "full_banner_link",
+          "label": "Make full banner clickable",
+          "default": false
+        },
+
+
+        {
+          "type": "header",
+          "content": "Content"
+        },
+
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button text"
+        },
+
+        {
+          "type": "range",
+          "id": "content_width",
+          "min": 250,
+          "max": 900,
+          "step": 10,
+          "unit": "px",
+          "label": "Content width",
+          "default": 550
+        },
+
+
+        {
+          "type": "header",
+          "content": "Desktop position"
+        },
+
+        {
+          "type": "select",
+          "id": "desktop_content_position",
+          "label": "Content position",
+          "default": "middle-left",
+
+          "options": [
+
+            {
+              "value": "top-left",
+              "label": "Top left"
+            },
+
+            {
+              "value": "top-center",
+              "label": "Top center"
+            },
+
+            {
+              "value": "top-right",
+              "label": "Top right"
+            },
+
+            {
+              "value": "middle-left",
+              "label": "Middle left"
+            },
+
+            {
+              "value": "middle-center",
+              "label": "Middle center"
+            },
+
+            {
+              "value": "middle-right",
+              "label": "Middle right"
+            },
+
+            {
+              "value": "bottom-left",
+              "label": "Bottom left"
+            },
+
+            {
+              "value": "bottom-center",
+              "label": "Bottom center"
+            },
+
+            {
+              "value": "bottom-right",
+              "label": "Bottom right"
+            }
+
+          ]
+        },
+
+        {
+          "type": "select",
+          "id": "desktop_text_alignment",
+          "label": "Text alignment",
+          "default": "left",
+
+          "options": [
+
+            {
+              "value": "left",
+              "label": "Left"
+            },
+
+            {
+              "value": "center",
+              "label": "Center"
+            },
+
+            {
+              "value": "right",
+              "label": "Right"
+            }
+
+          ]
+        },
+
+
+        {
+          "type": "header",
+          "content": "Mobile position"
+        },
+
+        {
+          "type": "select",
+          "id": "mobile_content_position",
+          "label": "Content position",
+          "default": "middle-left",
+
+          "options": [
+
+            {
+              "value": "top-left",
+              "label": "Top left"
+            },
+
+            {
+              "value": "top-center",
+              "label": "Top center"
+            },
+
+            {
+              "value": "top-right",
+              "label": "Top right"
+            },
+
+            {
+              "value": "middle-left",
+              "label": "Middle left"
+            },
+
+            {
+              "value": "middle-center",
+              "label": "Middle center"
+            },
+
+            {
+              "value": "middle-right",
+              "label": "Middle right"
+            },
+
+            {
+              "value": "bottom-left",
+              "label": "Bottom left"
+            },
+
+            {
+              "value": "bottom-center",
+              "label": "Bottom center"
+            },
+
+            {
+              "value": "bottom-right",
+              "label": "Bottom right"
+            }
+
+          ]
+        },
+
+        {
+          "type": "select",
+          "id": "mobile_text_alignment",
+          "label": "Text alignment",
+          "default": "left",
+
+          "options": [
+
+            {
+              "value": "left",
+              "label": "Left"
+            },
+
+            {
+              "value": "center",
+              "label": "Center"
+            },
+
+            {
+              "value": "right",
+              "label": "Right"
+            }
+
+          ]
+        },
+
+        {
+          "type": "checkbox",
+          "id": "hide_content_mobile",
+          "label": "Hide content on mobile",
+          "default": false
+        },
+
+
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#ffffff"
+        },
+
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text",
+          "default": "#ffffff"
+        },
+
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Button background",
+          "default": "#ffffff"
+        },
+
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button text",
+          "default": "#111111"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay color",
+          "default": "#000000"
+        },
+
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay opacity",
+          "default": 0
+        }
+
+      ]
+    }
+
+  ],
+
+
+  "presets": [
+
+    {
+      "name": "Auto Banner Slider",
+
+      "blocks": [
+
+        {
+          "type": "slide"
+        },
+
+        {
+          "type": "slide"
+        }
+
+      ]
+    }
+
+  ]
+}
+{% endschema %}
