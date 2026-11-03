@@ -31,8 +31,14 @@ body .nectar-cat-tab { box-shadow: none; min-height: 42px; }
 .nectar-grid-layout > *, .nectar-card__body { min-width: 0; }
 .nectar-cat-panel:focus-visible, .nectar-cat-tab:focus-visible { outline: 2px solid var(--nectar-green); outline-offset: 4px; }
 .nectar-drawer { height: 100dvh; }
-@media (min-width: 990px) {
-  .shopify-section-group-header-group:has(.nectar-header-wrapper.is-sticky) { position: sticky; top: 0; z-index: 100; }
+.shopify-section-group-header-group:has(.nectar-header-wrapper.is-sticky) {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+.shopify-section-group-header-group > .nectar-header-wrapper.is-sticky {
+  position: relative;
 }
 @media (max-width: 989px) {
   :root { --nf-gutter: 24px; }
