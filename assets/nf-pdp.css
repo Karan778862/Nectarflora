@@ -4,3 +4,5 @@
 @media(prefers-reduced-motion:reduce){.nf-pdp-stories{scroll-behavior:auto}}
 
 .nf-product__offers p>svg{width:15px;height:15px;flex-shrink:0;stroke:#f3592e;fill:none;stroke-width:1.5}
+
+@media(min-width:750px){.nf-product__main-media{max-height:calc(100dvh - var(--nf-sticky-header-height,160px) - 136px);min-height:230px}.nf-product__slide{max-height:inherit}.nf-product__image{max-height:calc(100dvh - var(--nf-sticky-header-height,160px) - 180px)}}
