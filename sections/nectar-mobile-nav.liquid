@@ -14,22 +14,26 @@
       <span>{{ section.settings.wishlist_label | escape }}</span>
       <span class="nf-bottom-nav__badge" data-nectar-wishlist-count style="display:none">0</span>
     </button>
+    {% if section.settings.show_account %}
     <a href="{{ routes.account_url }}" class="nf-bottom-nav__item" {% if request.page_type contains 'customers' %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
       <span>{{ section.settings.account_label | escape }}</span>
     </a>
+    {% endif %}
+    {% if section.settings.show_cart %}
     <a href="{{ routes.cart_url }}" class="nf-bottom-nav__item" {% if request.page_type == 'cart' %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
       <span>{{ section.settings.cart_label | escape }}</span>
       <span class="nf-bottom-nav__badge" data-nf-cart-count>{{ cart.item_count }}</span>
     </a>
+    {% endif %}
   </nav>
 {% endif %}
 {% stylesheet %}
   .nf-bottom-nav, .nf-bottom-space { display: none; }
   @media (max-width: 749px) {
     .nf-bottom-space { display: block; height: calc(66px + env(safe-area-inset-bottom, 0px)); flex-shrink: 0; }
-    .nf-bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 90; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); padding: 7px 8px calc(7px + env(safe-area-inset-bottom,0px)); background: var(--nf-nav-bg); border-top: 1px solid #dfe8e2; box-shadow: 0 -3px 18px rgb(13 59 43 / 6%); }
+    .nf-bottom-nav { position: fixed; bottom: 0; inset-inline: 0; z-index: 90; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0,1fr); padding: 7px 8px calc(7px + env(safe-area-inset-bottom,0px)); background: var(--nf-nav-bg); border-top: 1px solid #dfe8e2; box-shadow: 0 -3px 18px rgb(13 59 43 / 6%); }
     .nf-bottom-nav__item { position: relative; min-width: 0; min-height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; margin: 0; padding: 4px 2px; border: 0; background: transparent; color: var(--nf-nav-text); font: 500 11px/1.2 Arial,Helvetica,sans-serif; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
     .nf-bottom-nav__item svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
     .nf-bottom-nav__item[aria-current="page"] { color: var(--nf-nav-active); font-weight: 700; }
@@ -70,6 +74,8 @@
     {"type":"text","id":"category_label","label":"Categories label","default":"Categories"},
     {"type":"url","id":"category_link","label":"Categories link"},
     {"type":"text","id":"wishlist_label","label":"Wishlist label","default":"Wishlist"},
+    {"type":"checkbox","id":"show_account","label":"Show Account","default":false},
+    {"type":"checkbox","id":"show_cart","label":"Show Cart","default":false},
     {"type":"text","id":"account_label","label":"Account label","default":"Account"},
     {"type":"text","id":"cart_label","label":"Cart label","default":"Cart"},
     {"type":"color","id":"background","label":"Background","default":"#ffffff"},

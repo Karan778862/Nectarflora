@@ -73,7 +73,7 @@
         "logo_green_color": "#0A8754",
         "show_search": true,
         "search_placeholder": "Search for nutrition, skin, hair...",
-        "show_wishlist": true,
+        "show_wishlist": false,
         "wishlist_url": "/pages/wishlist",
         "show_account": true,
         "login_text": "LOGIN",
