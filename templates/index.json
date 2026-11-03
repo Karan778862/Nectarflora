@@ -93,6 +93,7 @@
         "slide_jNXVPa",
         "slide_ez9Y7B"
       ],
+      "disabled": true,
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
@@ -103,6 +104,86 @@
         "image_behavior": "none",
         "show_text_below": true,
         "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "custom_banner_slider_zgnGYQ": {
+      "type": "custom-banner-slider",
+      "blocks": {
+        "slide_GmAL3F": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Nectarflora_Daily_Wellness_Still_Life_52bd24b9-40a5-4fb0-a3e2-f4d750483742.png",
+            "mobile_image": "shopify://shop_images/Nectarflora_daily_wellness_mobile_banner_9191673d-9976-457d-b646-a13827b8dce3.png",
+            "banner_link": "",
+            "full_banner_link": false,
+            "heading": "",
+            "description": "",
+            "button_label": "",
+            "content_width": 550,
+            "desktop_content_position": "middle-left",
+            "desktop_text_alignment": "left",
+            "mobile_content_position": "middle-left",
+            "mobile_text_alignment": "left",
+            "hide_content_mobile": false,
+            "heading_color": "#ffffff",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_color": "#111111",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "slide_C8R83N": {
+          "type": "slide",
+          "settings": {
+            "banner_link": "",
+            "full_banner_link": false,
+            "heading": "",
+            "description": "",
+            "button_label": "",
+            "content_width": 550,
+            "desktop_content_position": "middle-left",
+            "desktop_text_alignment": "left",
+            "mobile_content_position": "middle-left",
+            "mobile_text_alignment": "left",
+            "hide_content_mobile": false,
+            "heading_color": "#ffffff",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_color": "#111111",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "slide_GmAL3F",
+        "slide_C8R83N"
+      ],
+      "name": "Auto Banner Slider",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "transition_speed": 500,
+        "pause_hover": true,
+        "show_arrows": true,
+        "arrow_size": 44,
+        "arrow_spacing": 20,
+        "arrow_background": "#ffffff",
+        "arrow_color": "#111111",
+        "show_dots": true,
+        "dot_size": 8,
+        "dots_bottom": 20,
+        "dot_color": "#ffffff",
+        "desktop_padding_horizontal": 60,
+        "desktop_padding_vertical": 50,
+        "desktop_heading_size": 48,
+        "desktop_text_size": 17,
+        "mobile_padding_horizontal": 20,
+        "mobile_padding_vertical": 24,
+        "mobile_heading_size": 30,
+        "mobile_text_size": 15,
+        "button_radius": 4
       }
     },
     "shop_by_concern": {
@@ -626,6 +707,7 @@
   "order": [
     "image_banner",
     "slideshow_HF7Dfx",
+    "custom_banner_slider_zgnGYQ",
     "shop_by_concern",
     "bestsellers",
     "shop_by_category",
