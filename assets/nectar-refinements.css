@@ -61,3 +61,26 @@ body .nectar-cat-tab { box-shadow: none; min-height: 42px; }
   .nectar-cat-panel.is-active, .nectar-menu-badge { animation: none; }
   .nectar-carousel-track, .nectar-category-tabs { scroll-behavior: auto; }
 }
+
+@media screen and (max-width: 749px) {
+  .nectar-header-wrapper .nectar-subnav { display: none; }
+}
+body > .nectar-drawer-backdrop { position: fixed; inset: 0; z-index: 2000; }
+body > .nectar-drawer {
+  position: fixed; top: 0; bottom: 0; left: 0; margin: 0;
+  height: 100vh; height: 100dvh; max-height: 100dvh;
+  z-index: 2001; padding: 0; isolation: isolate;
+}
+body > .nectar-drawer .nectar-drawer__header {
+  position: relative; top: 0; z-index: 2; display: flex;
+  flex-shrink: 0; min-height: 68px; padding-top: max(16px, env(safe-area-inset-top));
+  background: var(--nectar-top-strip-color, #0e3d2f);
+}
+body > .nectar-drawer .nectar-drawer__close-btn {
+  display: flex; visibility: visible; opacity: 1; flex-shrink: 0;
+  width: 44px; height: 44px; color: #fff; background: rgba(255,255,255,.2);
+}
+body > .nectar-drawer .nectar-drawer__content {
+  min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
