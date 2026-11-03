@@ -1,0 +1,91 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "nectar-about",
+      "blocks": {
+        "our_story": {
+          "type": "story",
+          "settings": {
+            "label": "Why we are here",
+            "heading": "A more personal way to think about wellness.",
+            "text": "<p>There is no single definition of feeling well. For some people, it is finding time to rest. For others, it is creating a routine that fits a busy day.</p><p>At Nectarflora, we believe wellness should begin with understanding your own needs. Our aim is to make that journey feel more approachable, one considered choice at a time.</p>",
+            "image_side": "left",
+            "image_caption": "Rooted in everyday wellbeing",
+            "image_background": "#e8f1e9"
+          }
+        },
+        "founder_one": {
+          "type": "founder",
+          "settings": {
+            "role": "Co-founder"
+          }
+        },
+        "founder_two": {
+          "type": "founder",
+          "settings": {
+            "role": "Co-founder"
+          }
+        },
+        "principles": {
+          "type": "principles",
+          "settings": {}
+        },
+        "ingredients": {
+          "type": "story",
+          "settings": {
+            "label": "Our philosophy",
+            "heading": "Nature inspires us. Understanding guides us.",
+            "text": "<p>We are drawn to the connection between nature and everyday wellbeing. We also believe that choosing a supplement should involve clear information about its ingredients, purpose and use.</p><p>We encourage you to explore the details, ask questions and choose what makes sense for your routine. Individual needs deserve individual attention.</p>",
+            "image_side": "right",
+            "image_caption": "A thoughtful starting point",
+            "image_background": "#f1eee3"
+          }
+        },
+        "routine": {
+          "type": "story",
+          "settings": {
+            "label": "The bigger picture",
+            "heading": "Wellness goes beyond a bottle.",
+            "text": "<p>We see supplements as one part of a wider routine, alongside balanced food, movement, sleep and time to recharge.</p><p>Our belief is simple: small, sustainable habits deserve as much attention as the products you choose. Build a routine at your own pace, and seek professional advice when you need it.</p>",
+            "image_side": "left",
+            "image_caption": "Make room for everyday balance",
+            "image_background": "#e9efed"
+          }
+        },
+        "statement": {
+          "type": "quote",
+          "settings": {}
+        },
+        "closing": {
+          "type": "cta",
+          "settings": {
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "our_story",
+        "founder_one",
+        "founder_two",
+        "principles",
+        "ingredients",
+        "routine",
+        "statement",
+        "closing"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

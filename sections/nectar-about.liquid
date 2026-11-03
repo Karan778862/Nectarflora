@@ -1,0 +1,92 @@
+<section class="nf-about" style="--nf-about-accent:{{ section.settings.accent }};--nf-about-bg:{{ section.settings.background }};--nf-about-space:{{ section.settings.spacing }}px">
+  <div class="nf-about__hero">
+    <div class="nf-about__wrap nf-about__intro">
+      <p class="nf-about__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h1>{{ section.settings.heading | escape }}</h1>
+      <div class="nf-about__lead rte">{{ section.settings.introduction }}</div>
+      {% if section.settings.hero_image != blank %}
+        {{ section.settings.hero_image | image_url: width: 1800 | image_tag: widths: '480,750,1100,1500,1800', sizes: '(min-width: 1400px) 1280px, 100vw', class: 'nf-about__hero-image', loading: 'eager' }}
+      {% endif %}
+    </div>
+  </div>
+  <div class="nf-about__wrap">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'story' %}
+          <article class="nf-about__story {% if block.settings.image_side == 'right' %}nf-about__story--reverse{% endif %}" {{ block.shopify_attributes }}>
+            <div class="nf-about__visual" style="--nf-about-panel:{{ block.settings.image_background }}">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: widths: '360,540,750,1000,1200', sizes: '(min-width: 990px) 44vw, 100vw', loading: 'lazy', class: 'nf-about__image' }}
+              {% else %}
+                <svg class="nf-about__botanical" viewBox="0 0 500 420" fill="none" aria-hidden="true"><circle cx="250" cy="210" r="144" fill="currentColor" opacity=".05"/><circle cx="250" cy="210" r="115" stroke="currentColor" opacity=".16"/><path d="M252 350V112m0 170c-80 0-125-55-125-110 79 0 125 48 125 110Zm0-62c75 0 120-52 120-105-76 0-120 45-120 105Zm0-63c-48 0-76-34-76-68 48 0 76 29 76 68Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M203 325h98" stroke="currentColor" stroke-width="2"/><circle cx="377" cy="298" r="6" fill="currentColor" opacity=".4"/><circle cx="117" cy="118" r="4" fill="currentColor" opacity=".4"/></svg>
+              {% endif %}
+              {% if block.settings.image_caption != blank %}<span class="nf-about__image-caption">{{ block.settings.image_caption | escape }}</span>{% endif %}
+            </div>
+            <div class="nf-about__copy">
+              {% if block.settings.label != blank %}<p class="nf-about__eyebrow">{{ block.settings.label | escape }}</p>{% endif %}
+              <h2>{{ block.settings.heading | escape }}</h2>
+              <div class="rte">{{ block.settings.text }}</div>
+              {% if block.settings.link != blank and block.settings.link_label != blank %}<a class="nf-about__text-link" href="{{ block.settings.link }}">{{ block.settings.link_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+            </div>
+          </article>
+        {% when 'founder' %}
+          {% if block.settings.name != blank %}
+            <article class="nf-about__founder" {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}<div class="nf-about__portrait">{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 35vw, 100vw', widths: '360,540,750,900' }}</div>{% endif %}
+              <div class="nf-about__copy"><p class="nf-about__eyebrow">{{ block.settings.role | escape }}</p><h2>{{ block.settings.name | escape }}</h2><div class="rte">{{ block.settings.bio }}</div></div>
+            </article>
+          {% elsif request.design_mode %}
+            <div class="nf-about__editor-note" {{ block.shopify_attributes }}>Add a founder name, photograph and biography in this block to display the profile.</div>
+          {% endif %}
+        {% when 'principles' %}
+          <div class="nf-about__principles" {{ block.shopify_attributes }}>
+            <p class="nf-about__eyebrow">{{ block.settings.label | escape }}</p><h2>{{ block.settings.heading | escape }}</h2>
+            <div class="nf-about__principle-grid">
+              {% for i in (1..3) %}
+                {% assign title_key = 'title_' | append: i %}{% assign text_key = 'text_' | append: i %}
+                {% if block.settings[title_key] != blank %}<div><span class="nf-about__number">0{{ i }}</span><h3>{{ block.settings[title_key] | escape }}</h3><p>{{ block.settings[text_key] | escape }}</p></div>{% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% when 'quote' %}
+          <div class="nf-about__quote" {{ block.shopify_attributes }}><blockquote>{{ block.settings.text | escape }}</blockquote>{% if block.settings.attribution != blank %}<p>{{ block.settings.attribution | escape }}</p>{% endif %}</div>
+        {% when 'cta' %}
+          <div class="nf-about__cta" {{ block.shopify_attributes }}><div><h2>{{ block.settings.heading | escape }}</h2><div class="rte">{{ block.settings.text }}</div></div>{% if block.settings.link_label != blank %}<a href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.link_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}</div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+{% stylesheet %}
+.nf-about{background:var(--nf-about-bg);color:#213b30;padding-bottom:56px;font-family:Arial,Helvetica,sans-serif}.nf-about__wrap{max-width:1280px;padding-inline:32px;margin-inline:auto}.nf-about__hero{background:#edf4ee;padding:72px 0 64px;border-bottom:1px solid #dce8de}.nf-about__intro{max-width:960px;text-align:center}.nf-about__eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--nf-about-accent);margin:0 0 18px}.nf-about h1{font-size:clamp(36px,5vw,64px);line-height:1.08;letter-spacing:-2px;font-weight:500;max-width:830px;margin:0 auto 24px;color:#143d2d}.nf-about__lead{max-width:660px;margin:auto;font-size:17px;line-height:1.7;color:#506258}.nf-about__hero-image{display:block;width:100%;height:auto;max-height:480px;object-fit:cover;border-radius:8px;margin-top:36px}.nf-about__story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(32px,6vw,88px);margin-block:var(--nf-about-space)}.nf-about__story--reverse .nf-about__visual{order:2}.nf-about__visual{position:relative;background:var(--nf-about-panel);aspect-ratio:1.12;overflow:hidden;border-radius:4px;color:var(--nf-about-accent)}.nf-about__image{width:100%;height:100%;object-fit:cover;display:block}.nf-about__botanical{display:block;width:100%;height:100%}.nf-about__image-caption{position:absolute;bottom:20px;left:24px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase}.nf-about h2{font-size:clamp(26px,3vw,38px);line-height:1.18;font-weight:500;letter-spacing:-.8px;margin:0 0 22px;color:#143d2d}.nf-about__copy .rte{font-size:15px;line-height:1.85;color:#536259}.nf-about .rte p:first-child{margin-top:0}.nf-about .rte p:last-child{margin-bottom:0}.nf-about__text-link{display:inline-flex;gap:24px;margin-top:24px;color:var(--nf-about-accent);font-size:14px;text-decoration:none;border-bottom:1px solid;padding-bottom:5px}.nf-about__founder{display:flex;align-items:center;gap:60px;border-top:1px solid #dce6dd;padding-block:40px}.nf-about__portrait{flex:0 0 36%;max-width:360px}.nf-about__portrait img{width:100%;height:auto;display:block;border-radius:4px}.nf-about__founder .nf-about__copy{flex:1}.nf-about__principles{padding:48px 0;border-block:1px solid #dce6dd;margin-block:var(--nf-about-space)}.nf-about__principle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;margin-top:36px}.nf-about__number{font-size:12px;letter-spacing:1px;color:var(--nf-about-accent)}.nf-about__principle-grid h3{font-size:20px;font-weight:500;margin:14px 0 12px}.nf-about__principle-grid p{font-size:14px;line-height:1.75;color:#536259;margin:0}.nf-about__quote{max-width:850px;text-align:center;margin:64px auto}.nf-about__quote blockquote{font-size:clamp(24px,3.4vw,36px);line-height:1.4;margin:0;border:0;padding:0;color:#143d2d;font-style:normal;font-weight:400}.nf-about__quote p{font-size:12px;letter-spacing:1px;margin-top:20px;color:#647569}.nf-about__cta{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:40px;background:#123e2c;color:white;border-radius:6px}.nf-about__cta h2{color:white;margin-bottom:12px;font-size:30px}.nf-about__cta .rte{color:#ccddd1;font-size:15px}.nf-about__cta a{display:inline-flex;align-items:center;gap:22px;background:#fff;color:#123e2c;white-space:nowrap;padding:14px 24px;text-decoration:none;font-size:14px;border-radius:3px}.nf-about__editor-note{border:1px dashed #9eb7a6;padding:20px;margin-block:20px;font-size:14px}.nf-about a:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+@media(max-width:749px){.nf-about__wrap{padding-inline:16px}.nf-about__hero{padding:44px 0 40px}.nf-about h1{letter-spacing:-1px;font-size:38px}.nf-about__lead{font-size:15px}.nf-about__story{grid-template-columns:minmax(0,1fr);gap:24px;margin-block:40px}.nf-about__story--reverse .nf-about__visual{order:0}.nf-about__visual{aspect-ratio:1.25}.nf-about h2{font-size:27px;margin-bottom:16px}.nf-about__copy .rte{font-size:14px;line-height:1.8}.nf-about__founder{flex-direction:column;gap:24px;align-items:stretch}.nf-about__portrait{max-width:none}.nf-about__principles{margin-block:40px;padding-block:32px}.nf-about__principle-grid{grid-template-columns:1fr;gap:28px}.nf-about__principle-grid>div+div{border-top:1px solid #dce6dd;padding-top:24px}.nf-about__quote{margin:44px auto}.nf-about__cta{padding:28px 22px;flex-direction:column;align-items:flex-start}.nf-about__cta h2{font-size:26px}.nf-about{padding-bottom:40px}}
+{% endstylesheet %}
+{% schema %}
+{
+ "name":"Nectarflora About Us",
+ "settings":[
+ {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The Nectarflora story"},
+ {"type":"text","id":"heading","label":"Page heading","default":"Wellness, with a little more thought."},
+ {"type":"richtext","id":"introduction","label":"Introduction","default":"<p>We believe looking after yourself should feel clear, considered and personal. Discover the ideas behind Nectarflora.</p>"},
+ {"type":"image_picker","id":"hero_image","label":"Hero image (optional)"},
+ {"type":"color","id":"accent","label":"Accent colour","default":"#0a8754"},
+ {"type":"color","id":"background","label":"Page background","default":"#fcfdfb"},
+ {"type":"range","id":"spacing","label":"Desktop section spacing","min":32,"max":100,"step":4,"unit":"px","default":64}
+ ],
+ "blocks":[
+ {"type":"story","name":"Image and story","settings":[
+ {"type":"text","id":"label","label":"Eyebrow","default":"Our approach"},
+ {"type":"text","id":"heading","label":"Heading","default":"Small choices. A thoughtful routine."},
+ {"type":"richtext","id":"text","label":"Story text","default":"<p>Wellness looks different for everyone. We believe in making space for individual goals, everyday habits and informed choices.</p>"},
+ {"type":"image_picker","id":"image","label":"Image"},
+ {"type":"text","id":"image_caption","label":"Image caption"},
+ {"type":"color","id":"image_background","label":"Image background","default":"#e8f1e9"},
+ {"type":"select","id":"image_side","label":"Desktop image side","options":[{"value":"left","label":"Left"},{"value":"right","label":"Right"}],"default":"left"},
+ {"type":"text","id":"link_label","label":"Link label"},{"type":"url","id":"link","label":"Link"}]},
+ {"type":"founder","name":"Founder profile","settings":[{"type":"image_picker","id":"image","label":"Portrait"},{"type":"text","id":"name","label":"Name (blank hides profile)"},{"type":"text","id":"role","label":"Role","default":"Meet the founder"},{"type":"richtext","id":"bio","label":"Biography"}]},
+ {"type":"principles","name":"Three brand principles","settings":[{"type":"text","id":"label","label":"Eyebrow","default":"What matters to us"},{"type":"text","id":"heading","label":"Heading","default":"A considered approach to wellbeing."},{"type":"text","id":"title_1","label":"First title","default":"Clarity"},{"type":"textarea","id":"text_1","label":"First text","default":"We believe product information should help you understand your choices."},{"type":"text","id":"title_2","label":"Second title","default":"Individuality"},{"type":"textarea","id":"text_2","label":"Second text","default":"Your routine should reflect your needs, preferences and goals."},{"type":"text","id":"title_3","label":"Third title","default":"Consistency"},{"type":"textarea","id":"text_3","label":"Third text","default":"Everyday habits are at the heart of our idea of wellness."}]},
+ {"type":"quote","name":"Brand statement","settings":[{"type":"textarea","id":"text","label":"Statement","default":"A better routine begins with understanding what matters to you."},{"type":"text","id":"attribution","label":"Attribution","default":"The Nectarflora philosophy"}]},
+ {"type":"cta","name":"Closing call to action","settings":[{"type":"text","id":"heading","label":"Heading","default":"Find your everyday balance."},{"type":"richtext","id":"text","label":"Text","default":"<p>Explore Nectarflora and find a place to begin your routine.</p>"},{"type":"text","id":"link_label","label":"Button label","default":"Explore the collection"},{"type":"url","id":"link","label":"Button link"}]}
+ ],
+ "presets":[{"name":"Nectarflora About Us","blocks":[{"type":"story"},{"type":"principles"},{"type":"story","settings":{"image_side":"right"}},{"type":"quote"},{"type":"cta"}]}]
+}
+{% endschema %}
