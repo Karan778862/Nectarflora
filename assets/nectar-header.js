@@ -84,7 +84,7 @@ function initCartListeners() {
   // Monitor DOM mutations in case Dawn re-renders #cart-icon-bubble
   const observer = new MutationObserver(() => {
     const bubble = document.querySelector('#cart-icon-bubble .cart-count-bubble span');
-    const badge = document.querySelector('.nectar-header__cart-badge');
+    const badge = document.querySelector('.nectar-header__cart-badge:not(.nectar-wishlist-badge)');
     if (bubble && badge) {
       const count = bubble.textContent.trim();
       badge.textContent = count;
@@ -103,7 +103,7 @@ function updateCartBadge() {
   fetch(root + 'cart.js')
     .then((res) => res.json())
     .then((cart) => {
-      const badge = document.querySelector('.nectar-header__cart-badge');
+      const badge = document.querySelector('.nectar-header__cart-badge:not(.nectar-wishlist-badge)');
       if (badge) {
         badge.textContent = cart.item_count;
         badge.setAttribute('data-count', cart.item_count);

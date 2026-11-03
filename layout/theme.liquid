@@ -14,9 +14,6 @@
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
 
     <title>
       {{ page_title }}
@@ -275,34 +272,14 @@
       }
 
       @media screen and (min-width: 750px) {
-        body {
-          font-size: 1.6rem;
-        }
-      :root {
-        --page-width: 160rem !important;
-      }
-      .page-width,
-      .page-width-desktop {
-        max-width: 1600px !important;
-        width: 100% !important;
-        padding-left: 32px !important;
-        padding-right: 32px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        box-sizing: border-box !important;
-      }
-      @media screen and (max-width: 749px) {
-        .page-width,
-        .page-width-desktop {
-          padding-left: 16px !important;
-          padding-right: 16px !important;
-        }
+        body { font-size: 1.6rem; }
       }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'nectar-card.css' | asset_url | stylesheet_tag }}
     {{ 'nectar-product.css' | asset_url | stylesheet_tag }}
+    {{ 'nectar-refinements.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -369,6 +346,7 @@
     </main>
 
     {% sections 'footer-group' %}
+    {% section 'nectar-mobile-nav' %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

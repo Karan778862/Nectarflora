@@ -1,5 +1,4 @@
 {{ 'nectar-card.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'nectar-card.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -31,16 +30,21 @@
     {%- endif -%}
 
     <!-- Category Filter Tabs -->
-    <div class="nectar-category-tabs">
+    <div class="nectar-category-tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
       {%- for block in section.blocks -%}
         <button
           type="button"
           class="nectar-cat-tab {% if forloop.first %}is-active{% endif %}"
           data-nectar-tab
+          role="tab"
+          id="cat-tab-{{ section.id }}-{{ block.id }}"
+          aria-controls="cat-panel-{{ section.id }}-{{ block.id }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
           data-target="cat-panel-{{ section.id }}-{{ block.id }}"
           {{ block.shopify_attributes }}
         >
-          <span class="nectar-cat-tab__icon">🍃</span>
+          <span class="nectar-cat-tab__icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-8-1-15 2-15 9a6 6 0 0 0 6 6c7 0 10-7 9-15Z"/><path d="m4 21 11-11"/></svg></span>
           <span>{{ block.settings.title | escape }}</span>
         </button>
       {%- endfor -%}
@@ -57,6 +61,8 @@
       <div
         class="nectar-cat-panel {% if forloop.first %}is-active{% endif %}"
         id="cat-panel-{{ section.id }}-{{ block.id }}"
+        role="tabpanel"
+        aria-labelledby="cat-tab-{{ section.id }}-{{ block.id }}"
       >
         <div class="nectar-carousel-wrapper">
           {%- if section.settings.layout_desktop == 'carousel' -%}

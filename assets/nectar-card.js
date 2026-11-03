@@ -8,6 +8,8 @@
 
 (function () {
   'use strict';
+  if (window.nectarCardInitialized) return;
+  window.nectarCardInitialized = true;
 
   // --- 1. AJAX ADD TO CART ---
   document.addEventListener('click', function (e) {
@@ -112,7 +114,7 @@
       .then((r) => r.json())
       .then((cart) => {
         const count = cart.item_count;
-        document.querySelectorAll('.nectar-header__cart-badge').forEach((badge) => {
+        document.querySelectorAll('.nectar-header__cart-badge:not(.nectar-wishlist-badge), [data-nf-cart-count]').forEach((badge) => {
           badge.textContent = count;
           badge.setAttribute('data-count', count);
           badge.classList.remove('badge-bounce');
@@ -406,7 +408,7 @@
     moveBtn.disabled = true;
     moveBtn.textContent = 'Adding...';
 
-    fetch(window.Shopify?.routes?.root + 'cart/add.js', {
+    fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: Number(variantId), quantity: 1 })
@@ -417,7 +419,7 @@
         // Remove from wishlist
         if (productId) WishlistStore.remove(productId);
         // Refresh cart header & drawer
-        refreshCartCount();
+        updateCartBadges();
         const cartDrawer = document.querySelector('cart-drawer');
         if (cartDrawer) {
           WishlistStore.closeDrawer();
@@ -462,7 +464,7 @@
     addAllBtn.disabled = true;
     addAllBtn.textContent = 'Adding All...';
 
-    fetch(window.Shopify?.routes?.root + 'cart/add.js', {
+    fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ items: validItems })
@@ -471,7 +473,7 @@
       .then(() => {
         WishlistStore.save([]);
         WishlistStore.syncUI();
-        refreshCartCount();
+        updateCartBadges();
         WishlistStore.closeDrawer();
         const cartDrawer = document.querySelector('cart-drawer');
         if (cartDrawer) cartDrawer.open();
@@ -541,8 +543,10 @@
     if (!container || !targetId) return;
 
     // Set active tab
-    container.querySelectorAll('[data-nectar-tab]').forEach((t) => t.classList.remove('is-active'));
+    container.querySelectorAll('[data-nectar-tab]').forEach((t) => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); t.tabIndex = -1; });
     tab.classList.add('is-active');
+    tab.setAttribute('aria-selected', 'true');
+    tab.tabIndex = 0;
 
     // Switch panels
     container.querySelectorAll('.nectar-cat-panel').forEach((panel) => {
