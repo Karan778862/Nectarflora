@@ -1,7 +1,15 @@
+{% liquid
+ assign nf_whatsapp_number = section.settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+ assign nf_help_url = section.settings.whatsapp_link | default: '/pages/contact'
+ if nf_whatsapp_number != blank
+   assign nf_message = section.settings.whatsapp_message | url_encode
+   assign nf_help_url = 'https://wa.me/' | append: nf_whatsapp_number | append: '?text=' | append: nf_message
+ endif
+%}
 {% if section.settings.enabled %}
   <div class="nf-bottom-space" aria-hidden="true"></div>
   <nav class="nf-bottom-nav" aria-label="{{ section.settings.nav_label | escape }}" style="--nf-nav-bg: {{ section.settings.background }}; --nf-nav-active: {{ section.settings.accent }}; --nf-nav-text: {{ section.settings.text_color }};">
-    <a href="{{ routes.root_url }}" class="nf-bottom-nav__item" {% if request.page_type == 'index' %}aria-current="page"{% endif %}>
+    <a href="{{ section.settings.home_link | default: routes.root_url }}" class="nf-bottom-nav__item" {% if request.page_type == 'index' %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H15v-6H9v6H3Z"/></svg>
       <span>{{ section.settings.home_label | escape }}</span>
     </a>
@@ -9,7 +17,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
       <span>{{ section.settings.category_label | escape }}</span>
     </a>
-<a href="{{ section.settings.whatsapp_link | default: '/pages/contact' }}" class="nf-bottom-nav__item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.5L3 21l1.7-4.9a8.5 8.5 0 1 1 15.8-4.5Z"/><path d="M8 7c-2 3 2 7 5 8l2-2-2-1-1 1-3-3 1-1-1-2Z"/></svg><span>{{ section.settings.help_label | escape }}</span></a>
+<a href="{{ nf_help_url }}" class="nf-bottom-nav__item" aria-label="{{ section.settings.help_label | escape }}"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 3.8A11.5 11.5 0 0 0 2.1 17.6L.5 23.5l6-1.6A11.5 11.5 0 0 0 20.2 3.8ZM12 21a9 9 0 0 1-4.6-1.3l-.3-.2-3.6.9 1-3.5-.2-.4A9.1 9.1 0 1 1 12 21Zm5-6.8c-.3-.1-1.6-.8-1.8-.9-.2-.1-.4-.1-.6.2-.2.3-.7.9-.9 1-.1.2-.3.2-.6.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.6l.4-.4.3-.5c.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.3 3.9.6.2 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.6-.7 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z" style="fill:currentColor;stroke:none"/></svg><span>{{ section.settings.help_label | escape }}</span></a>
   </nav>
 {% endif %}
 {% stylesheet %}
@@ -49,5 +57,5 @@
   });
 {% endjavascript %}
 {% schema %}
-{"name":"Mobile bottom navigation","settings":[{"type":"checkbox","id":"enabled","label":"Show mobile bottom navigation","default":true},{"type":"text","id":"nav_label","label":"Navigation accessibility label","default":"Mobile navigation"},{"type":"text","id":"home_label","label":"Home label","default":"Home"},{"type":"text","id":"category_label","label":"Categories label","default":"Categories"},{"type":"url","id":"category_link","label":"Categories link"},{"type":"text","id":"wishlist_label","label":"Wishlist label","default":"Wishlist"},{"type":"checkbox","id":"show_account","label":"Show Account","default":false},{"type":"checkbox","id":"show_cart","label":"Show Cart","default":false},{"type":"text","id":"account_label","label":"Account label","default":"Account"},{"type":"text","id":"cart_label","label":"Cart label","default":"Cart"},{"type":"color","id":"background","label":"Background","default":"#ffffff"},{"type":"color","id":"accent","label":"Active icon and badge","default":"#0a8754"},{"type":"color","id":"text_color","label":"Icon and label color","default":"#36443e"},{"type":"url","id":"concern_link","label":"Concerns link"},{"type":"text","id":"concern_label","label":"Concerns label","default":"Concerns"},{"type":"image_picker","id":"offer_image","label":"Centre offer image"},{"type":"text","id":"offer_label","label":"Centre offer text","default":"OFFERS"},{"type":"url","id":"offer_link","label":"Centre offer link"},{"type":"url","id":"whatsapp_link","label":"WhatsApp Help link","info":"Add your https://wa.me/91… business number. Falls back to Contact until configured."},{"type":"text","id":"help_label","label":"Help label","default":"Help"}]}
+{"name":"Mobile bottom navigation","settings":[{"type":"checkbox","id":"enabled","label":"Show mobile bottom navigation","default":true},{"type":"text","id":"nav_label","label":"Navigation accessibility label","default":"Mobile navigation"},{"type":"text","id":"home_label","label":"Home label","default":"Home"},{"type":"text","id":"category_label","label":"Categories label","default":"Categories"},{"type":"url","id":"category_link","label":"Categories link"},{"type":"color","id":"background","label":"Background","default":"#ffffff"},{"type":"color","id":"accent","label":"Active icon and badge","default":"#0a8754"},{"type":"color","id":"text_color","label":"Icon and label color","default":"#36443e"},{"type":"url","id":"concern_link","label":"Concerns link"},{"type":"text","id":"concern_label","label":"Concerns label","default":"Concerns"},{"type":"image_picker","id":"offer_image","label":"Centre offer image"},{"type":"text","id":"offer_label","label":"Centre offer text","default":"OFFERS"},{"type":"url","id":"offer_link","label":"Centre offer link"},{"type":"url","id":"whatsapp_link","label":"WhatsApp Help link","info":"Add your https://wa.me/91… business number. Falls back to Contact until configured."},{"type":"text","id":"help_label","label":"Help label","default":"Help"},{"type":"url","id":"home_link","label":"Home link"},{"type":"text","id":"whatsapp_number","label":"WhatsApp number with country code","info":"Example: 919876543210. Include country code."},{"type":"textarea","id":"whatsapp_message","label":"WhatsApp opening message","default":"Hi Nectarflora! I need help choosing a product."}]}
 {% endschema %}
