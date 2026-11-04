@@ -5,28 +5,11 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H15v-6H9v6H3Z"/></svg>
       <span>{{ section.settings.home_label | escape }}</span>
     </a>
-    <a href="{{ section.settings.category_link | default: routes.collections_url }}" class="nf-bottom-nav__item" {% if request.page_type == 'list-collections' or request.page_type == 'collection' %}aria-current="page"{% endif %}>
+<a href="{% if section.settings.concern_link != blank %}{{ section.settings.concern_link }}{% else %}{{ routes.root_url }}#nectar-concerns{% endif %}" class="nf-bottom-nav__item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h13M8 12h13M8 19h13"/><circle cx="3" cy="5" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="3" cy="19" r="1"/></svg><span>{{ section.settings.concern_label | escape }}</span></a><a href="{{ section.settings.offer_link | default: routes.all_products_collection_url }}" class="nf-bottom-nav__item nf-bottom-nav__offer" aria-label="{{ section.settings.offer_label | escape }}">{% if section.settings.offer_image != blank %}{{ section.settings.offer_image | image_url: width: 180 | image_tag: widths: '90,180', sizes: '66px', loading: 'lazy' }}{% else %}<span class="nf-bottom-nav__offer-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v4H3zM5 12v9h14v-9M12 8v13M12 8H8a3 3 0 1 1 3-3l1 3Zm0 0h4a3 3 0 1 0-3-3l-1 3Z"/></svg><strong>{{ section.settings.offer_label | escape }}</strong></span>{% endif %}</a>    <a href="{{ section.settings.category_link | default: routes.collections_url }}" class="nf-bottom-nav__item" {% if request.page_type == 'list-collections' or request.page_type == 'collection' %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
       <span>{{ section.settings.category_label | escape }}</span>
     </a>
-    <button type="button" class="nf-bottom-nav__item" data-nectar-wishlist-trigger aria-controls="NectarWishlistDrawer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0l-1 1-1-1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
-      <span>{{ section.settings.wishlist_label | escape }}</span>
-      <span class="nf-bottom-nav__badge" data-nectar-wishlist-count style="display:none">0</span>
-    </button>
-    {% if section.settings.show_account %}
-    <a href="{{ routes.account_url }}" class="nf-bottom-nav__item" {% if request.page_type contains 'customers' %}aria-current="page"{% endif %}>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
-      <span>{{ section.settings.account_label | escape }}</span>
-    </a>
-    {% endif %}
-    {% if section.settings.show_cart %}
-    <a href="{{ routes.cart_url }}" class="nf-bottom-nav__item" {% if request.page_type == 'cart' %}aria-current="page"{% endif %}>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
-      <span>{{ section.settings.cart_label | escape }}</span>
-      <span class="nf-bottom-nav__badge" data-nf-cart-count>{{ cart.item_count }}</span>
-    </a>
-    {% endif %}
+<a href="{{ section.settings.whatsapp_link | default: '/pages/contact' }}" class="nf-bottom-nav__item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.5L3 21l1.7-4.9a8.5 8.5 0 1 1 15.8-4.5Z"/><path d="M8 7c-2 3 2 7 5 8l2-2-2-1-1 1-3-3 1-1-1-2Z"/></svg><span>{{ section.settings.help_label | escape }}</span></a>
   </nav>
 {% endif %}
 {% stylesheet %}
@@ -41,6 +24,7 @@
     .nf-bottom-nav__badge { position: absolute; top: 0; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 20px; display: grid; place-items: center; background: var(--nf-nav-active); color: white; font-size: 10px; line-height: 1; }
     body:has(.nf-bottom-nav) .nectar-sticky-atc { bottom: calc(66px + env(safe-area-inset-bottom,0px)); }
   }
+@media(max-width:749px){.nf-bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr));border-radius:18px 18px 0 0;padding-top:7px;color:#0d443e}.nf-bottom-nav__item[aria-current="page"]{background:#edf2ef;border-radius:28px}.nf-bottom-nav__offer{overflow:visible}.nf-bottom-nav__offer-circle,.nf-bottom-nav__offer>img{width:66px;height:66px;border-radius:50%;margin-top:-27px;object-fit:cover;border:3px solid white;box-shadow:0 2px 8px #103e3026}.nf-bottom-nav__offer-circle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:linear-gradient(145deg,#0e4d38,#17875b);color:#ffdc61;font-size:10px}.nf-bottom-nav__offer-circle svg{width:24px;height:24px}.nectar-header__wishlist{display:flex!important}.nectar-header__right{gap:12px}.nectar-header__logo-text{font-size:clamp(20px,6vw,28px)}}
 {% endstylesheet %}
 {% javascript %}
   document.addEventListener('keydown', function(event) {
@@ -65,22 +49,5 @@
   });
 {% endjavascript %}
 {% schema %}
-{
-  "name": "Mobile bottom navigation",
-  "settings": [
-    {"type":"checkbox","id":"enabled","label":"Show mobile bottom navigation","default":true},
-    {"type":"text","id":"nav_label","label":"Navigation accessibility label","default":"Mobile navigation"},
-    {"type":"text","id":"home_label","label":"Home label","default":"Home"},
-    {"type":"text","id":"category_label","label":"Categories label","default":"Categories"},
-    {"type":"url","id":"category_link","label":"Categories link"},
-    {"type":"text","id":"wishlist_label","label":"Wishlist label","default":"Wishlist"},
-    {"type":"checkbox","id":"show_account","label":"Show Account","default":false},
-    {"type":"checkbox","id":"show_cart","label":"Show Cart","default":false},
-    {"type":"text","id":"account_label","label":"Account label","default":"Account"},
-    {"type":"text","id":"cart_label","label":"Cart label","default":"Cart"},
-    {"type":"color","id":"background","label":"Background","default":"#ffffff"},
-    {"type":"color","id":"accent","label":"Active icon and badge","default":"#0a8754"},
-    {"type":"color","id":"text_color","label":"Icon and label color","default":"#36443e"}
-  ]
-}
+{"name":"Mobile bottom navigation","settings":[{"type":"checkbox","id":"enabled","label":"Show mobile bottom navigation","default":true},{"type":"text","id":"nav_label","label":"Navigation accessibility label","default":"Mobile navigation"},{"type":"text","id":"home_label","label":"Home label","default":"Home"},{"type":"text","id":"category_label","label":"Categories label","default":"Categories"},{"type":"url","id":"category_link","label":"Categories link"},{"type":"text","id":"wishlist_label","label":"Wishlist label","default":"Wishlist"},{"type":"checkbox","id":"show_account","label":"Show Account","default":false},{"type":"checkbox","id":"show_cart","label":"Show Cart","default":false},{"type":"text","id":"account_label","label":"Account label","default":"Account"},{"type":"text","id":"cart_label","label":"Cart label","default":"Cart"},{"type":"color","id":"background","label":"Background","default":"#ffffff"},{"type":"color","id":"accent","label":"Active icon and badge","default":"#0a8754"},{"type":"color","id":"text_color","label":"Icon and label color","default":"#36443e"},{"type":"url","id":"concern_link","label":"Concerns link"},{"type":"text","id":"concern_label","label":"Concerns label","default":"Concerns"},{"type":"image_picker","id":"offer_image","label":"Centre offer image"},{"type":"text","id":"offer_label","label":"Centre offer text","default":"OFFERS"},{"type":"url","id":"offer_link","label":"Centre offer link"},{"type":"url","id":"whatsapp_link","label":"WhatsApp Help link","info":"Add your https://wa.me/91… business number. Falls back to Contact until configured."},{"type":"text","id":"help_label","label":"Help label","default":"Help"}]}
 {% endschema %}
