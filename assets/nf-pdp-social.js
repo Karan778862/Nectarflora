@@ -1,0 +1,1 @@
+if(!window.nfPdpVideoListening){window.nfPdpVideoListening=true;document.addEventListener('play',function(event){if(!(event.target instanceof HTMLVideoElement)||!event.target.closest('.nf-pdp-stories'))return;document.querySelectorAll('.nf-pdp-stories video').forEach(function(video){if(video!==event.target)video.pause();});},true);}
