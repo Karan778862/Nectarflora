@@ -87,11 +87,20 @@
     },
     "stories": {
       "type": "nf-pdp-stories",
-      "settings": {}
+      "settings": {
+        "heading": "Reels & Video Reviews",
+        "subheading": "Stories from our community",
+        "show_demo": true
+      }
     },
     "reviews": {
       "type": "nf-pdp-reviews",
-      "settings": {}
+      "settings": {
+        "heading": "Customer Reviews",
+        "subheading": "Experiences shared by our customers",
+        "show_demo": true,
+        "max_items": 6
+      }
     },
     "disclosures": {
       "type": "disclosures",
