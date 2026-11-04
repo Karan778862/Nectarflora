@@ -252,50 +252,7 @@
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </a>
-            <div class="nectar-megamenu">
-              <div class="nectar-megamenu__inner">
-                <div class="nectar-megamenu__nav-cols">
-                  <div class="nectar-megamenu__col">
-                    <span class="nectar-megamenu__heading-link">Immunity & Defense</span>
-                    <ul class="nectar-megamenu__list" role="list">
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Vitamin C & Zinc</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Natural Herbal Extracts</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Cold & Flu Support</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Antioxidant Blends</a></li>
-                    </ul>
-                  </div>
-                  <div class="nectar-megamenu__col">
-                    <span class="nectar-megamenu__heading-link">Daily Wellness</span>
-                    <ul class="nectar-megamenu__list" role="list">
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Multivitamin Tablets</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Omega-3 & Fish Oil</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Energy & Stamina</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Gut Health & Probiotics</a></li>
-                    </ul>
-                  </div>
-                  <div class="nectar-megamenu__col">
-                    <span class="nectar-megamenu__heading-link">Skin & Hair Care</span>
-                    <ul class="nectar-megamenu__list" role="list">
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Collagen Peptides</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Biotin Hair Gummies</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Glow & Hydration Serums</a></li>
-                      <li><a href="/collections/all" class="nectar-megamenu__link">Anti-Aging Nutrition</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="nectar-megamenu__side-media">
-                  <div class="nectar-megamenu__promo-banner">
-                    <a href="/collections/all" class="nectar-megamenu__promo-inner">
-                      <div class="nectar-megamenu__promo-content">
-                        <span class="nectar-megamenu__promo-tag">Special Offer</span>
-                        <h4 class="nectar-megamenu__promo-title">100% Organic Nutrition</h4>
-                        <span class="nectar-megamenu__promo-btn">Explore Now &rarr;</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {% render 'nf-collection-mega', section: section, parent_title_override: 'Product by Benefits' %}
           </li>
           <li class="nectar-subnav__item has-megamenu">
             <a href="/collections" class="nectar-subnav__link">
@@ -305,39 +262,7 @@
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </a>
-            <div class="nectar-megamenu">
-              <div class="nectar-megamenu__inner">
-                <div class="nectar-megamenu__nav-cols">
-                  <div class="nectar-megamenu__col">
-                    <span class="nectar-megamenu__heading-link">Nutrition & Herbs</span>
-                    <ul class="nectar-megamenu__list" role="list">
-                      <li><a href="/collections" class="nectar-megamenu__link">Superfood Powders</a></li>
-                      <li><a href="/collections" class="nectar-megamenu__link">Plant Protein</a></li>
-                      <li><a href="/collections" class="nectar-megamenu__link">Ayurvedic Juices</a></li>
-                    </ul>
-                  </div>
-                  <div class="nectar-megamenu__col">
-                    <span class="nectar-megamenu__heading-link">Organic Beauty</span>
-                    <ul class="nectar-megamenu__list" role="list">
-                      <li><a href="/collections" class="nectar-megamenu__link">Natural Face Oils</a></li>
-                      <li><a href="/collections" class="nectar-megamenu__link">Herbal Shampoos</a></li>
-                      <li><a href="/collections" class="nectar-megamenu__link">Body Cleansers</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="nectar-megamenu__side-media">
-                  <div class="nectar-megamenu__promo-banner">
-                    <a href="/collections" class="nectar-megamenu__promo-inner promo--alt">
-                      <div class="nectar-megamenu__promo-content">
-                        <span class="nectar-megamenu__promo-tag">Trending</span>
-                        <h4 class="nectar-megamenu__promo-title">Best Sellers Collection</h4>
-                        <span class="nectar-megamenu__promo-btn">Shop Now &rarr;</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {% render 'nf-collection-mega', section: section, parent_title_override: 'Product by Category' %}
           </li>
           <li class="nectar-subnav__item">
             <a href="/pages/free-consultation" class="nectar-subnav__link">Free Consultation</a>
