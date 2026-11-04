@@ -59,11 +59,177 @@
             "promo_button_text_2": "Shop Now",
             "promo_link_2": "/collections"
           }
+        },
+        "nf_mega_0_0": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Skin Health",
+            "products": [
+              "nectarflora-age-well",
+              "marine-collagen-peptides"
+            ]
+          }
+        },
+        "nf_mega_0_1": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Hair Health",
+            "products": [
+              "nectarflora-hair-revival",
+              "plant-biotin-hair-vitamins"
+            ]
+          }
+        },
+        "nf_mega_0_2": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Sleep & Stress",
+            "products": [
+              "nectarflora-stress-balance",
+              "ashwagandha-sleep-calm"
+            ]
+          }
+        },
+        "nf_mega_0_3": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Liver & Digestion",
+            "products": [
+              "nectarflora-liver-fresh",
+              "liver-detox-with-milk-thistle",
+              "acv-moringa-effervescent"
+            ]
+          }
+        },
+        "nf_mega_0_4": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Women Health",
+            "products": [
+              "nectarflora-cycle-balance",
+              "women-s-daily-multivitamin"
+            ]
+          }
+        },
+        "nf_mega_0_5": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Brain & Focus",
+            "products": [
+              "brahmi-brain-boost"
+            ]
+          }
+        },
+        "nf_mega_0_6": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Benefits",
+            "title": "Fitness",
+            "products": [
+              "super-food-plant-protein"
+            ]
+          }
+        },
+        "nf_mega_1_0": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Skin Health",
+            "products": [
+              "nectarflora-age-well",
+              "marine-collagen-peptides"
+            ]
+          }
+        },
+        "nf_mega_1_1": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Hair Health",
+            "products": [
+              "nectarflora-hair-revival",
+              "plant-biotin-hair-vitamins"
+            ]
+          }
+        },
+        "nf_mega_1_2": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Sleep & Stress",
+            "products": [
+              "nectarflora-stress-balance",
+              "ashwagandha-sleep-calm"
+            ]
+          }
+        },
+        "nf_mega_1_3": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Liver & Digestion",
+            "products": [
+              "nectarflora-liver-fresh",
+              "liver-detox-with-milk-thistle",
+              "acv-moringa-effervescent"
+            ]
+          }
+        },
+        "nf_mega_1_4": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Women Health",
+            "products": [
+              "nectarflora-cycle-balance",
+              "women-s-daily-multivitamin"
+            ]
+          }
+        },
+        "nf_mega_1_5": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Brain & Focus",
+            "products": [
+              "brahmi-brain-boost"
+            ]
+          }
+        },
+        "nf_mega_1_6": {
+          "type": "nf_mega_category",
+          "settings": {
+            "menu_title": "Product by Category",
+            "title": "Fitness",
+            "products": [
+              "super-food-plant-protein"
+            ]
+          }
         }
       },
       "block_order": [
         "mega_menu_benefits",
-        "mega_menu_category"
+        "mega_menu_category",
+        "nf_mega_0_0",
+        "nf_mega_0_1",
+        "nf_mega_0_2",
+        "nf_mega_0_3",
+        "nf_mega_0_4",
+        "nf_mega_0_5",
+        "nf_mega_0_6",
+        "nf_mega_1_0",
+        "nf_mega_1_1",
+        "nf_mega_1_2",
+        "nf_mega_1_3",
+        "nf_mega_1_4",
+        "nf_mega_1_5",
+        "nf_mega_1_6"
       ],
       "settings": {
         "show_top_strip": false,
